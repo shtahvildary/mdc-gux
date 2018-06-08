@@ -19,35 +19,34 @@ class Register extends Component {
   componentWillReceiveProps(nextProps){
     console.log("nextProps",nextProps);
   }
-  handleClick(event,role){
-    var apiBaseUrl = "http://localhost:4000/api/";
+  handleClick(event){
     // console.log("values in register handler",role);
     var self = this;
     //To be done:check for empty values before hitting submit
     if(this.state.first_name.length>0 && this.state.last_name.length>0 && this.state.email.length>0 && this.state.password.length>0){
       var payload={
-      "first_name": this.state.first_name,
-      "last_name":this.state.last_name,
-      "userid":this.state.email,
+      "fName": this.state.first_name,
+      "lName":this.state.last_name,
+      "username":this.state.email,
       "password":this.state.password,
-      "role":role
+      // "role":role
       }
-      axios.post(apiBaseUrl+'/register', payload)
+      axios.post(global.serverAddress+'/users/register', payload)
      .then(function (response) {
        console.log(response);
-       if(response.data.code === 200){
-        //  console.log("registration successfull");
+       if(response.status === 200){
+         console.log("registration successfull");
          var loginscreen=[];
-         loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role}/>);
+         loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} />);
          var loginmessage = "Not Registered yet.Go to registration";
          self.props.parentContext.setState({loginscreen:loginscreen,
          loginmessage:loginmessage,
-         buttonLabel:"Register",
+         buttonLabel:"ثبت نام",
          isLogin:true
           });
        }
        else{
-         console.log("some error ocurred",response.data.code);
+         console.log("some error ocurred",response.status);
        }
      })
      .catch(function (error) {
@@ -62,30 +61,28 @@ class Register extends Component {
   render() {
     // console.log("props",this.props);
     var userhintText,userLabel;
-    if(this.props.role === "student"){
-      userhintText="Enter your Student Id"
-      userLabel="Student Id"
-    }
-    else{
-      userhintText="Enter your Teacher Id"
-      userLabel="Teacher Id"
-    }
+    
+      userhintText="نام کاربری را وارد کنید"
+      userLabel="نام کاربری"
+    
+      
+    
     return (
       <div>
         <MuiThemeProvider>
           <div>
           <AppBar
-             title="Register"
+             title="ثبت نام"
            />
            <TextField
-             hintText="Enter your First Name"
-             floatingLabelText="First Name"
+             hintText="نام"
+             floatingLabelText="نام"
              onChange = {(event,newValue) => this.setState({first_name:newValue})}
              />
            <br/>
            <TextField
-             hintText="Enter your Last Name"
-             floatingLabelText="Last Name"
+             hintText="نام خانوادگی"
+             floatingLabelText="نام خانوادگی"
              onChange = {(event,newValue) => this.setState({last_name:newValue})}
              />
            <br/>
@@ -97,12 +94,12 @@ class Register extends Component {
            <br/>
            <TextField
              type = "password"
-             hintText="Enter your Password"
-             floatingLabelText="Password"
+             hintText="کلمه عبور را وارد کنید"
+             floatingLabelText="کلمه عبور"
              onChange = {(event,newValue) => this.setState({password:newValue})}
              />
            <br/>
-           <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
+           <RaisedButton label="ثبت نام" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
           </div>
          </MuiThemeProvider>
       </div>
