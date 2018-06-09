@@ -5,8 +5,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "material-ui": "^0.20.1",
+    "materialize-css": "^1.0.0-rc.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-router": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-tap-event-plugin": "^3.0.3",
     "webpack": "^3.11.0"

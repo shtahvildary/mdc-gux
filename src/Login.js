@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import indexPage from './index';
+import {Router,BrowserHistory} from 'react-router';
 
 class Login extends Component {
   constructor(props){
@@ -54,6 +55,7 @@ class Login extends Component {
       //  indexScreen.push(<redirect to='/App1' />)
        indexScreen.push(<indexPage appContext={self.props.appContext} />)
        self.props.appContext.setState({loginPage:[],indexScreen:indexScreen})
+       
      }
      else
        {
