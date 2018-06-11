@@ -12,7 +12,7 @@ class Register extends Component {
     this.state={
       first_name:'',
       last_name:'',
-      email:'',
+      username:'',
       password:''
     }
   }
@@ -23,11 +23,11 @@ class Register extends Component {
     // console.log("values in register handler",role);
     var self = this;
     //To be done:check for empty values before hitting submit
-    if(this.state.first_name.length>0 && this.state.last_name.length>0 && this.state.email.length>0 && this.state.password.length>0){
+    if(this.state.first_name.length>0 && this.state.last_name.length>0 && this.state.username.length>0 && this.state.password.length>0){
       var payload={
       "fName": this.state.first_name,
       "lName":this.state.last_name,
-      "username":this.state.email,
+      "username":this.state.username,
       "password":this.state.password,
       // "role":role
       }
@@ -89,7 +89,7 @@ class Register extends Component {
            <TextField
              hintText={userhintText}
              floatingLabelText={userLabel}
-             onChange = {(event,newValue) => this.setState({email:newValue})}
+             onChange = {(event,newValue) => this.setState({username:newValue})}
              />
            <br/>
            <TextField

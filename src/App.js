@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import AppBar from 'material-ui/AppBar'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
@@ -59,7 +61,13 @@ class App extends Component {
   render() {
     if(!localStorage.getItem('token'))
     return (
+      
       <div className="App">
+           <MuiThemeProvider>
+           <AppBar
+                title="صفحه اصلی"
+              />
+           </MuiThemeProvider>
         {this.state.loginPage}</div>)
         else
         return(
