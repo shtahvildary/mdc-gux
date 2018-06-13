@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import AppBar from 'material-ui/AppBar'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from './AppBar'
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import LoginScreen from './Loginscreen';
+import wallNodes from './netNodes';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -63,16 +63,14 @@ class App extends Component {
     return (
       
       <div className="App">
-           <MuiThemeProvider>
-           <AppBar
-                title="صفحه اصلی"
-              />
-           </MuiThemeProvider>
+           
         {this.state.loginPage}</div>)
         else
         return(
           <div className="App">
-
+<AppBar />
+<wallNodes/>
+        
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
