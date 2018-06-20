@@ -5,14 +5,15 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import LoginScreen from './Loginscreen';
-import wallNodes from './netNodes';
+import NetNodes from './NetNodes';
+// import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+// import { muiThemeable } from '@material-ui/core/styles/muiThemeable';
+
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-function WallNode(){
-  return(<div><h1>hello...WallNode</h1></div>)    
-  }
   
   function Rackroom(){
     return(<div><h1>hello...Rackroom</h1></div>)    
@@ -67,9 +68,21 @@ class App extends Component {
         {this.state.loginPage}</div>)
         else
         return(
+          <muiThemeable>
           <div className="App">
-<AppBar />
-<wallNodes/>
+ <AppBar classes={{
+  root: {
+    flexGrow: 1,
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  }}
+}/> 
+
         
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -80,10 +93,12 @@ class App extends Component {
         </p>
 
         <p className="App-intro">{this.state.response}</p>
-        <WallNode/>
+        
+        <NetNodes appContext={this}/>
         <Rackroom/>
         <Switchs/>
       </div>
+</muiThemeable>
     );
   }
 }

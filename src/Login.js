@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import AppBar from '@material-ui/core/AppBar';
+// import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import indexPage from './index';
-import {Router,BrowserHistory} from 'react-router';
+// import {Router,BrowserHistory} from 'react-router';
 
 class Login extends Component {
   constructor(props){
@@ -47,7 +48,7 @@ class Login extends Component {
     axios.post(global.serverAddress+'/users/login', payload)
    .then(function (response) {
      console.log(response);
-     if(response.status == 200){
+     if(response.status === 200){
        console.log("Login successfull");
        localStorage.setItem('token',response.data.token)
        console.log(localStorage.getItem('token'))

@@ -1,31 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles'
+// import { withStyles } from '@material-ui/core/styles'
 // import { withStyles } from 'material-ui/core/styles';
-// import AppBar from '@material-ui/core/AppBar';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/styles/typography'
-// import Typography from 'material-ui/core/Typography';
-import Button from 'material-ui/FlatButton'
-// import Button from 'material-ui/core/Button';
-import IconButton from 'material-ui/IconButton'
-// import IconButton from 'material-ui/core/IconButton';
-import MenuIcon from 'material-ui/Menu';
+import AppBar from '@material-ui/core/AppBar';
+// import AppBar from 'material-ui/AppBar';
+import Toolbar from '@material-ui/core/Toolbar'
+// import Typography from 'material-ui/styles/typography'
+import Typography from '@material-ui/core/Typography';
+// import Button from 'material-ui/FlatButton'
+import Button from '@material-ui/core/Button';
+// import IconButton from 'material-ui/IconButton'
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/core/Menu';
 // import MenuIcon from 'material-ui/icons/Menu';
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
+// const styles = {
+//   root: {
+//     flexGrow: 1,
+//   },
+//   flex: {
+//     flex: 1,
+//   },
+//   menuButton: {
+//     marginLeft: -12,
+//     marginRight: 20,
+//   },
+// };
 
 function ButtonAppBar(props) {
   const { classes } = props;
