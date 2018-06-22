@@ -34,76 +34,44 @@ function createData(name, cable, swName, swPort, vlan,systemType,description) {
     createData('Gingerbread', 356, 16.0, 49, 3.9,546,'gfjhfg'),
   ];
 
-class SimpleTable extends React.Component{
+function SimpleTable (props){
   
 
-  constructor(props){
-    console.log("props: ",props);
-    super(props);
-  this.state={
+  
+    console.log(props);
+    
+  var tblData={
     root:'',
     table:'',
     columns:props.columns,
     data:props.data,
-    col:[],
-    row:[],
   }
-//   var col=[];
-//   var row=[]
-//     this.state.data.map(d=>{
-//       console.log("d: ",d)
-//       mapKeys(d,(key,value)=>{
-//         this.setState(col.push({column:key}))
-//          this.setState(row.push({column:key,data:value}))
-
+    this.state.data.map(d=>{
+      mapKeys(d,(key,value)=>{
           
-//       })
-//   }
-// );
+      })
+  });
 
-
-  }
-  render(){
-   
-    // console.log("col: ",col)
-    var col=[];
-    var row=[];
-
-      this.state.data.map(d=>{
-        console.log("d: ",d)
-        mapKeys(d,(key,value)=>{
-          col.push({column:key})
-           row.push({column:key,data:value})        
-        })
-    }
-  );
-  this.setState({col,row})
-
+  
+  
     return(
 
-    <Paper className={this.state.root}>
-      <Table className={this.state.table}>
+    <Paper className={tblData.root}>
+      <Table className={tblData.table}>
         <TableHead>
           <TableRow>
-            {this.state.col.map(c=>{
-              console.log("c: ",c)
-              return(
-            <TableCell>{c}</TableCell>
-
-              )
-            })}
               {/* bayad ba key ha por shavad */}
-            {/* <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell>Dessert (100g serving)</TableCell>
             <TableCell numeric>شماره کابل</TableCell>
             <TableCell numeric>نام سوییچ</TableCell>
             <TableCell numeric>شماره پورت</TableCell>
             <TableCell numeric>vlan</TableCell>
             <TableCell numeric>systemType</TableCell>
-            <TableCell numeric>توضیحات</TableCell> */}
+            <TableCell numeric>توضیحات</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-        {data.map(n => {
+        {tblData.data.map(n => {
               return (
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">{n.name}</TableCell>
@@ -123,11 +91,11 @@ class SimpleTable extends React.Component{
       
           )
     
-  }
+  
 
 }
 
-// export default SimpleTable;
+export default SimpleTable;
   // function SimpleTable(props) {
   
   //   const { classes } = props;
