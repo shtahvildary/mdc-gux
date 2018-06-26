@@ -68,6 +68,7 @@ class SimpleTable extends React.Component{
     // console.log("col: ",col)
     var col=[];
     var row=[];
+    console.log(this.state)
 
       this.state.data.map(d=>{
         console.log("d: ",d)
