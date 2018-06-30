@@ -24,23 +24,30 @@ class netNodeTable extends Component {
       url: global.serverAddress + "/netnodes/all",
       headers: { "x-access-token": localStorage.getItem("token") }
     });
+    console.log("response: ",response)
     const body = await response;
     if (response.status !== 200) throw Error(body.message);
 
     return body;
   };
   render() {
+    console.log("columns: ",this.state.response.columns)
+    console.log("netNodesData: ",this.state.response.netNodesData)
     return (
+      // <SimpleTable
+      //   columns={{
+      //     location: "مکان",
+      //     switchPort: "شماره پورت سوییچ",
+      //     switchId: "سوییچ",
+      //     cabelNumber: "شماره کابل",
+      //     patchPanelPort: "شماره patch panel"
+      //   }}
+      //   data={this.state.response}
+      // />
       <SimpleTable
-        columns={{
-          location: "مکان",
-          switchPort: "شماره پورت سوییچ",
-          switchId: "سوییچ",
-          cabelNumber: "شماره کابل",
-          patchPanelPort: "شماره patch panel"
-        }}
-        data={this.state.response}
-      />
+      columns={this.state.response.columns}
+      data={this.state.response.netNodesData}
+    />
     );
   }
 }
