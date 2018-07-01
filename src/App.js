@@ -70,7 +70,7 @@ class App extends Component {
         return(
           <muiThemeable>
           <div className="App">
- <AppBar classes={{
+ {/* <AppBar classes={{
   root: {
     flexGrow: 1,
   },
@@ -81,7 +81,8 @@ class App extends Component {
     marginLeft: -12,
     marginRight: 20,
   }}
-}/> 
+}/>  */}
+ <AppBar token="asdafa"/>
 
         
         <header className="App-header">

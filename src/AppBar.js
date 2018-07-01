@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles'
 // import { withStyles } from 'material-ui/core/styles';
@@ -27,28 +27,55 @@ import MenuIcon from '@material-ui/core/Menu';
 //   },
 // };
 
-function ButtonAppBar(props) {
-  const { classes } = props;
+class ButtonAppBar extends Component {
+  constructor(props){
+    super(props);
+this.state={root: {
+  flexGrow: 1,
+},
+flex: {
+  flex: 1,
+},
+menuButton: {
+  marginLeft: -12,
+  marginRight: 20,
+},
+token:props.token,
+    
+  }
+}
+  // const { classes } = props;
+  render(){
   return (
-    <div className={classes.root}>
+    <div >
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+          <IconButton className={this.state.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="title" color="inherit" className={classes.flex}>
+          <Typography variant="title" color="inherit" className={this.state.flex}>
             Title
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={(event) => this.handleClick(event)}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+handleClick(event){
+ localStorage.removeItem('token')
+ return (
+      
+  <div className="App">
+       
+    {this.state.loginPage}</div>)
+ 
+}
+  }
 
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// ButtonAppBar.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 export default ButtonAppBar;
 // export default withStyles(styles)(ButtonAppBar);
