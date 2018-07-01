@@ -35,15 +35,13 @@ class SimpleTable extends React.Component {
     };
   }
   componentWillMount() {
-    console.log("data:", this.props.data)
-    console.log("columns:", this.props.columns)
-    this.setState({ data: this.props.data, columns: this.props.columns });
+    // this.setState({ data: this.props.data, columns: this.props.columns });
   }
   componentWillReceiveProps(newProps) {
     var col = [];
     var rows = [];
 
-    _.mapKeys(this.state.columns, (value, key) => {
+    _.mapKeys(this.props.columns, (value, key) => {
       col.push({ column: key, title: value });
     });
     //rows=>>
@@ -61,6 +59,7 @@ class SimpleTable extends React.Component {
     this.setState({ data: newProps.data, col, rows }, () => {
       this.setColumns();
       this.setRows();
+     
     });
   }
   setColumns() {
@@ -79,6 +78,8 @@ class SimpleTable extends React.Component {
     this.setState({ rowsComponets }, () => {});
   }
   render() {
+    console.log("column: ",this.state.columnComponents)
+    console.log("row: ",this.state.rowComponents)
     return (
       <Paper className={this.state.root}>
         <Table className={this.state.table}>

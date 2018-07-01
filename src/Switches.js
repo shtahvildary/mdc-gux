@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import SimpleTable from "./components/Table";
 
-class netNodeTable extends Component {
+class switchesTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,7 @@ class netNodeTable extends Component {
   callApi = async () => {
     const response = await axios({
       method: "post",
-      url: global.serverAddress + "/netnodes/all",
+      url: global.serverAddress + "/switches/all",
       headers: { "x-access-token": localStorage.getItem("token") }
     });
     const body = await response;
@@ -25,24 +25,20 @@ class netNodeTable extends Component {
     
     this.callApi()
     .then(res => {
-      this.setState({ response: res.data.netNodes },()=>{
+      this.setState({ response: res.data.switches },()=>{
           this.setTblData()
+          console.log("Switches response: ",this.state.response)
 
         });
       })
       .catch(err => console.log(err));
   }
-  // componentDidMount(){
-  //     <SimpleTable
-  //     columns={this.state.response.columns}
-  //     data={this.state.response.netNodesData}
-  //   />
-  // }
+ 
 
   setTblData(){
-    var table={netNodeTable:<SimpleTable
+    var table={switchesTable:<SimpleTable
     columns={this.state.response.columns}
-    data={this.state.response.netNodesData}
+    data={this.state.response.switchesData}
   />}
     
     this.setState({table},()=>{})
@@ -52,10 +48,10 @@ class netNodeTable extends Component {
       return(
       <SimpleTable
       columns={this.state.response.columns}
-      data={this.state.response.netNodesData}
+      data={this.state.response.switchesData}
     />
     );
   }
 }
 
-export default netNodeTable;
+export default switchesTable;
