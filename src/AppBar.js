@@ -1,3 +1,5 @@
+import LoginScreen from './Loginscreen';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { withStyles } from '@material-ui/core/styles'
@@ -30,7 +32,9 @@ import MenuIcon from '@material-ui/core/Menu';
 class ButtonAppBar extends Component {
   constructor(props){
     super(props);
-this.state={root: {
+this.state={
+  loginPage:[],
+  root: {
   flexGrow: 1,
 },
 flex: {
@@ -43,6 +47,13 @@ menuButton: {
 token:props.token,
     
   }
+}
+componentWillMount(){
+  var loginPage =[];
+  loginPage.push(<LoginScreen appContext={this}/>);
+  this.setState({
+                loginPage:loginPage
+                  })
 }
   // const { classes } = props;
   render(){
@@ -64,6 +75,7 @@ token:props.token,
 }
 handleClick(event){
  localStorage.removeItem('token')
+ console.log(this.setState.loginPage)
  return (
       
   <div className="App">

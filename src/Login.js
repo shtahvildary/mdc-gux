@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+// import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+// import AppBar from '@material-ui/core/AppBar';
+// // import RaisedButton from 'material-ui/RaisedButton';
+// import RaisedButton from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
+// import axios from 'axios';
+// import indexPage from './index';
+// // import {Router,BrowserHistory} from 'react-router';
+
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
-// import RaisedButton from 'material-ui/RaisedButton';
-import RaisedButton from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import indexPage from './index';
@@ -15,20 +23,23 @@ class Login extends Component {
     localloginComponent.push(
       <MuiThemeProvider>
         <div>
-         <TextField
+          <TextField
            hintText="نام کاربری را وارد کنید"
            floatingLabelText="نام کاربری"
-           onChange = {(event,newValue)=>this.setState({username:newValue})}
+           onChange = {this.handleChange('username')}
            />
          <br/>
-           <TextField
-             type="password"
+           <TextField type="password"
              hintText="کلمه عبور را وارد کنید"
              floatingLabelText="کلمه عبور"
-             onChange = {(event,newValue) => this.setState({password:newValue})}
+             onChange = {this.handleChange('password')}
              />
            <br/>
-           <RaisedButton label="وارد شوید" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+
+           
+          {/* <Button label="وارد شوید" color="inherit" onClick={(event) => this.handleClick(event)}/> */}
+
+           <Button label="وارد شوید" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
        </div>
        </MuiThemeProvider>
     )
@@ -45,9 +56,12 @@ class Login extends Component {
       "username":this.state.username,
 	    "password":this.state.password,
     }
+    console.log("username: ",this.state.username);
+    console.log("password: ",this.state.password);
+
     axios.post(global.serverAddress+'/users/login', payload)
    .then(function (response) {
-     console.log(response);
+     console.log("response: ",response);
      if(response.status === 200){
        console.log("Login successfull");
        localStorage.setItem('token',response.data.token)
@@ -70,6 +84,15 @@ class Login extends Component {
    });
   }
  
+
+ 
+    handleChange = name => event => {
+      this.setState({
+        [name]: event.target.value,
+      });
+    };
+
+
   render() {
     return (
       <div>

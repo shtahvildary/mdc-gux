@@ -24,9 +24,6 @@ injectTapEventPlugin();
 
 class App extends Component {
 
-
- 
-
   componentDidMount() {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
@@ -82,7 +79,7 @@ class App extends Component {
     marginRight: 20,
   }}
 }/>  */}
- <AppBar token="asdafa"/>
+ <AppBar/>
 
         
         <header className="App-header">
