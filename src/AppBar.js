@@ -30,60 +30,60 @@ import MenuIcon from '@material-ui/core/Menu';
 // };
 
 class ButtonAppBar extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-this.state={
-  loginPage:[],
-  root: {
-  flexGrow: 1,
-},
-flex: {
-  flex: 1,
-},
-menuButton: {
-  marginLeft: -12,
-  marginRight: 20,
-},
-token:props.token,
-    
+    this.state = {
+      loginPage: [],
+      root: {
+        flexGrow: 1,
+      },
+      flex: {
+        flex: 1,
+      },
+      menuButton: {
+        marginLeft: -12,
+        marginRight: 20,
+      },
+      token: props.token,
+
+    }
   }
-}
-componentWillMount(){
-  var loginPage =[];
-  loginPage.push(<LoginScreen appContext={this}/>);
-  this.setState({
-                loginPage:loginPage
-                  })
-}
+  componentWillMount() {
+    var loginPage = [];
+    loginPage.push(<LoginScreen appContext={this} />);
+    this.setState({
+      loginPage: loginPage
+    })
+  }
   // const { classes } = props;
-  render(){
-  return (
-    <div >
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={this.state.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="title" color="inherit" className={this.state.flex}>
-            Title
+  render() {
+    return (
+      <div >
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton className={this.state.menuButton} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" className={this.state.flex}>
+              مدیاسنتر
           </Typography>
-          <Button color="inherit" onClick={(event) => this.handleClick(event)}>Logout</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-}
-handleClick(event){
- localStorage.removeItem('token')
- console.log(this.setState.loginPage)
- return (
-      
-  <div className="App">
-       
-    {this.state.loginPage}</div>)
- 
-}
+            <Button color="inherit" onClick={(event) => this.handleClick(event)}>خروج</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
   }
+  handleClick(event) {
+    localStorage.removeItem('token')
+    console.log(this.setState.loginPage)
+    return (
+
+      <div className="App">
+
+        {this.state.loginPage}</div>)
+
+  }
+}
 
 // ButtonAppBar.propTypes = {
 //   classes: PropTypes.object.isRequired,

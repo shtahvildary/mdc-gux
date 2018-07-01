@@ -35,6 +35,8 @@ class SimpleTable extends React.Component {
     };
   }
   componentWillMount() {
+    console.log("data:", this.props.data)
+    console.log("columns:", this.props.columns)
     this.setState({ data: this.props.data, columns: this.props.columns });
   }
   componentWillReceiveProps(newProps) {
