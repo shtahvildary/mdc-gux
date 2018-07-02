@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import AppBar from './AppBar'
+import AppBar from './components/AppBar'
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';

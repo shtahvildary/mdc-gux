@@ -45,12 +45,18 @@ class SimpleTable extends React.Component {
       col.push({ column: key, title: value });
     });
     //rows=>>
+    console.log("newProps.data: ",newProps.data )
     newProps.data.map((d, i) => {
+      console.log("i: ",i)
+      console.log("d: ",d)
+      console.log("col: ",col)
+
       rows.push(col);
       _.mapKeys(d, (value, key) => {
         var j = rows[i].findIndex(ci => ci.column === key);
         if (j !== -1) rows[i][j].data = value;
       });
+      console.log('rows: ',rows)
       col.map(c => {
         if (rows[i].findIndex(ri => ri.column === c.column) === -1)
           rows[i].push({ column: c.column, data: "-" });
@@ -69,6 +75,7 @@ class SimpleTable extends React.Component {
     this.setState({ columnComponents }, () => {});
   }
   setRows() {
+    console.log("this.state.rows: ",this.state.rows)
     var rowsComponets = this.state.rows.map(r => {
       var thisRow = r.map(cell => {
         return <TableCell>{cell.data}</TableCell>;

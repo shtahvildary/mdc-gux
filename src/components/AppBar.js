@@ -1,4 +1,4 @@
-import LoginScreen from './Loginscreen';
+import LoginScreen from '../Loginscreen';
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
