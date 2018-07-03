@@ -9,12 +9,17 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import PropTypes from "prop-types";
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
     width: "100%",
     marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
+    overflowX: "auto",
+
+   paper:{ ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,}
   },
   table: {
     minWidth: 700
@@ -88,14 +93,18 @@ class SimpleTable extends React.Component {
     console.log("column: ",this.state.columnComponents)
     console.log("row: ",this.state.rowComponents)
     return (
-      <Paper className={this.state.root}>
+      <Paper className={this.state.root.paper} elevation={1}>
+        <Typography variant="headline" component="h3">
+        جدول
+        </Typography>
         <Table className={this.state.table}>
           <TableHead>
             <TableRow>{this.state.columnComponents}</TableRow>
           </TableHead>
           <TableBody>{this.state.rowsComponets}</TableBody>
         </Table>
-      </Paper>
+        </Paper>
+      
     );
   }
 }

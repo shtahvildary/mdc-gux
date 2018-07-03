@@ -7,6 +7,9 @@ import axios from 'axios';
 import LoginScreen from './Loginscreen';
 import NetNodes from './NetNodes';
 import Switches from './Switches';
+
+import Table2 from './components/Table2';
+import NewNetNode from "./NewNetNode"
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 // import { muiThemeable } from '@material-ui/core/styles/muiThemeable';
 
@@ -93,6 +96,9 @@ class App extends Component {
         <Rackroom/>
         <div><h1>...Switches...</h1></div>
         <Switches/>
+
+        <Table2/>
+        <NewNetNode/>
       </div>
 </muiThemeable>
     );
