@@ -6,7 +6,10 @@ import TextField from '@material-ui/core/TextField';
 
 
   const styles = theme => ({
-    margin: 15,
+      button:{
+
+          margin: 15,
+      },
 
 
     container: {
@@ -35,37 +38,25 @@ class NewNetNode extends Component {
         localComponent.push(
             <MuiThemeProvider>
                 <div>
-                <TextField
-          id="search"
-          label="Search field"
-          type="search"
-        //   className={classes.textField}
-          margin="normal"
-        />
-                <TextField
-          id="name"
-          label="Name"
-        //   className={classes.textField}
-          value={this.state.name}
-          onChange={this.handleChange('name')}
-          margin="normal"
-        />
-                    <TextField floatingLabelText="شماره patch panel" />
-                    <TextField floatingLabelText="شماره کابل" />
+                {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
+                {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
+                    <TextField id="patchPanelNumber" floatingLabelText="شماره patch panel" />
+                    <TextField id="cableNumber" floatingLabelText="شماره کابل" />
                     <br/>
-                    <TextField floatingLabelText="سوییچ" />
-                    <TextField floatingLabelText="شماره پورت سوییچ" />
+                    <TextField id="switchName" floatingLabelText="سوییچ" />
+                    <TextField id="switchPort" floatingLabelText="شماره پورت سوییچ" />
                     <br/>
-                    <TextField floatingLabelText="شبکه مجازی" />
-                    <TextField floatingLabelText="نوع" />
-                    <TextField floatingLabelText="مکان" />
+                    <TextField id="vlanName" floatingLabelText="شبکه مجازی" />
+                    <TextField id="type" floatingLabelText="نوع" />
+                    <TextField id="location" floatingLabelText="مکان" />
                     <br/>
-                    <Button label="ذخیره" primary={true} style={styles} onClick={(event) => this.handleClick(event)}/>
+                    <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)}/>
                 </div>
             </MuiThemeProvider>
         )
         this.state={
             localComponent:localComponent,
+
         }
     }
     handleChange = name => event => {
