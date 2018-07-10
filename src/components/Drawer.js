@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, Route,Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,6 +17,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import MainAppBar from './AppBar'
 import {ListItem,ListItemText} from '@material-ui/core/List';
+
+import NetNodes from '../NetNodes';
+import Switches from '../Switches';
+import NewNetNode from '../NewNetNode';
+// import Index from '../Index'
+
 
 const drawerWidth = 240;
 
@@ -142,14 +149,25 @@ class MiniDrawer extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <list>نودهای شبکه</list>
-          {/* <List>{mailFolderListItems}</List> */}
+
+          
+          <li><Link to="/">داشبورد</Link></li>
+          
           <Divider />
-          {/* <List>{otherMailFolderListItems}</List> */}
+          <li><Link to="/سوییچها">سوییچ ها</Link></li>
+            <li><Link to="/نودها">نود ها</Link></li>
+            <li><Link to="/نود جدید">افزودن نود جدید</Link></li>
+          
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography noWrap>{this.state.elements}</Typography>
+          <Switch>
+      {/* <Route exact path="/" component={Index}/> */}
+      <Route path="/سوییچها" component={Switches}/>
+      <Route path="/نودها" component={NetNodes}/> 
+      <Route path="/نود جدید" component={NewNetNode}/> 
+    </Switch>
+          
         </main>
       </div>
     );

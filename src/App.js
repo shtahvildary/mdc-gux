@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
 // import AppBar from './components/AppBar'
 import Drawer from './components/Drawer'
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import LoginScreen from './Loginscreen';
-import NetNodes from './NetNodes';
 import Switches from './Switches';
 
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -20,14 +20,6 @@ import netNodeTable from './NetNodes';
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
-
-  
-  function Rackroom(){
-    return(<div><h1>hello...Rackroom</h1></div>)    
-    }
-    // function Switches(){
-    //   return(<div><h1>hello...Switchs</h1></div>)    
-    //   }
 
 class App extends Component {
 
