@@ -21,6 +21,9 @@ import {ListItem,ListItemText} from '@material-ui/core/List';
 import NetNodes from '../NetNodes';
 import Switches from '../Switches';
 import NewNetNode from '../NewNetNode';
+import NewSwitch from '../NewSwitch';
+import NewLocation from '../NewLocation';
+import NewVlan from '../NewVlan';
 // import Index from '../Index'
 
 
@@ -157,6 +160,9 @@ class MiniDrawer extends React.Component {
           <li><Link to="/سوییچها">سوییچ ها</Link></li>
             <li><Link to="/نودها">نود ها</Link></li>
             <li><Link to="/نود جدید">افزودن نود جدید</Link></li>
+            <li><Link to="/سوییچ جدید">افزودن سوییج جدید</Link></li>
+            <li><Link to="/مکان جدید">افزودن مکان جدید</Link></li>
+            <li><Link to="/شبکه مجازی جدید">افزودن شبکه مجازی جدید</Link></li>
           
         </Drawer>
         <main className={classes.content}>
@@ -166,6 +172,8 @@ class MiniDrawer extends React.Component {
       <Route path="/سوییچها" component={Switches}/>
       <Route path="/نودها" component={NetNodes}/> 
       <Route path="/نود جدید" component={NewNetNode}/> 
+      <Route path="/سوییچ جدید" component={NewSwitch}/> 
+      <Route path="/شبکه مجازی جدید" component={NewVlan}/> 
     </Switch>
           
         </main>
