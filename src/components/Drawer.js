@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route,Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,7 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
 import MainAppBar from './AppBar'
-import {ListItem,ListItemText} from '@material-ui/core/List';
+import { ListItem, ListItemText } from '@material-ui/core/List';
 
 import NetNodes from '../NetNodes';
 import Switches from '../Switches';
@@ -97,10 +97,10 @@ const styles = theme => ({
 class MiniDrawer extends React.Component {
   constructor(props) {
     super(props);
-  this.state = {
-    open: false,
-    elements:[]
-  };
+    this.state = {
+      open: false,
+      elements: []
+    };
   }
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -109,9 +109,9 @@ class MiniDrawer extends React.Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
-  componentWillMount(event){
-    
-    this.setState({elements:this.props.elements},()=>{
+  componentWillMount(event) {
+
+    this.setState({ elements: this.props.elements }, () => {
 
     })
   }
@@ -135,7 +135,7 @@ class MiniDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" noWrap>
-              <MainAppBar/>
+              <MainAppBar />
             </Typography>
           </Toolbar>
         </AppBar>
@@ -152,30 +152,36 @@ class MiniDrawer extends React.Component {
             </IconButton>
           </div>
           <Divider />
-
-          
           <li><Link to="/">داشبورد</Link></li>
-          
           <Divider />
+
+          <li><Link to="/نودها">نود ها</Link></li>
           <li><Link to="/سوییچها">سوییچ ها</Link></li>
-            <li><Link to="/نودها">نود ها</Link></li>
-            <li><Link to="/نود جدید">افزودن نود جدید</Link></li>
-            <li><Link to="/سوییچ جدید">افزودن سوییج جدید</Link></li>
-            <li><Link to="/مکان جدید">افزودن مکان جدید</Link></li>
-            <li><Link to="/شبکه مجازی جدید">افزودن شبکه مجازی جدید</Link></li>
+          <Divider />
           
+          <li><Link to="/نود جدید">افزودن نود جدید</Link></li>
+          <li><Link to="/سوییچ جدید">افزودن سوییج جدید</Link></li>
+          <li><Link to="/مکان جدید">افزودن مکان جدید</Link></li>
+          <li><Link to="/شبکه مجازی جدید">افزودن شبکه مجازی جدید</Link></li>
+
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
+{/*           
+// {if this.state.elements.length!==0{return(elements.map(e=>{
+//   render(){e}
+// }))}} */}
+<div className="App">
           <Switch>
-      {/* <Route exact path="/" component={Index}/> */}
-      <Route path="/سوییچها" component={Switches}/>
-      <Route path="/نودها" component={NetNodes}/> 
-      <Route path="/نود جدید" component={NewNetNode}/> 
-      <Route path="/سوییچ جدید" component={NewSwitch}/> 
-      <Route path="/شبکه مجازی جدید" component={NewVlan}/> 
-    </Switch>
-          
+            {/* <Route exact path="/" component={Index}/> */}
+            <Route path="/سوییچها" component={Switches} />
+            <Route path="/نودها" component={NetNodes} />
+            <Route path="/نود جدید" component={NewNetNode} />
+            <Route path="/سوییچ جدید" component={NewSwitch} />
+            <Route path="/مکان جدید" component={NewLocation} />
+            <Route path="/شبکه مجازی جدید" component={NewVlan} />
+          </Switch>
+          </div>
         </main>
       </div>
     );

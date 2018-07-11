@@ -7,6 +7,7 @@ import './App.css';
 import axios from 'axios';
 import LoginScreen from './Loginscreen';
 import Switches from './Switches';
+import Header from'./components/Header';
 
 
 
@@ -59,16 +60,12 @@ class App extends Component {
   
         return(
           <muiThemeable>
-          <div className="App">
-        
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
+          <Header/>
         {/* <p className="App-intro">{this.state.response}</p> */}
         {/* <div><h1>...net nodes...</h1></div> */}
         <Drawer elements={[<Switches/>]}/>
-      </div>
+        {/* <Drawer elements={[<Switches/>,<Header/>]}/> */}
+      
 </muiThemeable>
     );
   }
