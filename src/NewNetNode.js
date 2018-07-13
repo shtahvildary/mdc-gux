@@ -4,10 +4,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
-import Menue from './Menue'
+import Menu from './components/Menu'
 import './index.css';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import MenuItem from '@material-ui/core/MenuItem';
 
 
 // import React from 'react';
@@ -49,49 +49,20 @@ class NewNetNode extends Component {
 
       cableNumber: '',
       switchName: '',
+      //switchId: '',
       switchPort: '',
       vlanName: '',
+      // vlanId:'',
       type: '',
       location: '',
-    }
-    var localComponent = []
-    localComponent.push(
-      <MuiThemeProvider>
-        <div>
-          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-          شماره patch panel<TextField id="patchPanelNumber" floatingLabelText="شماره patch panel" />
-          <br />
-          شماره کابل:<TextField id="cableNumber" floatingLabelText="شماره کابل" />
-          <br />
-          سوییچ: <TextField id="switchName" floatingLabelText="سوییچ" />
-          <br />
-          شماره پورت سوییچ:<TextField id="switchPort" floatingLabelText="شماره پورت سوییچ" />
-          <br />
-          {/* شبکه مجازی: <Menu
-          id="vlanName"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-          <MenuItem onClick={this.handleClose}>My account</MenuItem>
-          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-        </Menu> */}
-        شبکه مجازی: <TextField id="vlanName" floatingLabelText="شبکه مجازی" />
-        <br />
-        نوع: <TextField id="type" floatingLabelText="نوع" />
-        <br />
-        مکان: <TextField id="location" floatingLabelText="مکان" />
-        <br />
-        <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)} />
-                </div>
-             </MuiThemeProvider >
-        )
-    this.state = {
-      localComponent: localComponent,
+      // locationId: '',
 
+      //for use in menu:
+      vlans:[],
+      switches:[],
+      locations:[]
     }
+   
   }
   handleChange = name => event => {
     this.setState({
@@ -129,7 +100,63 @@ class NewNetNode extends Component {
       alert("Input field value is missing");
     }
   }
+  callVlanApi = async () => {
+    var response = await axios({method:'post',url:global.serverAddress+'/vlans/all/names',headers:{"x-access-token":localStorage.getItem('token')}});
+    // const body = await response.json();
+    console.log("tttt",response)
+    if (response.status !== 200) throw Error(response.message);
 
+    return response;
+  };
+  componentWillMount() {
+    this.callVlanApi()
+    .then(res => {
+      console.log("hello there",res)
+      this.setState({ vlans: res.data.vlans },()=>{
+        console.log('dfgdfgdf: ',this.state.vlans)
+          // this.setVlansData()
+       
+     var localComponent = []
+    localComponent.push(
+      <MuiThemeProvider>
+        <div>
+          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
+          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
+          شماره patch panel<TextField id="patchPanelNumber" floatingLabelText="شماره patch panel" />
+          <br />
+          شماره کابل:<TextField id="cableNumber" floatingLabelText="شماره کابل" />
+          <br />
+          سوییچ: <TextField id="switchName" floatingLabelText="سوییچ" />
+          <br />
+          شماره پورت سوییچ:<TextField id="switchPort" floatingLabelText="شماره پورت سوییچ" />
+          <br />
+           شبکه مجازی: <Menu id="vlanName" items={this.state.vlans}> </Menu>
+
+        <br />
+        نوع: <TextField id="type" floatingLabelText="نوع" />
+        <br />
+        مکان: <TextField id="location" floatingLabelText="مکان" />
+        <br />
+        <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)} />
+                </div>
+             </MuiThemeProvider >
+        )
+        console.log('localComponent: ',localComponent)
+    this.setState ({localComponent: localComponent})
+    
+  });
+})
+.catch(err => console.log(err));
+  }
+  // setVlansData(){
+  //   var vlansMenu={vlansMenu:<Menu
+  //   items={this.state.vlans}
+    
+  // />}
+    
+    // this.setState({table},()=>{})
+  // }
+  
   render() {
     return (
       <div>
@@ -141,6 +168,7 @@ class NewNetNode extends Component {
     )
   }
 }
+
 export default withStyles(styles)(NewNetNode)
 // export default NewNetNode
 

@@ -16,10 +16,10 @@ class netNodeTable extends Component {
       url: global.serverAddress + "/netnodes/all",
       headers: { "x-access-token": localStorage.getItem("token") }
     });
-    const body = await response;
-    if (response.status !== 200) throw Error(body.message);
+    // const body = await response;
+    if (response.status !== 200) throw Error(response.message);
 
-    return body;
+    return response;
   };
   componentWillMount() {
     

@@ -25,12 +25,12 @@ class App extends Component {
 
   callApi = async () => {
     const response = await axios({method:'post',url:global.serverAddress+'/switches/all',headers:{"x-access-token":localStorage.getItem('token')}});
-    const body = await response.json();
+    // const body = await response.json();
 
-    if (response.status !== 200) throw Error(body.message);
-    console.log(body)
+    if (response.status !== 200) throw Error(response.message);
+    console.log(response)
 
-    return body;
+    return response;
   };
 
 // class App extends Component {
