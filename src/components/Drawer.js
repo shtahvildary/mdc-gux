@@ -24,6 +24,7 @@ import NewNetNode from '../NewNetNode';
 import NewSwitch from '../NewSwitch';
 import NewLocation from '../NewLocation';
 import NewVlan from '../NewVlan';
+import NewDeviceType from '../NewDeviceType';
 // import Index from '../Index'
 
 
@@ -32,7 +33,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 430,
+    height: 730,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -163,6 +164,7 @@ class MiniDrawer extends React.Component {
           <li><Link to="/سوییچ جدید">افزودن سوییج جدید</Link></li>
           <li><Link to="/مکان جدید">افزودن مکان جدید</Link></li>
           <li><Link to="/شبکه مجازی جدید">افزودن شبکه مجازی جدید</Link></li>
+          <li><Link to="/وسیله جدید">افزودن وسیله جدید</Link></li>
 
         </Drawer>
         <main className={classes.content}>
@@ -180,6 +182,7 @@ class MiniDrawer extends React.Component {
             <Route path="/سوییچ جدید" component={NewSwitch} />
             <Route path="/مکان جدید" component={NewLocation} />
             <Route path="/شبکه مجازی جدید" component={NewVlan} />
+            <Route path="/وسیله جدید" component={NewDeviceType} />
           </Switch>
           </div>
         </main>

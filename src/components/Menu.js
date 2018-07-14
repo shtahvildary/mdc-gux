@@ -38,10 +38,9 @@ componentWillMount(){
     console.log('i:',i)
     items.push(<MenuItem 
       key={i}
-      disabled={index === 0}
+      // disabled={index === 0}
       selected={index === this.state.selectedIndex}
-      // id={i._id}
-      onClick={event => this.handleMenuItemClick(event, i._id)}
+      onClick={event => this.handleMenuItemClick(event,index, i._id)}
       >{i.name}</MenuItem>)
   })
   this.setState({items});
@@ -49,24 +48,21 @@ componentWillMount(){
 
 handleClickListItem = event => {
     this.setState({ anchorEl: event.currentTarget });
-    // console.log('anchorEl: ',event.currentTarget)
-    // this.props.
   };
 
-  handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index, anchorEl: null });
-    console.log(index)
+  handleMenuItemClick = (event, index,id) => {
+    this.setState({ selectedIndex: index, anchorEl: null,selectedId:id });
+    // var DOMname=this.props.id
+    var json={}
+    json[this.props.id]=id
+    this.props.selectedId(json)
+    console.log('json: ',json)
   };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
 
   };
-  // handleChange=event=>{
-  //   this.setState({ selectedItem: event.Target.id });
-  //   console.log('selectedItem: ',this.state.selectedItem)
-
-  // }
 
   render() {
     const { classes } = this.props;
@@ -80,11 +76,11 @@ handleClickListItem = event => {
             button
             aria-haspopup="true"
             aria-controls="lock-menu"
-            aria-label="When device is locked"
+            aria-label="انتخاب کنید..."
             onClick={this.handleClickListItem}
           >
             <ListItemText
-              primary="When device is locked"
+              primary="انتخاب کنید..."
               secondary={this.state.items[this.state.selectedIndex]}
             />
           </ListItem>
@@ -94,7 +90,6 @@ handleClickListItem = event => {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
-          // onChange={this.handleChange}
         >
         
           {this.state.items}

@@ -48,21 +48,23 @@ class NewNetNode extends Component {
     this.state = {
 
       cableNumber: '',
-      switchName: '',
-      //switchId: '',
+      switchId: '',
       switchPort: '',
-      vlanName: '',
-      // vlanId:'',
+      vlanId: '',
       type: '',
       location: '',
-      // locationId: '',
 
       //for use in menu:
-      vlans:[],
-      switches:[],
-      locations:[]
+      vlans: [],
+      switches: [],
+      locations: [],
+      types:[]
     }
-   
+
+  }
+  setId(selectedId) {
+    this.setState(selectedId, () => {
+    })
   }
   handleChange = name => event => {
     this.setState({
@@ -70,19 +72,28 @@ class NewNetNode extends Component {
     });
   };
   handleClick(event) {
-    var self = this;
+    // var self = this;
+    console.log('this.state: ', this.state)
 
     //To be done:check for empty values before hitting submit
-    if (this.state.patchPanelNumber.length > 0 && this.state.cableNumber.length > 0 && this.state.switchName.length > 0 && this.state.switchPort.length > 0 && this.state.vlanName.length > 0 && this.state.type.length > 0 && this.state.location.length > 0) {
+    if (this.state.patchPanelNumber.length > 0 &&
+      this.state.cableNumber.length > 0 &&
+      this.state.switchId.length > 0 &&
+      this.state.switchPort.length > 0 &&
+      this.state.vlanId.length > 0 &&
+      this.state.type.length > 0 &&
+      this.state.location.length > 0) {
       var payload = {
-        "patchPanelNumber": this.state.patchPanelNumber,
+        "patchPanelPort": this.state.patchPanelNumber,
         "cableNumber": this.state.cableNumber,
-        "switchName": this.state.switchName,
-        "vlanName": this.state.vlanName,
+        "switchId": this.state.switchId,
+        "switchPort": this.state.switchPort,
+        "vlan": this.state.vlanId,
         "type": this.state.type,
         "location": this.state.location,
       }
-      axios.post(global.serverAddress + '/netnodes/new', payload)
+      this.callApi(payload)
+        // axios.post(global.serverAddress+'/switches/new', payload)
         .then(function (response) {
           console.log(response);
           if (response.status === 200) {
@@ -99,69 +110,80 @@ class NewNetNode extends Component {
     else {
       alert("Input field value is missing");
     }
+
   }
-  callVlanApi = async () => {
-    var response = await axios({method:'post',url:global.serverAddress+'/vlans/all/names',headers:{"x-access-token":localStorage.getItem('token')}});
+  callApi = async (payload) => {
+    const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/new', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+    console.log(body)
+
+    return body;
+  };
+
+  callApiMenus = async (model) => {
+    var response = await axios({ method: 'post', url: global.serverAddress + '/' + model + '/all/names', headers: { "x-access-token": localStorage.getItem('token') } });
     // const body = await response.json();
-    console.log("tttt",response)
     if (response.status !== 200) throw Error(response.message);
 
     return response;
   };
   componentWillMount() {
-    this.callVlanApi()
-    .then(res => {
-      console.log("hello there",res)
-      this.setState({ vlans: res.data.vlans },()=>{
-        console.log('dfgdfgdf: ',this.state.vlans)
-          // this.setVlansData()
-       
-     var localComponent = []
-    localComponent.push(
-      <MuiThemeProvider>
-        <div>
-          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-          شماره patch panel<TextField id="patchPanelNumber" floatingLabelText="شماره patch panel" />
-          <br />
-          شماره کابل:<TextField id="cableNumber" floatingLabelText="شماره کابل" />
-          <br />
-          سوییچ: <TextField id="switchName" floatingLabelText="سوییچ" />
-          <br />
-          شماره پورت سوییچ:<TextField id="switchPort" floatingLabelText="شماره پورت سوییچ" />
-          <br />
-           شبکه مجازی: <Menu id="vlanName" items={this.state.vlans}> </Menu>
+    var vlans, switches, locations;
+    this.callApiMenus('vlans')
+      .then(res => {
+        vlans = res.data.vlans
+        this.callApiMenus('switches').then(res => {
+          switches = res.data.switches
+          this.callApiMenus('locations').then(res => {
+            locations = res.data.locations
+            this.setState({ vlans, switches, locations }, () => {
 
-        <br />
-        نوع: <TextField id="type" floatingLabelText="نوع" />
-        <br />
-        مکان: <TextField id="location" floatingLabelText="مکان" />
-        <br />
-        <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)} />
-                </div>
-             </MuiThemeProvider >
-        )
-        console.log('localComponent: ',localComponent)
-    this.setState ({localComponent: localComponent})
-    
-  });
-})
-.catch(err => console.log(err));
+              var localComponent = []
+              var types=[{name:'pc',_id:5},{name:'pc',_id:5},]
+              localComponent.push(
+                <MuiThemeProvider>
+                  <div>
+
+
+                    {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
+                    {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
+                    شماره patch panel<TextField id="patchPanelNumber" floatingLabelText="شماره patch panel" onChange={this.handleChange('patchPanelNumber')} />
+                    <br />
+                    شماره کابل:<TextField id="cableNumber" floatingLabelText="شماره کابل" onChange={this.handleChange('cableNumber')} />
+                    <br />
+                    شبکه مجازی: <Menu id="vlanId" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
+
+                    <br />
+                    سوییچ: <Menu id="switchId" items={this.state.switches} selectedId={this.setId.bind(this)} />
+                    <br />
+                    شماره پورت سوییچ:<TextField id="switchPort" floatingLabelText="شماره پورت سوییچ" onChange={this.handleChange('switchPort')} />
+                    <br />
+                    نوع: <Menu id="type" items={this.state.types} selectedId={this.setId.bind(this)} />
+                    {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
+                    <br />
+                    مکان: <Menu id="location" items={this.state.locations} selectedId={this.setId.bind(this)} />
+                    <br />
+                    <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)} />
+                  </div>
+                </MuiThemeProvider >
+              )
+              this.setState({ localComponent: localComponent })
+
+            });
+          })
+        })
+
+      })
+      .catch(err => console.log(err));
   }
-  // setVlansData(){
-  //   var vlansMenu={vlansMenu:<Menu
-  //   items={this.state.vlans}
-    
-  // />}
-    
-    // this.setState({table},()=>{})
-  // }
-  
+
   render() {
     return (
       <div>
         <MuiThemeProvider>
-          <AppBar title="salam" />
+          <AppBar title="info sima" />
         </MuiThemeProvider>
         {this.state.localComponent}
       </div>
