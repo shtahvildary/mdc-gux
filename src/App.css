@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  direction: rtl;
 }
 
 .App-logo {
@@ -36,4 +37,73 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+
+/* Drawer css */
+.drawer-root {
+  flex-Grow: 1;
+  height: 730;
+  z-Index: 1;
+  overflow: 'hidden';
+  position: 'relative';
+  display: 'flex';
+}
+/* .drawer-appBar{
+  z-Index: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+}, */
+:root{
+  --drawerWidth:240;
+}
+.drawer-appBarShift {
+  
+  margin-Left: var(--drawerWidth);
+  width: calc(100% - var(--drawerWidth)px);
+  /* transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }), */
+}
+.drawer-menuButton {
+  margin-Left: 12;
+  margin-Right: 36;
+}
+.drawer-hide {
+  display: 'none';
+}
+.drawer-drawerPaper {
+  position: 'relative';
+  white-Space: 'nowrap';
+  width: var(--drawerWidth);
+  /* transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }), */
+}
+.drawer-drawerPaperClose{
+  overflow-X: 'hidden';
+  /* transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }), */
+  /* width: theme.spacing.unit * 7,
+  [theme.breakpoints.up('sm')]: {
+    width: theme.spacing.unit * 9,
+  }, */
+}
+.drawer-toolbar {
+  display: 'flex';
+  align-Items: 'center';
+  justify-Content: 'flex-end';
+  padding: '0 8px';
+  /* ...theme.mixins.toolbar; */
+}
+.drawer-content {
+  flex-Grow: 1;
+  /* background-Color: theme.palette.background.default, */
+  /* padding: theme.spacing.unit * 3, */
 }

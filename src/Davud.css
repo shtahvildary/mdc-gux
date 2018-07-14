@@ -1,0 +1,665 @@
+/* OrdersCard Section */
+
+.OrderCard {
+  background-color: #efefef;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+  transition: 1000ms;
+}
+
+.PersianDateMyOrder {
+  font-family: "DimaWeb";
+  color: grey;
+  direction: rtl;
+  margin-top: 25px;
+  margin-right: 28px;
+  text-align: right;
+}
+
+.OrderCode {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: grey;
+  max-width: 89%;
+  margin-right: 28px;
+  margin-top: -5px;
+}
+
+.OrderPay {
+  max-width: 89%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: grey;
+  margin-right: 28px;
+  margin-top: 10px;
+}
+
+.OrderSit {
+  max-width: 89%;
+  color: grey;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 28px;
+  margin-top: 10px;
+}
+
+.ColoumnStyle {
+  margin-top: 60px;
+  margin-right: -65px;
+}
+
+.button {
+  margin-top: 20px;
+  margin-left: 25px;
+  font-size: 23px;
+  background-color: #4dad2f !important;
+  border: 1px solid #4dad2f !important;
+}
+
+.MyOrdersCard {
+  display: flex;
+  flex-direction: row;
+}
+
+/* MyOrder page */
+
+.NavbarUnderLine {
+  color: #a20050;
+  text-align: right;
+  margin-right: 30px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .OrderPay {
+    max-width: 85%;
+  }
+  .OrderCode {
+    max-width: 85%;
+  }
+  .OrderPay {
+    max-width: 85%;
+  }
+  .OrderSit {
+    max-width: 85%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .OrderPay {
+    max-width: 80%;
+  }
+  .OrderPay>h4 {
+    font-size: 18px;
+  }
+  .OrderCode {
+    max-width: 80%;
+  }
+  .OrderCode>h1 {
+    font-size: 22px;
+  }
+  .OrderPay {
+    max-width: 80%;
+  }
+  .OrderPay>h4 {
+    font-size: 18px;
+  }
+  .OrderSit {
+    max-width: 80%;
+  }
+  .OrderSit>h4 {
+    font-size: 18px;
+  }
+  .OrderCard>h4 {
+    font-size: 18px;
+  }
+  .button {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .OrderPay {
+    max-width: 85%;
+  }
+  .OrderCode {
+    max-width: 85%;
+  }
+  .OrderPay {
+    max-width: 85%;
+  }
+  .OrderSit {
+    max-width: 85%;
+  }
+}
+
+/* Accounts page */
+
+@media only screen and (max-width: 768px) {
+  .item-Acc {
+    font-size: 18px;
+  }
+}
+
+.Acc-BG {
+  width: 300px;
+  height: 350px;
+  background-color: #a20050;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.All-in-on-coloumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  direction: rtl;
+}
+
+.Acc-Avatar {
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  width: 100px;
+  height: 100px;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+
+.Acc-Avatar-Smaller {
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  width: 80px;
+  height: 80px;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+}
+
+.AccTitle {
+  text-align: center;
+}
+
+.ReminedPassage {
+  color: white;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.CountDown {
+  color: #f3d503;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 25px;
+  direction: rtl;
+}
+
+.btn-Acc {
+  margin-top: 10px;
+}
+
+/* Accounts page end */
+
+/* Zanbil Card start */
+
+@media only screen and (max-width: 1200px) {
+  .img-zanbilCard {
+    max-width: 180px !important;
+  }
+  .title-subtitle {
+    font-size: 18px !important;
+  }
+}
+
+@media only screen and (max-width: 988px) {
+  .img-zanbilCard {
+    max-width: 220px !important;
+  }
+  .title-subtitle {
+    font-size: 20px !important;
+  }
+  .title {
+    font-size: 35px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .img-zanbilCard {
+    max-width: 170px !important;
+  }
+  .title-subtitle {
+    font-size: 20px !important;
+  }
+  .Del {
+    font-size: 20px;
+  }
+  .Obs {
+    font-size: 20px;
+  }
+  .title {
+    font-size: 27px;
+  }
+  .Zanbilhead {
+    font-size: 27px;
+    white-space: nowrap;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  .img-zanbilCard {
+    max-width: 90% !important;
+    height: auto !important;
+    max-height: 120px !important;
+  }
+  .title-subtitle {
+    font-size: 15px !important;
+  }
+  .title {
+    font-size: 20px
+  }
+  .img-zanbilCard {
+    max-width: 120px !important;
+  }
+  .Del {
+    font-size: 15px;
+  }
+  .Obs {
+    font-size: 15px;
+  }
+  .Zanbilhead {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+  .rowCardZanbil {
+    justify-content: center !important;
+    flex-direction: column;
+  }
+  .sm1 {
+    display: flex;
+    justify-content: center !important;
+  }
+  .sm2 {
+    text-align: center !important;
+  }
+}
+
+.dropWidth-zanbilCard {
+  width: 80px !important;
+}
+
+.ZanbilCard {
+  background: rgba(110, 110, 110, 0.1);
+  padding: 15px;
+  border-radius: 25px;
+}
+
+.img-zanbilCard {
+  max-width: 220px;
+  height: auto;
+  border-radius: 25px;
+  transition: 0.5s;
+  float: right;
+}
+
+.title-subtitle {
+  color: gray;
+  text-align: center;
+}
+
+.title {
+  color: gray;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.AllCost {
+  color: #4dad2f;
+}
+
+.green {
+  color: #4dad2f;
+}
+
+.Obs {
+  background-color: #efefef !important;
+  border: 2px solid #4dad2f !important;
+  color: #4dad2f !important;
+  margin-left: 10px !important;
+  margin-top: 5px;
+}
+
+.Del {
+  background-color: #a20050 !important;
+  border: 1px solid #a20050 !important;
+  margin-top: 5px;
+}
+
+/* Zanbil Card end */
+
+/* Zanbil page start*/
+
+.Zanbilhead {
+  text-align: right;
+  margin-right: 40px;
+  margin-top: -40px;
+}
+
+/* Zanbil page end*/
+
+/* My hojre -> order list page start */
+
+.Lst-orders-header {
+  background-color: #efefef;
+  justify-content: space-between;
+  direction: rtl;
+  color: #a20050;
+  border-radius: 15px;
+  padding: 10px;
+  white-space: nowrap;
+  margin-top: 10px;
+  text-align: center;
+  display: flex;
+  align-content: center;
+}
+
+.Lst-orders {
+  background-color: #efefef;
+  justify-content: space-between;
+  direction: rtl;
+  border-radius: 15px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 0px;
+  white-space: nowrap;
+  margin-top: 10px;
+}
+
+.column-align {
+  text-align: center;
+  display: flex;
+  align-content: center;
+}
+
+.Lst-order-page-title {
+  color: #f30038;
+  text-align: right;
+  padding-right: 40px;
+  margin-top: 20px;
+}
+
+.Lst-container {
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 770px) {
+  .column-align>h5 {
+    font-size: 17px;
+  }
+  .Lst-order-page-title>h2 {
+    font-size: 25px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .column-align>h5 {
+    font-size: 13px;
+  }
+}
+
+/* My hojre -> order list page end */
+
+/* Wallet start */
+
+.LinkOnWallet {
+  display: flex;
+  flex-direction: row;
+  color: grey !important;
+  font-size: 25px;
+  direction: rtl;
+  text-align: right;
+  margin-top: 20px;
+  white-space: nowrap;
+}
+
+.Money {
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  margin-top: 20px;
+  direction: rtl;
+}
+
+.link-in-wallet {
+  color: #a20050 !important;
+}
+
+.Btn-Wallet {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Wallet end */
+
+/* Withdrawal page start */
+
+.deposit-sec {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  direction: rtl;
+  margin-top: 30px;
+}
+
+.deposit-sec>span {
+  padding-left: 20px;
+  font-size: 25px;
+  color: grey;
+  white-space: nowrap;
+}
+
+input {
+  text-align: right;
+  background-color: #efefef;
+  border: none;
+  border-radius: 25px;
+  padding: 5px;
+  color: grey;
+  font-size: 25px;
+}
+
+input::-webkit-input-placeholder {
+  color: lightgray;
+}
+
+.red-1 {
+  color: #f30038;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.Btn-deposit {
+  text-align: center;
+  margin-top: 30px;
+}
+
+@media only screen and (max-width: 550px) {
+  .deposit-sec>span {
+    font-size: 20px;
+  }
+  input {
+    font-size: 20px;
+  }
+  input::-webkit-input-placeholder {
+    font-size: 20px;
+  }
+  .red-1 {
+    font-size: 17px;
+  }
+}
+
+/* withdrawal page end */
+
+/* Desposit page start */
+
+.grey-1 {
+  text-align: center;
+  margin-top: 30px;
+}
+
+@media only screen and (max-width: 550px) {
+  .grey-1 {
+    font-size: 17px;
+  }
+}
+
+/* Desposit page end */
+
+/* Instant by page start */
+
+.img-instantBy {
+  border-radius: 25px;
+  width: 200px;
+  height: 200px;
+}
+
+.hojreAvatar {
+  width: 50px;
+  height: 50px;
+}
+
+.hojre-sec-instant-by {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  direction: rtl;
+}
+
+.hojre-sec-instant-by>h4 {
+  padding: 13px;
+}
+
+.All-in-one {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.perple {
+  color: #a20050;
+  direction: rtl;
+}
+
+.headerForInstantBy {
+  font-family: 'SultanAdan';
+  margin-left: 20px;
+}
+
+/* Instant by page end */
+
+/* Document page start */
+
+.Btn-document {
+  margin-top: 20px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* Document page end */
+
+/* Edit document page start */
+
+.Hushmand {
+  color: #a20050;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.Choose-Pic-Edit-doc {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.ChoosePic {
+  background-color: #e5e5e5;
+  border-radius: 25px;
+  width: 120px;
+  height: 120px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.Btn-edit-doc {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.Article-edit-doc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 200px;
+}
+
+.plus-icon {
+  font-size: 35px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 720px) {
+  .warn-in-edit-doc {
+    display: flex;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    max-width: 450px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .warn-in-edit-doc {
+    display: flex;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+  }
+}
+
+/* Edit document page end */
+
+/* style for footer */
+
+.Allfooter {
+  margin-top: 250px;
+}
+
+/* style for footer */
