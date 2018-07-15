@@ -121,7 +121,8 @@ class MiniDrawer extends React.Component {
     const { classes, theme } = this.props;
 console.log('theme: ',theme)
     return (
-      <div className={classes.root}>
+      <div className=".drawer-root">
+      {/* <div className={classes.root}> */}
         <AppBar
           position="absolute"
           className={classNames("drawer-appBar", this.state.open && "drawer-appBarShift")}

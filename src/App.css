@@ -39,6 +39,10 @@
   to { transform: rotate(360deg); }
 }
 
+.btn{
+       background-color :blue;
+}
+
 
 /* Drawer css */
 .drawer-root {
@@ -49,13 +53,14 @@
   position: 'relative';
   display: 'flex';
 }
-/* .drawer-appBar{
-  z-Index: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
+.drawer-appBar{
+  z-Index: 10;
+  /* z-Index: theme.zIndex.drawer + 1, */
+  /* transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
-  }),
-}, */
+  }), */
+}
 :root{
   --drawerWidth:240;
 }
@@ -83,6 +88,8 @@
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }), */
+  transition: ease-in
+  
 }
 .drawer-drawerPaperClose{
   overflow-X: 'hidden';

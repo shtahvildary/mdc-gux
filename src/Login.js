@@ -8,13 +8,17 @@ import React, { Component } from 'react';
 // import indexPage from './index';
 // // import {Router,BrowserHistory} from 'react-router';
 
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+// import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import './App.css'
 import indexPage from './index';
 // import {Router,BrowserHistory} from 'react-router';
+
+
 
 class Login extends Component {
   constructor(props){
@@ -22,7 +26,7 @@ class Login extends Component {
     var localloginComponent=[];
     localloginComponent.push(
       <MuiThemeProvider>
-        <div>
+        <div className="App">
           <TextField
            hintText="نام کاربری را وارد کنید"
            floatingLabelText="نام کاربری"
@@ -34,12 +38,9 @@ class Login extends Component {
              floatingLabelText="کلمه عبور"
              onChange = {this.handleChange('password')}
              />
-           <br/>
-
-           
+           <br/> 
           {/* <Button label="وارد شوید" color="inherit" onClick={(event) => this.handleClick(event)}/> */}
-
-           <Button label="وارد شوید" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+           <Button className="btn" label="وارد شوید" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
        </div>
        </MuiThemeProvider>
     )
@@ -110,5 +111,4 @@ class Login extends Component {
 const style = {
   margin: 15,
 };
-
-export default Login;
+export default withStyles(style)(Login)
