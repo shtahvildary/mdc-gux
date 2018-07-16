@@ -1,46 +1,29 @@
 import React, { Component } from 'react';
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-// import AppBar from '@material-ui/core/AppBar';
-// // import RaisedButton from 'material-ui/RaisedButton';
-// import RaisedButton from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
-// import axios from 'axios';
-// import indexPage from './index';
-// // import {Router,BrowserHistory} from 'react-router';
-
-// import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import MyButton from './components/Button';
+import MyTextField from './components/TextField';
 import axios from 'axios';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './App.css'
 import indexPage from './index';
 // import {Router,BrowserHistory} from 'react-router';
 
-
-
 class Login extends Component {
   constructor(props){
+    const { classes } = props;
     super(props);
     var localloginComponent=[];
     localloginComponent.push(
       <MuiThemeProvider>
         <div className="App">
-          <TextField
-           hintText="نام کاربری را وارد کنید"
-           floatingLabelText="نام کاربری"
-           onChange = {this.handleChange('username')}
-           />
+        <form className={classes.container} noValidate autoComplete="off">
+        <MyTextField id="username" label="نام کاربری" change={this.setUN.bind(this)}/>  
          <br/>
-           <TextField type="password"
-             hintText="کلمه عبور را وارد کنید"
-             floatingLabelText="کلمه عبور"
-             onChange = {this.handleChange('password')}
-             />
+         <MyTextField id="password" label="کلمه عبور" type="password" autoComplete="current-password" change = {this.setPW.bind(this)}/>
            <br/> 
-          {/* <Button label="وارد شوید" color="inherit" onClick={(event) => this.handleClick(event)}/> */}
-           <Button className="btn" label="وارد شوید" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+           <MyButton label="وارد شوید" click={this.enter.bind(this)}/>
+       </form>
        </div>
        </MuiThemeProvider>
     )
@@ -51,15 +34,14 @@ class Login extends Component {
       // loginRole:'student'
     }
   }
-  handleClick(event){
+  enter(event){
+    // handleClick(event){
     var self = this;
     var payload={
       "username":this.state.username,
 	    "password":this.state.password,
     }
-    console.log("username: ",this.state.username);
-    console.log("password: ",this.state.password);
-
+   
     axios.post(global.serverAddress+'/users/login', payload)
    .then(function (response) {
      console.log("response: ",response);
@@ -77,23 +59,15 @@ class Login extends Component {
        {
          console.log("Username does not exists");
        alert("نام کاربری یا رمز عبور اشتباه است");
-      }
-     
+      }    
    })
    .catch(function (error) {
      console.log(error);
    });
   }
- 
-
- 
-    handleChange = name => event => {
-      this.setState({
-        [name]: event.target.value,
-      });
-    };
-
-
+    setUN(value) {this.setState({username: value});};
+    setPW(value) {this.setState({password: value});};
+    
   render() {
     return (
       <div>

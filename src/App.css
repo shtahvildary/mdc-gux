@@ -39,9 +39,28 @@
   to { transform: rotate(360deg); }
 }
 
+/* my css */
+
 .btn{
-       background-color :blue;
+       background-color:lightgray !important;
 }
+
+@font-face {
+  font-family: 'BBadr';
+  src:        url('./fonts/BBadr.eot');
+  src: local('☺'),
+  url('./fonts/BBadr.woff') format('woff'),
+  url('./fonts/BBadr.ttf') format('truetype'); 
+  /* url('http://www.fontfarsi.ir/Content/Fonts/SVG/Far_Abasan.svg') format('svg'); */
+  font-weight: normal;
+  font-style: normal;
+  }
+
+  .fFonts {
+  font-family: 'BBadr',Tahoma, Sans-Serif !important;
+  font-size: 24px ;
+  color: black;
+  }
 
 
 /* Drawer css */

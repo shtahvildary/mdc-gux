@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import Button from '@material-ui/core/Button';
+import MyButton from './components/Button';
 // import RaisedButton from 'material-ui/RaisedButton';
 
 import Login from './Login';
@@ -18,7 +18,8 @@ class Loginscreen extends Component {
       <div>
       <MuiThemeProvider>
         <div>
-           <Button label={"ثبت نام"} primary={true} style={style} onClick={(event) => this.handleClick(event,)}/>
+        <MyButton label="ثبت نام" click={this.handleClick.bind(this)}/>
+
        </div>
        </MuiThemeProvider>
       </div>
@@ -53,7 +54,7 @@ class Loginscreen extends Component {
         <div key="login-button">
         <MuiThemeProvider>
           <div>
-             <Button label={"ورود"} primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+             <MyButton label="ورود" click={this.handleClick.bind(this)}/>
          </div>
          </MuiThemeProvider>
         </div>

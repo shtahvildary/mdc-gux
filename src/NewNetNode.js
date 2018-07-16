@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
+import MyButton from './components/Button';
 import axios from 'axios';
-import TextField from '@material-ui/core/TextField';
+import MyTextField from './components/TextField';
 import Menu from './components/Menu'
 import './index.css';
 // import Menu from '@material-ui/core/Menu';
@@ -13,31 +13,6 @@ import './index.css';
 // import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
-
-
-const styles = theme => ({
-  button: {
-
-    margin: 15,
-  },
-
-
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  menu: {
-    width: 200,
-  },
-});
-
-
 
 
 class NewNetNode extends Component {
@@ -71,7 +46,7 @@ class NewNetNode extends Component {
       [name]: event.target.value,
     });
   };
-  handleClick(event) {
+  saveBtnClick(event) {
     // var self = this;
     console.log('this.state: ', this.state)
 
@@ -149,23 +124,23 @@ class NewNetNode extends Component {
 
                     {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
                     {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-                    شماره patch panel<TextField id="patchPanelNumber" floatingLabelText="شماره patch panel" onChange={this.handleChange('patchPanelNumber')} />
+                    <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
                     <br />
-                    شماره کابل:<TextField id="cableNumber" floatingLabelText="شماره کابل" onChange={this.handleChange('cableNumber')} />
+                    <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
                     <br />
                     شبکه مجازی: <Menu id="vlanId" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
 
                     <br />
                     سوییچ: <Menu id="switchId" items={this.state.switches} selectedId={this.setId.bind(this)} />
                     <br />
-                    شماره پورت سوییچ:<TextField id="switchPort" floatingLabelText="شماره پورت سوییچ" onChange={this.handleChange('switchPort')} />
+                    <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
                     <br />
                     نوع: <Menu id="type" items={this.state.types} selectedId={this.setId.bind(this)} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
                     مکان: <Menu id="location" items={this.state.locations} selectedId={this.setId.bind(this)} />
                     <br />
-                    <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)} />
+                    <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
                   </div>
                 </MuiThemeProvider >
               )
@@ -178,7 +153,7 @@ class NewNetNode extends Component {
       })
       .catch(err => console.log(err));
   }
-
+tbxReadValue(input){this.setState(input) }
   render() {
     return (
       <div>
@@ -191,7 +166,7 @@ class NewNetNode extends Component {
   }
 }
 
-export default withStyles(styles)(NewNetNode)
-// export default NewNetNode
+// export default withStyles(styles)(NewNetNode)
+export default NewNetNode
 
 
