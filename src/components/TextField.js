@@ -60,26 +60,9 @@ class TextFields extends React.Component {
   //   // name,id,type,autoComplete, value, defaultValue,type,InputLabelProps,helperText={this.props} )
   //     }
   handleChange = name => event => {
-    // handleChange = name => event => {
-      
-    
-    
-    // this.setState({  inputValue: event.target.value });
-      // var DOMname=this.props.id
       var json={}
       json[this.props.id]=event.target.value
       this.props.change(json)
-
-
-
-    // this.setState({
-    //   inputValue: event.target.value,
-    // }, () => {
-
-    //   this.props.change(this.state.inputValue)
-    // });
-    // var json={id:this.state.id,value:event.target.value}
-    // this.props.change(this.state.id ,event)
   };
 
   render() {

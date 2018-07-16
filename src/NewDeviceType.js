@@ -1,40 +1,13 @@
 import React, { Component } from "react";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
+import Button from './components/Button';
 import axios from 'axios';
-import TextField from '@material-ui/core/TextField';
+import TextField from './components/TextField';
 import './index.css';
 
-// import React from 'react';
-// import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
-
-
-
-const styles = theme => ({
-  button: {
-
-    margin: 15,
-  },
-
-
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  menu: {
-    width: 200,
-  },
-});
-
-
-
 
 class NewVlan extends Component {
   constructor(props) {
@@ -52,12 +25,11 @@ class NewVlan extends Component {
         <div>
           {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
           {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-          نام<TextField id="type" floatingLabelText="نام" onChange={this.handleChange('type')} />
-          
+          <TextField id="type" label="نام" change={this.tbxReadValue.bind(this)} />
           <br />
-          توضیحات: <TextField id="description" floatingLabelText="توضیحات" onChange={this.handleChange('description')} />
+          <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
           <br />
-          <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)} />
+          <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
         </div>
       </MuiThemeProvider>
     )
@@ -66,15 +38,11 @@ class NewVlan extends Component {
 
     }
   }
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-  handleClick(event) {
-    var self = this;
-
-
+  tbxReadValue(input) {
+    this.setState(input);
+  }
+  
+  saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
     if ( this.state.type.length > 0 && this.state.description.length > 0) {
       var payload = {
@@ -103,12 +71,8 @@ class NewVlan extends Component {
   }
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/devicetypes/new', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-    console.log(body)
-
-    return body;
+    if (response.status !== 200) throw Error(response.message);
+    return response;
   };
 
   render() {
@@ -122,6 +86,6 @@ class NewVlan extends Component {
     )
   }
 }
-export default withStyles(styles)(NewVlan)
+export default NewVlan
 
 

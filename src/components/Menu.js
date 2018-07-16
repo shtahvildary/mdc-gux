@@ -16,13 +16,10 @@ const styles = theme => ({
   },
 });
 
-class SimpleMenu extends React.Component {
+class SimpleListMenu extends React.Component {
   button = null;
-
   constructor(props){
     super(props);
-
-
     this.state = {
       anchorEl: null,
     selectedIndex: 1,
@@ -65,27 +62,26 @@ handleClickListItem = event => {
   };
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     const { anchorEl } = this.state;
-
     return (
-      // <div className={classes.root}>
-      <div>
+      <div >
+      {/* <div className={classes.root}> */}
       <List component="nav">
           <ListItem
             button
             aria-haspopup="true"
             aria-controls="lock-menu"
-            aria-label="انتخاب کنید..."
+            aria-label={this.props.name}
             onClick={this.handleClickListItem}
           >
             <ListItemText
-              primary="انتخاب کنید..."
+              primary={this.props.name}
               secondary={this.state.items[this.state.selectedIndex]}
             />
           </ListItem>
         </List>
-        <Menu
+        <Menu 
           id={this.props.menueId}
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -98,5 +94,7 @@ handleClickListItem = event => {
     );
   }
 }
-
-export default SimpleMenu;
+// SimpleListMenu.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
+export default SimpleListMenu;

@@ -6,9 +6,7 @@ import MyButton from './components/Button';
 import Login from './Login';
 import Register from './Register';
 
-const style = {
-  margin: 15,
-};
+
 
 class Loginscreen extends Component {
   constructor(props){

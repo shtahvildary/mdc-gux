@@ -1,40 +1,9 @@
 import React, { Component } from "react";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
+import Button from './components/Button';
 import axios from 'axios';
-import TextField from '@material-ui/core/TextField';
-import './index.css';
-
-// import React from 'react';
-// import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-
-
-
-const styles = theme => ({
-  button: {
-
-    margin: 15,
-  },
-
-
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  menu: {
-    width: 200,
-  },
-});
-
-
-
+import TextField from './components/TextField';
 
 class NewVlan extends Component {
   constructor(props) {
@@ -57,40 +26,33 @@ class NewVlan extends Component {
         <div>
           {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
           {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-          شماره<TextField id="number" floatingLabelText="شماره" onChange={this.handleChange('number')} />
+          <TextField id="number" label="شماره" change={this.tbxReadValue.bind(this)} />
           <br />
-          نام<TextField id="name" floatingLabelText="نام" onChange={this.handleChange('name')} />
+          <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} />
           <br />
-          IP<TextField id="ip" floatingLabelText="IP" onChange={this.handleChange('ip')} />
+          <TextField id="ip" label="IP" change={this.tbxReadValue.bind(this)} />
           <br />
-          توضیحات: <TextField id="description" floatingLabelText="توضیحات" onChange={this.handleChange('description')} />
-          <br />اولین IP<TextField id="firstIp" floatingLabelText="اولین IP" onChange={this.handleChange('firstIp')} />
-          <br />آخرین IP<TextField id="lastIp" floatingLabelText="آخرین IP" onChange={this.handleChange('lastIp')} />
+          <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
+          <br /><TextField id="firstIp" label="اولین IP" change={this.tbxReadValue.bind(this)} />
+          <br /><TextField id="lastIp" label="آخرین IP" change={this.tbxReadValue.bind(this)} />
           <br />
-          subnetMask<TextField id="subnetMask" floatingLabelText="subnetMask" onChange={this.handleChange('subnetMask')} />
+          <TextField id="subnetMask" label="subnetMask" change={this.tbxReadValue.bind(this)} />
           <br />
-          <Button label="ذخیره" primary={true} style={styles.button} onClick={(event) => this.handleClick(event)} />
+          <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
         </div>
       </MuiThemeProvider>
     )
     this.state = {
       localComponent: localComponent,
-
     }
   }
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-  handleClick(event) {
-    var self = this;
-
-
+  tbxReadValue(input) {
+    this.setState(input);
+  }
+  saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
     if (this.state.number.length > 0 && this.state.name.length > 0 && this.state.ip.length > 0 && this.state.description.length > 0 && this.state.firstIp.length > 0 && this.state.lastIp.length > 0 && this.state.subnetMask.length > 0) {
       var payload = {
-
         "number": this.state.number,
         "name": this.state.name,
         "ip": this.state.ip,
@@ -105,7 +67,7 @@ class NewVlan extends Component {
         .then(function (response) {
           console.log(response);
           if (response.status === 200) {
-            console.log("add new location is OK :D");
+            console.log("add new vlan is OK :D");
           }
           else {
             console.log("some error ocurred", response.status);
@@ -121,12 +83,8 @@ class NewVlan extends Component {
   }
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/vlans/new', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-    console.log(body)
-
-    return body;
+    if (response.status !== 200) throw Error(response.message);
+    return response;
   };
 
   render() {
@@ -140,6 +98,6 @@ class NewVlan extends Component {
     )
   }
 }
-export default withStyles(styles)(NewVlan)
+export default NewVlan;
 
 

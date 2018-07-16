@@ -18,9 +18,9 @@ class Login extends Component {
       <MuiThemeProvider>
         <div className="App">
         <form className={classes.container} noValidate autoComplete="off">
-        <MyTextField id="username" label="نام کاربری" change={this.setUN.bind(this)}/>  
+        <MyTextField id="username" label="نام کاربری" change={this.tbxReadValue.bind(this)}/>  
          <br/>
-         <MyTextField id="password" label="کلمه عبور" type="password" autoComplete="current-password" change = {this.setPW.bind(this)}/>
+         <MyTextField id="password" label="کلمه عبور" type="password" autoComplete="current-password" change = {this.tbxReadValue.bind(this)}/>
            <br/> 
            <MyButton label="وارد شوید" click={this.enter.bind(this)}/>
        </form>
@@ -65,8 +65,10 @@ class Login extends Component {
      console.log(error);
    });
   }
-    setUN(value) {this.setState({username: value});};
-    setPW(value) {this.setState({password: value});};
+tbxReadValue(input){this.setState(input) }
+
+    // setUN(value) {this.setState({username: value});};
+    // setPW(value) {this.setState({password: value});};
     
   render() {
     return (

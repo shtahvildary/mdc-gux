@@ -9,12 +9,6 @@ import './index.css';
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
 
-
-// import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-
-
 class NewNetNode extends Component {
   constructor(props) {
 
@@ -41,11 +35,6 @@ class NewNetNode extends Component {
     this.setState(selectedId, () => {
     })
   }
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
   saveBtnClick(event) {
     // var self = this;
     console.log('this.state: ', this.state)
@@ -89,12 +78,8 @@ class NewNetNode extends Component {
   }
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/new', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
-    const body = await response.json();
-
-    if (response.status !== 200) throw Error(body.message);
-    console.log(body)
-
-    return body;
+    if (response.status !== 200) throw Error(response.message);
+    return response;
   };
 
   callApiMenus = async (model) => {
@@ -109,6 +94,7 @@ class NewNetNode extends Component {
     this.callApiMenus('vlans')
       .then(res => {
         vlans = res.data.vlans
+        console.log('vlans: ',vlans)
         this.callApiMenus('switches').then(res => {
           switches = res.data.switches
           this.callApiMenus('locations').then(res => {
@@ -116,7 +102,6 @@ class NewNetNode extends Component {
             this.setState({ vlans, switches, locations }, () => {
 
               var localComponent = []
-              var types=[{name:'pc',_id:5},{name:'pc',_id:5},]
               localComponent.push(
                 <MuiThemeProvider>
                   <div>
@@ -128,17 +113,17 @@ class NewNetNode extends Component {
                     <br />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
                     <br />
-                    شبکه مجازی: <Menu id="vlanId" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
+                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
 
                     <br />
-                    سوییچ: <Menu id="switchId" items={this.state.switches} selectedId={this.setId.bind(this)} />
+                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} />
                     <br />
                     <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
                     <br />
-                    نوع: <Menu id="type" items={this.state.types} selectedId={this.setId.bind(this)} />
+                     <Menu id="type" name="نوع" items={this.state.types} selectedId={this.setId.bind(this)} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
-                    مکان: <Menu id="location" items={this.state.locations} selectedId={this.setId.bind(this)} />
+                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} />
                     <br />
                     <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
                   </div>
@@ -166,7 +151,6 @@ tbxReadValue(input){this.setState(input) }
   }
 }
 
-// export default withStyles(styles)(NewNetNode)
 export default NewNetNode
 
 
