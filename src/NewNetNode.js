@@ -5,6 +5,7 @@ import MyButton from './components/Button';
 import axios from 'axios';
 import MyTextField from './components/TextField';
 import Menu from './components/Menu'
+import Card from './components/Card'
 import './index.css';
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
@@ -27,7 +28,8 @@ class NewNetNode extends Component {
       vlans: [],
       switches: [],
       locations: [],
-      types:[]
+      deviceTypes:[],
+      devices:[],
     }
 
   }
@@ -45,16 +47,19 @@ class NewNetNode extends Component {
       this.state.switchId.length > 0 &&
       this.state.switchPort.length > 0 &&
       this.state.vlanId.length > 0 &&
-      this.state.type.length > 0 &&
-      this.state.location.length > 0) {
+      this.state.device.length > 0 &&
+      this.state.location.length > 0&&
+      this.state.type.length > 0 ){
       var payload = {
         "patchPanelPort": this.state.patchPanelNumber,
         "cableNumber": this.state.cableNumber,
         "switchId": this.state.switchId,
         "switchPort": this.state.switchPort,
         "vlan": this.state.vlanId,
-        "type": this.state.type,
+        "device": this.state.device,
         "location": this.state.location,
+        //
+        "type": this.state.type,
       }
       this.callApi(payload)
         // axios.post(global.serverAddress+'/switches/new', payload)
@@ -103,10 +108,9 @@ class NewNetNode extends Component {
 
               var localComponent = []
               localComponent.push(
+                
                 <MuiThemeProvider>
                   <div>
-
-
                     {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
                     {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
                     <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
@@ -120,7 +124,8 @@ class NewNetNode extends Component {
                     <br />
                     <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
                     <br />
-                     <Menu id="type" name="نوع" items={this.state.types} selectedId={this.setId.bind(this)} />
+                     {/* <Menu id="type" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} /> */}
+                     <Menu id="device" name="وسیله" items={this.state.device} selectedId={this.setId.bind(this)} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
                    <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} />
@@ -128,9 +133,9 @@ class NewNetNode extends Component {
                     <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
                   </div>
                 </MuiThemeProvider >
+                
               )
-              this.setState({ localComponent: localComponent })
-
+             this.setState({ localComponent: localComponent },()=>{})
             });
           })
         })
@@ -140,12 +145,13 @@ class NewNetNode extends Component {
   }
 tbxReadValue(input){this.setState(input) }
   render() {
+    console.log("this.state.finalCard: ",this.state.finalCard)
     return (
       <div>
         <MuiThemeProvider>
           <AppBar title="info sima" />
         </MuiThemeProvider>
-        {this.state.localComponent}
+        <Card pageName="افزودن نود جدید" content={this.state.localComponent}/>
       </div>
     )
   }

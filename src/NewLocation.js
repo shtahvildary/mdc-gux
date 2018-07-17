@@ -5,6 +5,7 @@ import Button from "./components/Button";
 import axios from "axios";
 import TextField from "./components/TextField";
 import "./index.css";
+import Card from "./components/Card"
 
 class NewLocation extends Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class NewLocation extends Component {
         <MuiThemeProvider>
           <AppBar title="salam" />
         </MuiThemeProvider>
-        {this.state.localComponent}
+        <Card pageName="افزودن مکان جدید" content={this.state.localComponent}/>
       </div>
     );
   }

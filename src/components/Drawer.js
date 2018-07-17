@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,7 +13,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
-
 import MainAppBar from './AppBar'
 import { ListItem, ListItemText } from '@material-ui/core/List';
 
@@ -24,6 +22,7 @@ import NewNetNode from '../NewNetNode';
 import NewSwitch from '../NewSwitch';
 import NewLocation from '../NewLocation';
 import NewVlan from '../NewVlan';
+import NewDevice from '../NewDevice';
 import NewDeviceType from '../NewDeviceType';
 // import Index from '../Index'
 
@@ -31,6 +30,10 @@ import NewDeviceType from '../NewDeviceType';
 const drawerWidth = 240;
 
 const styles = theme => ({
+  ///////////
+  direction:"rtl",
+  ///////////
+
   root: {
     flexGrow: 1,
     height: 'auto',
@@ -44,10 +47,11 @@ const styles = theme => ({
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
+      // color:theme.color
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
+    marginRight: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -62,6 +66,9 @@ const styles = theme => ({
     display: 'none',
   },
   drawerPaper: {
+    //my color
+    // backgroundColor: "#e6f9ff",
+    ////
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
@@ -150,7 +157,7 @@ console.log('theme: ',theme)
         >
           <div className={classes.toolbar}>
             <IconButton onClick={this.handleDrawerClose}>
-              {/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </div>
           <Divider />
@@ -165,7 +172,8 @@ console.log('theme: ',theme)
           <li><Link to="/سوییچ جدید">افزودن سوییج جدید</Link></li>
           <li><Link to="/مکان جدید">افزودن مکان جدید</Link></li>
           <li><Link to="/شبکه مجازی جدید">افزودن شبکه مجازی جدید</Link></li>
-          <li><Link to="/وسیله جدید">افزودن وسیله جدید</Link></li>
+          <li><Link to="/سخت افزار جدید">افزودن سخت افزار جدید</Link></li>
+          <li><Link to="/نوع جدید" >افزودن نوع جدید</Link></li>
 
         </Drawer>
         <main className={classes.content}>
@@ -175,6 +183,7 @@ console.log('theme: ',theme)
 //   render(){e}
 // }))}} */}
 <div className="App">
+        
           <Switch>
             {/* <Route exact path="/" component={Index}/> */}
             <Route path="/سوییچها" component={Switches} />
@@ -183,8 +192,10 @@ console.log('theme: ',theme)
             <Route path="/سوییچ جدید" component={NewSwitch} />
             <Route path="/مکان جدید" component={NewLocation} />
             <Route path="/شبکه مجازی جدید" component={NewVlan} />
-            <Route path="/وسیله جدید" component={NewDeviceType} />
+            <Route path="/سخت افزار جدید" component={NewDevice} />
+            <Route path="/نوع جدید" component={NewDeviceType} />
           </Switch>
+         
           </div>
         </main>
       </div>

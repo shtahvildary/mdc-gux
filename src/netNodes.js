@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SimpleTable from "./components/Table";
+import Card from './components/Card'
 
 class netNodeTable extends Component {
   constructor(props) {
@@ -40,20 +41,34 @@ class netNodeTable extends Component {
   // }
 
   setTblData(){
-    var table={netNodeTable:<SimpleTable
-    columns={this.state.response.columns}
-    data={this.state.response.netNodesData}
-  />}
+  //   var table={netNodeTable:<SimpleTable
+  //   columns={this.state.response.columns}
+  //   data={this.state.response.netNodesData}
+  // />}
     
-    this.setState({table},()=>{})
-  }
- 
-  render() {
-      return(
+  //   this.setState({table},()=>{})
+    var localComponent = []
+    localComponent.push(
       <SimpleTable
       columns={this.state.response.columns}
       data={this.state.response.netNodesData}
-    />
+    />)
+    this.setState({ localComponent: localComponent },()=>{})
+
+  }
+  render() {
+    
+      return(
+    //   <SimpleTable
+    //   columns={this.state.response.columns}
+    //   data={this.state.response.netNodesData}
+    // />
+    <div>
+    {/* <MuiThemeProvider>
+      <AppBar title="info sima" />
+    </MuiThemeProvider> */}
+    <Card pageName="نودها" content={this.state.localComponent}/>
+  </div>
     );
   }
 }

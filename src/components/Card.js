@@ -25,34 +25,51 @@ const styles = {
   },
 };
 
-function SimpleCard(props) {
-  const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
+class SimpleCard extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      // content:""
 
+    }
+  }
+  // componentWillMount(){
+  //   console.log('card content: ',this.props.content)
+  // if(!this.props.content)return;
+  // this.setState({content:this.props.content},()=>{
+    
+  // })
+
+
+  // }
+  render(){
+    const { classes } =this. props;
+    const bull = <span className={classes.bullet}>•</span>;
   return (
     <div>
       <Card className={classes.card}>
         <CardContent>
-          <Typography className={classes.title} color="textSecondary">
-            Word of the Day
-          </Typography>
+          {/* <Typography className={classes.title} color="textSecondary">
+          </Typography> */}
           <Typography variant="headline" component="h2">
-            be{bull}nev{bull}o{bull}lent
+            {this.props.pageName}
+            {/* be{bull}nev{bull}o{bull}lent */}
           </Typography>
-          <Typography className={classes.pos} color="textSecondary">
+          {/* <Typography className={classes.pos} color="textSecondary">
             adjective
-          </Typography>
+          </Typography> */}
           <Typography component="p">
-            well meaning and kindly.<br />
-            {'"a benevolent smile"'}
+            
+            {this.props.content}
           </Typography>
         </CardContent>
-        <CardActions>
+        {/* <CardActions>
           <Button size="small">Learn More</Button>
-        </CardActions>
+        </CardActions> */}
       </Card>
     </div>
   );
+}
 }
 
 SimpleCard.propTypes = {

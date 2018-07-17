@@ -5,7 +5,7 @@ import Button from "./components/Button";
 import axios from "axios";
 import Menu from "./components/Menu";
 import TextField from "./components/TextField";
-
+import Card from "./components/Card"
 class NewSwitch extends Component {
   constructor(props) {
     super(props);
@@ -141,7 +141,7 @@ class NewSwitch extends Component {
             </div>
           </MuiThemeProvider>
         );
-        this.setState ( {localComponent: localComponent});
+        this.setState ( {localComponent: localComponent},()=>{});
       });
     });
   }
@@ -152,7 +152,7 @@ class NewSwitch extends Component {
         <MuiThemeProvider>
           <AppBar title="salam" />
         </MuiThemeProvider>
-        {this.state.localComponent}
+        <Card pageName="افزودن سوییچ جدید" content={this.state.localComponent}/>
       </div>
     );
   }

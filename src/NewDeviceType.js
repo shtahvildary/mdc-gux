@@ -5,6 +5,7 @@ import Button from './components/Button';
 import axios from 'axios';
 import TextField from './components/TextField';
 import './index.css';
+import Card from './components/Card'
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -81,7 +82,7 @@ class NewVlan extends Component {
         <MuiThemeProvider>
           <AppBar title="new vlan" />
         </MuiThemeProvider>
-        {this.state.localComponent}
+        <Card pageName="افزودن نوع جدید" content={this.state.localComponent}/>
       </div>
     )
   }

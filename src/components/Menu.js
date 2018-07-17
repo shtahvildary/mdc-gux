@@ -22,7 +22,7 @@ class SimpleListMenu extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
-    selectedIndex: 1,
+    selectedIndex: 0,
       items:[],
     };
   }

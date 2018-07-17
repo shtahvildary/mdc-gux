@@ -43,10 +43,12 @@ class App extends Component {
     else
 
       return (
+        <div dir="rtl">
         <muiThemeable>
           <Header />
           <Drawer  />
         </muiThemeable>
+        </div>
       );
   }
 }

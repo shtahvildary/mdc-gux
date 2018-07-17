@@ -63,6 +63,8 @@ class SimpleTable extends React.Component {
       });
       console.log('rows: ',rows)
       col.map(c => {
+      console.log('col: ',c)
+
         if (rows[i].findIndex(ri => ri.column === c.column) === -1)
           rows[i].push({ column: c.column, data: "-" });
       });
@@ -75,6 +77,7 @@ class SimpleTable extends React.Component {
   }
   setColumns() {
     var columnComponents = this.state.col.map(c => {
+      console.log("c: ",c)
       return <TableCell>{c.title}</TableCell>;
     });
     this.setState({ columnComponents }, () => {});
@@ -90,14 +93,16 @@ class SimpleTable extends React.Component {
     this.setState({ rowsComponets }, () => {});
   }
   render() {
+    const { classes } =this. props;
+
     console.log("column: ",this.state.columnComponents)
     console.log("row: ",this.state.rowComponents)
     return (
-      <Paper className={this.state.root.paper} elevation={1}>
+      <Paper className={classes.root.paper} elevation={1}>
         <Typography variant="headline" component="h3">
         جدول
         </Typography>
-        <Table className={this.state.table}>
+        <Table className={classes.table}>
           <TableHead>
             <TableRow>{this.state.columnComponents}</TableRow>
           </TableHead>
