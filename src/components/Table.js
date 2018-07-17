@@ -63,12 +63,13 @@ class SimpleTable extends React.Component {
       });
       console.log('rows: ',rows)
       col.map(c => {
-      console.log('col: ',c)
+      console.log('c: ',c)
 
         if (rows[i].findIndex(ri => ri.column === c.column) === -1)
           rows[i].push({ column: c.column, data: "-" });
       });
     });
+    console.log("newProps.data: ",newProps.data)
     this.setState({ data: newProps.data, col, rows }, () => {
       this.setColumns();
       this.setRows();

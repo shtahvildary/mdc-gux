@@ -10,13 +10,13 @@ import Card from './components/Card'
 
 import { withStyles } from '@material-ui/core/styles';
 
-class NewVlan extends Component {
+class NewDeviceType extends Component {
   constructor(props) {
 
     super(props);
     const { classes } = this.props;
     this.state = {
-      type:'',
+      name:'',
       description: '',
       
     }
@@ -26,7 +26,7 @@ class NewVlan extends Component {
         <div>
           {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
           {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-          <TextField id="type" label="نام" change={this.tbxReadValue.bind(this)} />
+          <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} />
           <br />
           <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
           <br />
@@ -48,7 +48,7 @@ class NewVlan extends Component {
     if ( this.state.type.length > 0 && this.state.description.length > 0) {
       var payload = {
 
-        "type": this.state.type,
+        "name": this.state.name,
         "description": this.state.description,
       }
 
@@ -80,13 +80,13 @@ class NewVlan extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <AppBar title="new vlan" />
+          <AppBar title="new device type" />
         </MuiThemeProvider>
         <Card pageName="افزودن نوع جدید" content={this.state.localComponent}/>
       </div>
     )
   }
 }
-export default NewVlan
+export default NewDeviceType
 
 

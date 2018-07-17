@@ -39,8 +39,6 @@ class NewNetNode extends Component {
   }
   saveBtnClick(event) {
     // var self = this;
-    console.log('this.state: ', this.state)
-
     //To be done:check for empty values before hitting submit
     if (this.state.patchPanelNumber.length > 0 &&
       this.state.cableNumber.length > 0 &&
@@ -64,7 +62,6 @@ class NewNetNode extends Component {
       this.callApi(payload)
         // axios.post(global.serverAddress+'/switches/new', payload)
         .then(function (response) {
-          console.log(response);
           if (response.status === 200) {
             console.log("add new netNode is OK :D");
           }
@@ -99,7 +96,6 @@ class NewNetNode extends Component {
     this.callApiMenus('vlans')
       .then(res => {
         vlans = res.data.vlans
-        console.log('vlans: ',vlans)
         this.callApiMenus('switches').then(res => {
           switches = res.data.switches
           this.callApiMenus('locations').then(res => {
@@ -145,7 +141,6 @@ class NewNetNode extends Component {
   }
 tbxReadValue(input){this.setState(input) }
   render() {
-    console.log("this.state.finalCard: ",this.state.finalCard)
     return (
       <div>
         <MuiThemeProvider>

@@ -53,7 +53,9 @@ class netNodeTable extends Component {
       columns={this.state.response.columns}
       data={this.state.response.netNodesData}
     />)
-    this.setState({ localComponent: localComponent },()=>{})
+    this.setState({ localComponent },()=>{
+      console.log("localComponent: ",this.state.localComponent)
+    })
 
   }
   render() {

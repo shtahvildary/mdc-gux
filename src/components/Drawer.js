@@ -126,7 +126,7 @@ class MiniDrawer extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-console.log('theme: ',theme)
+// console.log('theme: ',theme)
     return (
       <div className={classes.root}>
       {/* <div className={classes.root}> */}
