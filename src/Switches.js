@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SimpleTable from "./components/Table";
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import AppBar from '@material-ui/core/AppBar';
+import Card from './components/Card'
 
 class switchesTable extends Component {
   constructor(props) {
@@ -22,34 +25,41 @@ class switchesTable extends Component {
     return body;
   };
   componentWillMount() {
-    
-    this.callApi()
-    .then(res => {
-      this.setState({ response: res.data.switches },()=>{
-          this.setTblData()
-          console.log("Switches response: ",this.state.response)
 
+    this.callApi()
+      .then(res => {
+        this.setState({ response: res.data.switches }, () => {
+          this.setTblData()
+          console.log("Switches response: ", this.state.response)
         });
       })
       .catch(err => console.log(err));
   }
- 
 
-  setTblData(){
-    var table={switchesTable:<SimpleTable
-    columns={this.state.response.columns}
-    data={this.state.response.switchesData}
-  />}
-    
-    this.setState({table},()=>{})
+  setTblData() {
+    var table = {
+      switchesTable: <SimpleTable
+        columns={this.state.response.columns}
+        data={this.state.response.switchesData}
+      />
+    }
+
+    this.setState({ table }, () => { })
   }
- 
+
   render() {
-      return(
-      <SimpleTable
-      columns={this.state.response.columns}
-      data={this.state.response.switchesData}
-    />
+    return (
+      <div>
+        <MuiThemeProvider>
+          <AppBar title="info sima" />
+        </MuiThemeProvider>
+        <Card pageName="سوییچها" content={
+          <SimpleTable
+            columns={this.state.response.columns}
+            data={this.state.response.switchesData}
+          />}
+        />
+      </div>
     );
   }
 }

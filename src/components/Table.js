@@ -101,7 +101,7 @@ class SimpleTable extends React.Component {
     return (
       <Paper className={classes.root.paper} elevation={1}>
         <Typography variant="headline" component="h3">
-        جدول
+        {/* جدول */}
         </Typography>
         <Table className={classes.table}>
           <TableHead>

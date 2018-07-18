@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SimpleTable from "./components/Table";
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import AppBar from '@material-ui/core/AppBar';
 import Card from './components/Card'
 
 class netNodeTable extends Component {
@@ -23,54 +25,35 @@ class netNodeTable extends Component {
     return response;
   };
   componentWillMount() {
-    
-    this.callApi()
-    .then(res => {
-      this.setState({ response: res.data.netNodes },()=>{
-          this.setTblData()
 
+    this.callApi()
+      .then(res => {
+        this.setState({ response: res.data.netNodes }, () => {
+          this.setTblData()
         });
       })
       .catch(err => console.log(err));
   }
-  // componentDidMount(){
-  //     <SimpleTable
-  //     columns={this.state.response.columns}
-  //     data={this.state.response.netNodesData}
-  //   />
-  // }
 
-  setTblData(){
-  //   var table={netNodeTable:<SimpleTable
-  //   columns={this.state.response.columns}
-  //   data={this.state.response.netNodesData}
-  // />}
-    
-  //   this.setState({table},()=>{})
-    var localComponent = []
-    localComponent.push(
-      <SimpleTable
+
+  setTblData() {
+    <SimpleTable
       columns={this.state.response.columns}
       data={this.state.response.netNodesData}
-    />)
-    this.setState({ localComponent },()=>{
-      console.log("localComponent: ",this.state.localComponent)
-    })
-
+    />
   }
   render() {
-    
-      return(
-    //   <SimpleTable
-    //   columns={this.state.response.columns}
-    //   data={this.state.response.netNodesData}
-    // />
-    <div>
-    {/* <MuiThemeProvider>
-      <AppBar title="info sima" />
-    </MuiThemeProvider> */}
-    <Card pageName="نودها" content={this.state.localComponent}/>
-  </div>
+
+    return (
+      <div>
+        <MuiThemeProvider>
+          <AppBar title="info sima" />
+        </MuiThemeProvider>
+        <Card pageName="نودها" content={<SimpleTable
+          columns={this.state.response.columns}
+          data={this.state.response.netNodesData}
+        />} />
+      </div>
     );
   }
 }
