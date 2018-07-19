@@ -90,8 +90,6 @@ class SimpleTable extends React.Component {
   render() {
     const { classes } =this.props;
 
-    console.log("column: ",this.state.columnComponents)
-    console.log("row: ",this.state.rowComponents)
     return (
       <Paper className={classes.root.paper} elevation={1}>
       <Linkfy>
