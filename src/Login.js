@@ -4,9 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import MyButton from './components/Button';
 import MyTextField from './components/TextField';
 import axios from 'axios';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import './App.css'
-import indexPage from './index';
 // import {Router,BrowserHistory} from 'react-router';
 
 class Login extends Component {

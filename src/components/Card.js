@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const styles = {
   card: {
+    maxWidth:'90%',
+    // position:'center',
     minWidth: 275,
+    margin:50,
   },
   bullet: {
     display: 'inline-block',
@@ -43,10 +46,10 @@ class SimpleCard extends React.Component {
 
   // }
   render(){
-    const { classes } =this. props;
-    const bull = <span className={classes.bullet}>•</span>;
+    const { classes } =this.props;
+    // const bull = <span className={classes.bullet}>•</span>;
   return (
-    <div>
+    <div className="container">
       <Card className={classes.card}>
         <CardContent>
           {/* <Typography className={classes.title} color="textSecondary">

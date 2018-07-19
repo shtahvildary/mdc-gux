@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -97,4 +97,5 @@ handleClickListItem = event => {
 // SimpleListMenu.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
-export default SimpleListMenu;
+// export default SimpleListMenu;
+export default withStyles(styles)(SimpleListMenu);

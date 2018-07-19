@@ -7,14 +7,11 @@ import TextField from './components/TextField';
 import './index.css';
 import Card from './components/Card'
 
-
-import { withStyles } from '@material-ui/core/styles';
-
 class NewDeviceType extends Component {
   constructor(props) {
 
     super(props);
-    const { classes } = this.props;
+    // const { classes } = this.props;
     this.state = {
       name:'',
       description: '',

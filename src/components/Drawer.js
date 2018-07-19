@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 import MainAppBar from './AppBar'
-import { ListItem, ListItemText } from '@material-ui/core/List';
+// import { ListItem, ListItemText } from '@material-ui/core/List';
 
 import NetNodes from '../NetNodes';
 import Switches from '../Switches';
@@ -24,6 +24,7 @@ import NewLocation from '../NewLocation';
 import NewVlan from '../NewVlan';
 import NewDevice from '../NewDevice';
 import NewDeviceType from '../NewDeviceType';
+import NetNodesCard from '../NetNodesCard';
 // import Index from '../Index'
 
 
@@ -175,6 +176,10 @@ class MiniDrawer extends React.Component {
           <li><Link to="/سخت افزار جدید">افزودن سخت افزار جدید</Link></li>
           <li><Link to="/نوع جدید" >افزودن نوع جدید</Link></li>
 
+          <Divider />
+          <li><Link to="/کارت نودها">کارت نود ها</Link></li>
+
+
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -194,6 +199,8 @@ class MiniDrawer extends React.Component {
             <Route path="/شبکه مجازی جدید" component={NewVlan} />
             <Route path="/سخت افزار جدید" component={NewDevice} />
             <Route path="/نوع جدید" component={NewDeviceType} />
+          <Route path="/کارت نودها" component={NetNodesCard}/>
+
           </Switch>
          
           </div>

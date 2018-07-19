@@ -1,3 +1,16 @@
+@font-face {
+  font-family: 'BBadr';
+  src:        url('./fonts/BBadr.eot');
+  src: local('☺'),
+  url('./fonts/BBadr.woff') format('woff'),
+  url('./fonts/BBadr.ttf') format('truetype'); 
+  /* url('http://www.fontfarsi.ir/Content/Fonts/SVG/Far_Abasan.svg') format('svg'); */
+  font-weight: normal;
+  font-style: normal;
+  }
+  body{
+    font-family: 'BBadr' !important;
+  }
 .App {
   text-align: center;
   direction: rtl;
@@ -45,16 +58,7 @@
        background-color:lightgray !important;
 }
 
-@font-face {
-  font-family: 'BBadr';
-  src:        url('./fonts/BBadr.eot');
-  src: local('☺'),
-  url('./fonts/BBadr.woff') format('woff'),
-  url('./fonts/BBadr.ttf') format('truetype'); 
-  /* url('http://www.fontfarsi.ir/Content/Fonts/SVG/Far_Abasan.svg') format('svg'); */
-  font-weight: normal;
-  font-style: normal;
-  }
+
 
   .fFonts {
   font-family: 'BBadr',Tahoma, Sans-Serif !important;

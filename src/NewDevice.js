@@ -8,14 +8,11 @@ import './index.css';
 import Card from './components/Card'
 import Menu from './components/Menu'
 
-
-import { withStyles } from '@material-ui/core/styles';
-
 class NewDevice extends Component {
   constructor(props) {
 
     super(props);
-    const { classes } = this.props;
+    // const { classes } = this.props;
     this.state = {
       
       name:"",
@@ -159,5 +156,3 @@ class NewDevice extends Component {
   }
 }
 export default NewDevice
-
-

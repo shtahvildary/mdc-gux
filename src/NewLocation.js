@@ -10,7 +10,7 @@ import Card from "./components/Card"
 class NewLocation extends Component {
   constructor(props) {
     super(props);
-    const { classes } = this.props;
+    // const { classes } = this.props;
     this.state = {
       name: "",
       description: ""

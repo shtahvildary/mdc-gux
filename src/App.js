@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Drawer from './components/Drawer'
-import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
 import LoginScreen from './Loginscreen';
-import Switches from './Switches';
 import Header from './components/Header';
 
 

@@ -1,5 +1,6 @@
 import React from "react";
 import _ from "lodash";
+import Linkfy from "react-linkify";
 
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -46,30 +47,23 @@ class SimpleTable extends React.Component {
     var col = [];
     var rows = [];
 
-    _.mapKeys(this.props.columns, (value, key) => {
+    _.mapKeys(newProps.columns, (value, key) => {
       col.push({ column: key, title: value });
     });
-    //rows=>>
-    console.log("newProps.data: ",newProps.data )
+   
     newProps.data.map((d, i) => {
-      console.log("i: ",i)
-      console.log("d: ",d)
-      console.log("col: ",col)
-
-      rows.push(col);
+    
+      rows.push(JSON.parse(JSON.stringify(col))) ;
       _.mapKeys(d, (value, key) => {
         var j = rows[i].findIndex(ci => ci.column === key);
         if (j !== -1) rows[i][j].data = value;
       });
-      console.log('rows: ',rows)
       col.map(c => {
-      console.log('c: ',c)
 
         if (rows[i].findIndex(ri => ri.column === c.column) === -1)
           rows[i].push({ column: c.column, data: "-" });
       });
     });
-    console.log("newProps.data: ",newProps.data)
     this.setState({ data: newProps.data, col, rows }, () => {
       this.setColumns();
       this.setRows();
@@ -78,15 +72,15 @@ class SimpleTable extends React.Component {
   }
   setColumns() {
     var columnComponents = this.state.col.map(c => {
-      console.log("c: ",c)
       return <TableCell>{c.title}</TableCell>;
     });
     this.setState({ columnComponents }, () => {});
   }
   setRows() {
-    console.log("this.state.rows: ",this.state.rows)
+    // console.log("this.state.rows: ",this.state.rows)
     var rowsComponets = this.state.rows.map(r => {
       var thisRow = r.map(cell => {
+        
         return <TableCell>{cell.data}</TableCell>;
       });
       return <TableRow>{thisRow}</TableRow>;
@@ -94,12 +88,13 @@ class SimpleTable extends React.Component {
     this.setState({ rowsComponets }, () => {});
   }
   render() {
-    const { classes } =this. props;
+    const { classes } =this.props;
 
     console.log("column: ",this.state.columnComponents)
     console.log("row: ",this.state.rowComponents)
     return (
       <Paper className={classes.root.paper} elevation={1}>
+      <Linkfy>
         <Typography variant="headline" component="h3">
         {/* جدول */}
         </Typography>
@@ -109,6 +104,7 @@ class SimpleTable extends React.Component {
           </TableHead>
           <TableBody>{this.state.rowsComponets}</TableBody>
         </Table>
+        </Linkfy>
         </Paper>
       
     );
