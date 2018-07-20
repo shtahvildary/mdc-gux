@@ -17,7 +17,7 @@ class netNodeTable extends Component {
     };
   }
   callApi = async (path,payload) => {
-    console.log(path,payload)
+    // console.log(path,payload)
     const response = await axios({
       method: "post",
       url: global.serverAddress + "/netnodes/"+path,
@@ -55,7 +55,7 @@ class netNodeTable extends Component {
       .then(res => {
         this.setState({ response: res.data.netNodes }, () => {
           
-          console.log("this.state.response",this.state.response)
+          // console.log("this.state.response",this.state.response)
           this.setTblData()
         });
       })
