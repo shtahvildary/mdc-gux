@@ -23,6 +23,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
+import Button from './Button';
+import Modal from './Modal';
+
 
 
 // let counter = 0;
@@ -143,7 +146,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
+  const { numSelected,dataLength, classes } = props;
 
   return (
     <Toolbar
@@ -154,11 +157,11 @@ let EnhancedTableToolbar = props => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subheading">
-            {numSelected} انتخاب شده
+            {numSelected} مورد انتخاب شده
           </Typography>
         ) : (
           <Typography variant="title" id="tableTitle">
-            جدول
+            تعداد کل: {dataLength}
           </Typography>
         )}
       </div>
@@ -266,79 +269,7 @@ class EnhancedTable extends React.Component {
 
   isSelected = _id => this.state.selected.indexOf(_id) !== -1;
 
-  render() {
-    const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-    console.log("this.state: ",this.state)
-    
-    return (
-      <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-            col={this.state.col}
-            columnComponents={this.state.columnComponents}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
-              onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
-            />
-            <TableBody>
-              {data
-                .sort(getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  const isSelected = this.isSelected(n[0]._id);
-                  console.log("nnn",n)
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => this.handleClick(event, n._id)}
-                      role="checkbox"
-                      aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={n[0]._id}
-                      selected={isSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} />
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        {n.title}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <TablePagination
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
-      </Paper>
-    );
-  }
-
+ 
 
 
 
@@ -359,12 +290,11 @@ class EnhancedTable extends React.Component {
       rows.push(JSON.parse(JSON.stringify(col))) ;
       _.mapKeys(d, (value, key) => {
         var j = rows[i].findIndex(ci => ci.column === key);
-        if (j !== -1) {rows[i][j].data = value;
-        rows[i][j]._id=d._id
-        }
+        if (j !== -1) {rows[i][j].data = value;}
+        rows[i]._id=d._id
+        
       });
       col.map(c => {
-        console.log("ehem",d._id)
         if (rows[i].findIndex(ri => ri.column === c.column) === -1)
           rows[i].push({ column: c.column, data: "-",_id:d._id });
       });
@@ -387,19 +317,20 @@ class EnhancedTable extends React.Component {
   
   setRows(data, order, orderBy, selected, rowsPerPage, page) {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
+console.log(" this.state.rows:", this.state.rows)
     var rowsComponets = this.state.rows.sort(getSorting(order, orderBy))
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
    .map(r => {
       var thisRow = r.map(cell => {
-        
-        return <TableCell>{cell.data}</TableCell>;
-      });
-      console.log("what is r",r)
-      const isSelected = this.isSelected(r[0]._id);
 
-      return <TableRow hover
-      onClick={event => this.handleClick(event, r[0]._id)}
+        return <TableCell>{cell.data}</TableCell>;
+        // return <TableCell component="th" scope="row" padding="none">{cell.data}</TableCell>;
+      });
+      const isSelected = this.isSelected(r._id);
+      console.log("r._id: ",r._id)
+
+      return (<TableRow hover
+      onClick={event => this.handleClick(event, r._id)}
       role="checkbox"
       aria-checked={isSelected}
       tabIndex={-1}
@@ -407,10 +338,16 @@ class EnhancedTable extends React.Component {
       // key={n.title}
       selected={isSelected}>
       <TableCell padding="checkbox">
+      {console.log("isSelected",isSelected)}
+      
               <Checkbox checked={isSelected} />
             </TableCell>
             {thisRow}
-            </TableRow>;
+            <TableCell>
+            <Button label="ویرایش"  click={this.editBtnClick.bind(this)} />
+
+            </TableCell>
+            </TableRow>);
     });
     {emptyRows > 0 && (
       <TableRow style={{ height: 49 * emptyRows }}>
@@ -418,8 +355,11 @@ class EnhancedTable extends React.Component {
       </TableRow>
     )}
     this.setState({ rowsComponets }, () => {});
-
     
+  }
+  editBtnClick(event){
+    <Modal/>
+    //open modal
   }
   render() {
     const { classes } =this.props;
@@ -431,7 +371,7 @@ class EnhancedTable extends React.Component {
     return (
       <Paper className={classes.root.paper} elevation={1}>
       <Linkfy>
-      <EnhancedTableToolbar numSelected={selected.length} />
+      <EnhancedTableToolbar numSelected={selected.length} dataLength={data.length} />
       <div className={classes.tableWrapper}>
 
         <Typography variant="headline" component="h3">
@@ -449,41 +389,9 @@ class EnhancedTable extends React.Component {
               onRequestSort={this.handleRequestSort}
               rowCount={data.length}
             />
-            {/* <TableHead>
-            <TableRow>{this.state.columnComponents}</TableRow>
-          </TableHead> */}
+           
           <TableBody> 
-          {console.log("data: ",this.state.rows)}
-          {/* {data
-                .sort(getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  console.log("nnn",n)
-                  const isSelected = this.isSelected(n._id);
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => this.handleClick(event, n._id)}
-                      role="checkbox"
-                      aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={n._id}
-                      selected={isSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} />
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        {n.title}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })} */}
-              {/* {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )} */}
+         
               {this.state.rowsComponets}
               </TableBody>
         </Table>
@@ -514,9 +422,4 @@ EnhancedTable.propTypes = {
 };
 
 export default withStyles(styles)(EnhancedTable);
-// }
 
-// SimpleTable.propTypes = {
-//   data: PropTypes.object.isRequired
-// };
-// export default withStyles(styles)(SimpleTable);
