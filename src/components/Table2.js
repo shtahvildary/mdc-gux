@@ -22,7 +22,7 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 let counter = 0;
 function createData(name, calories, fat, carbs, protein) {
   counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
+  return { id: counter, name, calories, fat, carbs, protein ,rt:"mhd"};
 }
 
 function getSorting(order, orderBy) {
@@ -31,7 +31,7 @@ function getSorting(order, orderBy) {
     : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
 }
 
-const columnData = [
+var columnData = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
   { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
   { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
@@ -57,7 +57,7 @@ class EnhancedTableHead extends React.Component {
               onChange={onSelectAllClick}
             />
           </TableCell>
-          {columnData.map(column => {
+          {this.props.columnData.map(column => {
             return (
               <TableCell
                 key={column.id}
@@ -206,6 +206,7 @@ class EnhancedTable extends React.Component {
       ],
       page: 0,
       rowsPerPage: 5,
+      columnData
     };
   }
 
@@ -245,8 +246,10 @@ class EnhancedTable extends React.Component {
         selected.slice(selectedIndex + 1),
       );
     }
-
-    this.setState({ selected: newSelected });
+    var {data}=this.state;
+    data.push({id:400,rt:"hello from rt"})
+    columnData.push({id:"rt","label":"RT"})
+    this.setState({ selected: newSelected ,columnData},()=>this.setState({data}));
   };
 
   handleChangePage = (event, page) => {
@@ -276,6 +279,7 @@ class EnhancedTable extends React.Component {
               onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
               rowCount={data.length}
+              columnData={this.state.columnData}
             />
             <TableBody>
               {data
