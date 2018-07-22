@@ -5,6 +5,7 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
 import Card from './components/Card'
 import TextField from './components/TextField';
+import EditNetNode from './EditNetNode'
 
 
 class netNodeTable extends Component {
@@ -74,6 +75,8 @@ class netNodeTable extends Component {
         <Card pageName="نودها" content={<SimpleTable
           columns={this.state.response.columns}
           data={this.state.response.netNodesData}
+          editComponent={<EditNetNode/>}
+          viewComponent="ViewNetNode"
         />} />
       </div>
     );

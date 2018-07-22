@@ -33,6 +33,7 @@ const styles = theme => ({
 class SimpleModal extends React.Component {
   state = {
     open: false,
+    components:[],
   };
 
   handleOpen = () => {
@@ -41,15 +42,24 @@ class SimpleModal extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    console.log(this.props)
+    this.props.modalClose()
   };
+  componentWillReceiveProps(){
+    var {open,components}=this.props
+    this.setState({open,components},()=>{
+      console.log("modal State: ", this.state)
+    })
+    
+  }
 
   render() {
     const { classes } = this.props;
 
     return (
       <div>
-        <Typography gutterBottom>Click to get the full Modal experience!</Typography>
-        <Button onClick={this.handleOpen}>Open Modal</Button>
+        {/* <Typography gutterBottom>Click to get the full Modal experience!</Typography>
+        <Button onClick={this.handleOpen}>Open Modal</Button> */}
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -61,7 +71,7 @@ class SimpleModal extends React.Component {
               Text in a modal
             </Typography>
             <Typography variant="subheading" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              {this.state.components}
             </Typography>
             <SimpleModalWrapped />
           </div>

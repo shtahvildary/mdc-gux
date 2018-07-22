@@ -17,10 +17,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import EditIcon from '@material-ui/icons/Edit';
+import ViewListIcon from '@material-ui/icons/ViewList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
+
+import Modal from "./Modal"
 
 
 let counter = 0;
@@ -42,7 +46,7 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount,columnData } = this.props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, columnData } = this.props;
 
     return (
       <TableHead>
@@ -100,13 +104,13 @@ const toolbarStyles = theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   spacer: {
     flex: '1 1 100%',
   },
@@ -119,7 +123,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
+  const { numSelected,dataLength, classes } = props;
 
   return (
     <Toolbar
@@ -130,13 +134,13 @@ let EnhancedTableToolbar = props => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subheading">
-            {numSelected} selected
+            {numSelected} مورد انتخاب شده
           </Typography>
         ) : (
-          <Typography variant="title" id="tableTitle">
-            Nutrition
+            <Typography variant="title" id="tableTitle">
+            تعداد کل: {dataLength}              
           </Typography>
-        )}
+          )}
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
@@ -147,12 +151,12 @@ let EnhancedTableToolbar = props => {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+            <Tooltip title="Filter list">
+              <IconButton aria-label="Filter list">
+                <FilterListIcon />
+              </IconButton>
+            </Tooltip>
+          )}
       </div>
     </Toolbar>
   );
@@ -184,31 +188,35 @@ class EnhancedTable extends React.Component {
 
     this.state = {
       order: 'asc',
-      orderBy:null,
+      orderBy: null,
       selected: [],
       data: [
       ],
-      columnData:[],
+      columnData: [],
       page: 0,
       rowsPerPage: 5,
+
+      editModalOpen:false,
+      viewModalOpen:false,
     };
   }
-  componentWillReceiveProps(newProps){
-    if(newProps.data==this.state.data)return;
-    console.log(newProps)
-    var columns=[];
-    _.mapKeys(newProps.columns,(v,k)=>{
-      columns.push({id:k,label:v})
+  componentWillReceiveProps(newProps) {
+    if (newProps.data == this.state.data) return;
+    console.log('newProps:',newProps.editComponent)
+
+
+    var columns = [];
+    _.mapKeys(newProps.columns, (v, k) => {
+      columns.push({ id: k, label: v })
     })
-    var data=newProps.data.map((d, i) => {
-        d.id=i;
-        return d;
+    var data = newProps.data.map((d, i) => {
+      d.id = i;
+      return d;
     })
-    console.log(columns)
-    console.log(data)
-    var {orderBy}=this.state;
-    if(!orderBy&&columns[0])orderBy=columns[0].id
-    this.setState({columnData:columns,data,orderBy})
+
+    var { orderBy } = this.state;
+    if (!orderBy && columns[0]) orderBy = columns[0].id
+    this.setState({ columnData: columns, data, orderBy })
   }
 
   handleRequestSort = (event, property) => {
@@ -246,7 +254,7 @@ class EnhancedTable extends React.Component {
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1),
       );
-      }
+    }
 
     this.setState({ selected: newSelected });
   };
@@ -261,18 +269,30 @@ class EnhancedTable extends React.Component {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
+  editModal(event){
+    var editModalOpen=!this.state.editModalOpen
+    // return modalOpen
+    this.setState({editModalOpen},()=>{console.log("editModalOpen: ",this.state.editModalOpen)})   
+  }
+
+  viewModal(event){
+    var viewModalOpen=!this.state.viewModalOpen
+    // return modalOpen
+    this.setState({viewModalOpen},()=>{console.log("viewModalOpen: ",this.state.viewModalOpen)})   
+  }
+ 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page,columnData } = this.state;
+    const { data, order, orderBy, selected, rowsPerPage, page, columnData } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} dataLength={data.length}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
-            columnData={columnData}
+              columnData={columnData}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -289,22 +309,37 @@ class EnhancedTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.id)}
+                      // onClick={event => this.handleClick(event, n.id)}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
                       key={n.id}
                       selected={isSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} />
+                      <TableCell padding="checkbox"
+                      onClick={event => this.handleClick(event, n.id)}
+                      >
+                        <Checkbox checked={isSelected}  />
                       </TableCell>
-                      {columnData.map(c=>{
-                        let txt=n[c.id];
-                        if(!txt)txt="-";
-                        if(validator.isURL(txt)&&!validator.isIP(txt))txt=<a href={normUrl(txt)}>مشاهده</a>;
+                      {columnData.map(c => {
+                        let txt = n[c.id];
+                        if (!txt) txt = "-";
+                        if (validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
                         return <TableCell>{txt}</TableCell>
                       })}
+                      <TableCell >
+                      
+                        <IconButton aria-label="Edit" onClick={event=>this.editModal(event)} >
+                          <EditIcon />
+                          {this.state.editComponent}
+                          {/* <Modal open={this.state.editModalOpen} components={[n.name]} close={this.editModal.bind(this)}/> */}
+                        </IconButton>
+                        <IconButton aria-label="View" onClick={event=>this.viewModal(event)} >
+                          <ViewListIcon />
+                          {this.state.viewComponent}
+                          {/* <Modal open={this.state.viewModalOpen} components={[n.name]} close={this.viewModal.bind(this)}/> */}
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                   );
                 })}

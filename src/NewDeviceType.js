@@ -42,7 +42,7 @@ class NewDeviceType extends Component {
   
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if ( this.state.type.length > 0 && this.state.description.length > 0) {
+    if ( this.state.name.length > 0 && this.state.description.length > 0) {
       var payload = {
 
         "name": this.state.name,

@@ -98,8 +98,8 @@ class NewDevice extends Component {
     var vlans,deviceTypes,locations;
     this.callApiMenus('vlans').then(res=>{
       vlans=res.data.vlans
-      console.log("dsgsdgsgsdf")
       this.callApiMenus('devicetypes').then(res=>{
+        console.log("DEVICE TYPES:", res)
         deviceTypes=res.data.deviceTypes
         this.callApiMenus('locations').then(res=>{
           console.log("locations: ",res.data.locations)

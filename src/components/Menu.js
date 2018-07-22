@@ -51,6 +51,7 @@ handleClickListItem = event => {
     this.setState({ selectedIndex: index, anchorEl: null,selectedId:id });
     // var DOMname=this.props.id
     var json={}
+    console.log(json)
     json[this.props.id]=id
     this.props.selectedId(json)
     console.log('json: ',json)

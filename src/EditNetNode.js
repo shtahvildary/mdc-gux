@@ -8,10 +8,11 @@ import Menu from './components/Menu'
 import Card from './components/Card'
 import './index.css';
 import Modal from './components/Modal'
+
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
 
-class NewNetNode extends Component {
+class EditNetNode extends Component {
   constructor(props) {
 
     super(props);
@@ -33,7 +34,8 @@ class NewNetNode extends Component {
       deviceTypes:[],
       devices:[],
     }
-    this.setState({_id,cableNumber,switchId,switchPort,vlanId,type,location}=props)
+    var {_id,cableNumber,switchId,switchPort,vlanId,type,location}=props
+    this.setState({_id,cableNumber,switchId,switchPort,vlanId,type,location})
 
   }
   setId(selectedId) {
@@ -149,7 +151,8 @@ tbxReadValue(input){this.setState(input) }
         <MuiThemeProvider>
           <AppBar title="info sima" />
         </MuiThemeProvider>
-        {this.state.localComponent}
+        
+       
         {/* <Modal components={this.state.localComponent}/> */}
       </div>
     )
