@@ -202,8 +202,6 @@ class EnhancedTable extends React.Component {
   }
   componentWillReceiveProps(newProps) {
     if (newProps.data == this.state.data) return;
-    console.log('newProps:',newProps.editComponent)
-
 
     var columns = [];
     _.mapKeys(newProps.columns, (v, k) => {
@@ -269,11 +267,7 @@ class EnhancedTable extends React.Component {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
-  editModal(event){
-    var editModalOpen=!this.state.editModalOpen
-    // return modalOpen
-    this.setState({editModalOpen},()=>{console.log("editModalOpen: ",this.state.editModalOpen)})   
-  }
+
 
   viewModal(event){
     var viewModalOpen=!this.state.viewModalOpen
@@ -329,10 +323,10 @@ class EnhancedTable extends React.Component {
                       })}
                       <TableCell >
                       
-                        <IconButton aria-label="Edit" onClick={event=>this.editModal(event)} >
+                        <IconButton aria-label="Edit" onClick={event=>this.props.showEdit(n)} >
+                        
                           <EditIcon />
-                          {this.state.editComponent}
-                          {/* <Modal open={this.state.editModalOpen} components={[n.name]} close={this.editModal.bind(this)}/> */}
+                          
                         </IconButton>
                         <IconButton aria-label="View" onClick={event=>this.viewModal(event)} >
                           <ViewListIcon />

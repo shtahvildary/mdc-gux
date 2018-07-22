@@ -33,9 +33,12 @@ class EditNetNode extends Component {
       locations: [],
       deviceTypes:[],
       devices:[],
+
+      editModalOpen:true,
     }
-    var {_id,cableNumber,switchId,switchPort,vlanId,type,location}=props
+    var {_id,cableNumber,switchId,switchPort,vlanId,type,location}=props.netNode
     this.setState({_id,cableNumber,switchId,switchPort,vlanId,type,location})
+    console.log(_id,cableNumber,switchId,switchPort,vlanId,type,location)
 
   }
   setId(selectedId) {
@@ -97,6 +100,7 @@ class EditNetNode extends Component {
     return response;
   };
   componentWillMount() {
+    console.log(this.props)
     var vlans, switches, locations;
     this.callApiMenus('vlans')
       .then(res => {
@@ -108,28 +112,29 @@ class EditNetNode extends Component {
             this.setState({ vlans, switches, locations }, () => {
 
               var localComponent = []
+              var netNode=this.props.netNode
               localComponent.push(
                 
                 <MuiThemeProvider>
                   <div>
                     {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
                     {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-                    <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} defaultValue={this.state.patchPanelNumber} />
+                    <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} defaultValue={netNode.patchPanelNumber} />
                     <br />
-                    <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} defaultValue={this.state.cableNumber} />
+                    <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} defaultValue={netNode.cableNumber} />
                     <br />
-                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)} defaultValue={this.state.vlanId}/>
+                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)} defaultValue={netNode.vlanId}/>
 
                     <br />
-                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} defaultValue={this.state.switchId} />
+                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} defaultValue={netNode.switchId} />
                     <br />
-                    <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} defaultValue={this.state.switchPort} />
+                    <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} defaultValue={netNode.switchPort} />
                     <br />
                      {/* <Menu id="type" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} /> */}
-                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} defaultValue={this.state.device} />
+                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} defaultValue={netNode.device} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
-                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={this.state.location} />
+                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={netNode.location} />
                     <br />
                     <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
                   </div>
@@ -145,15 +150,22 @@ class EditNetNode extends Component {
       .catch(err => console.log(err));
   }
 tbxReadValue(input){this.setState(input) }
+editModal(event){
+  // var editModalOpen=false
+  var editModalOpen=!this.state.editModalOpen
+  // return modalOpen
+  this.setState({editModalOpen},()=>{console.log("editModalOpen: ",this.state.editModalOpen)})   
+}
   render() {
     return (
       <div>
         <MuiThemeProvider>
           <AppBar title="info sima" />
         </MuiThemeProvider>
-        
+        {/* {this.editModal()} */}
+        <Modal open={this.state.editModalOpen} components={this.state.localComponent} close={this.editModal.bind(this)}/>
        
-        {/* <Modal components={this.state.localComponent}/> */}
+        {/* <Modal open="true" components={this.state.localComponent} close=/> */}
       </div>
     )
   }

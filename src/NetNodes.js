@@ -63,6 +63,13 @@ class netNodeTable extends Component {
       .catch(err => console.log(err));
     });
   }
+  showEdit(n){
+this.setState({editComponent:<EditNetNode netNode={n}/>})
+console.log("edit")
+
+console.log(n)
+
+  }
   render() {
 
     return (
@@ -71,12 +78,14 @@ class netNodeTable extends Component {
           <AppBar title="info sima" />
         </MuiThemeProvider>
         <TextField id="search" label="جستجو" change={this.tbxReadValue.bind(this)} />
+        {this.state.editComponent}
         
         <Card pageName="نودها" content={<SimpleTable
           columns={this.state.response.columns}
           data={this.state.response.netNodesData}
-          editComponent={<EditNetNode/>}
+          // editComponent={<EditNetNode/>}
           viewComponent="ViewNetNode"
+          showEdit={this.showEdit.bind(this)}
         />} />
       </div>
     );

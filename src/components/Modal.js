@@ -43,12 +43,14 @@ class SimpleModal extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
     console.log(this.props)
-    this.props.modalClose()
+    this.props.close()
   };
-  componentWillReceiveProps(){
-    var {open,components}=this.props
+  componentWillReceiveProps(newProps){
+    // if(!newProps.components) return
+    if (newProps.components == this.state.components) return;
+
+    var {open,components}=newProps
     this.setState({open,components},()=>{
-      console.log("modal State: ", this.state)
     })
     
   }
