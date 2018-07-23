@@ -24,8 +24,7 @@ import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
 
-import Modal from "./Modal"
-
+import DeleteObjects from "../DeleteObjects"
 
 let counter = 0;
 function createData(name, calories, fat, carbs, protein) {
