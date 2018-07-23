@@ -20,7 +20,7 @@ class NewDevice extends Component {
       description:"",
       deviceType:"",
       model:"", 
-      vlan:"",
+      // vlan:"",
     
       location:"",
       managementUrl:"",
@@ -46,7 +46,7 @@ class NewDevice extends Component {
   saveBtnClick(event) {
     console.log("state: ",this.state)
     //To be done:check for empty values before hitting submit
-    if ( this.state.name.length > 0 && this.state.deviceType.length > 0&& this.state.location.length>0&&this.state.vlan.length>0) {
+    if ( this.state.name.length > 0 && this.state.deviceType.length > 0&& this.state.location.length>0&&this.state.vlanId.length>0) {
       var payload = {
 
         "name": this.state.name,
@@ -99,7 +99,6 @@ class NewDevice extends Component {
     this.callApiMenus('vlans').then(res=>{
       vlans=res.data.vlans
       this.callApiMenus('devicetypes').then(res=>{
-        console.log("DEVICE TYPES:", res)
         deviceTypes=res.data.deviceTypes
         this.callApiMenus('locations').then(res=>{
           console.log("locations: ",res.data.locations)

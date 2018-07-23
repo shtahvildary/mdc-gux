@@ -40,14 +40,13 @@ class NewNetNode extends Component {
   saveBtnClick(event) {
     // var self = this;
     //To be done:check for empty values before hitting submit
+    console.log(this.state)
     if (this.state.patchPanelNumber.length > 0 &&
-      this.state.cableNumber.length > 0 &&
       this.state.switchId.length > 0 &&
       this.state.switchPort.length > 0 &&
       this.state.vlanId.length > 0 &&
       this.state.device.length > 0 &&
-      this.state.location.length > 0&&
-      this.state.type.length > 0 ){
+      this.state.location.length > 0 ){
       var payload = {
         "patchPanelPort": this.state.patchPanelNumber,
         "cableNumber": this.state.cableNumber,
@@ -55,9 +54,10 @@ class NewNetNode extends Component {
         "switchPort": this.state.switchPort,
         "vlan": this.state.vlanId,
         "device": this.state.device,
+        "description": this.state.description,
         "location": this.state.location,
         //
-        "type": this.state.type,
+        // "type": this.state.type,
       }
       this.callApi(payload)
         // axios.post(global.serverAddress+'/switches/new', payload)
@@ -92,15 +92,19 @@ class NewNetNode extends Component {
     return response;
   };
   componentWillMount() {
-    var vlans, switches, locations;
+    var vlans, switches, devices,locations;
     this.callApiMenus('vlans')
       .then(res => {
         vlans = res.data.vlans
         this.callApiMenus('switches').then(res => {
           switches = res.data.switches
+          this.callApiMenus('devices').then(res=>{
+            console.log("devices: ",res)
+            devices=res.data.devices
           this.callApiMenus('locations').then(res => {
             locations = res.data.locations
-            this.setState({ vlans, switches, locations }, () => {
+            this.setState({ vlans, switches,devices, locations }, () => {
+              console.log(this.state.devices)
 
               var localComponent = []
               localComponent.push(
@@ -121,7 +125,7 @@ class NewNetNode extends Component {
                     <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
                     <br />
                      {/* <Menu id="type" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} /> */}
-                     <Menu id="device" name="وسیله" items={this.state.device} selectedId={this.setId.bind(this)} />
+                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
                    <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} />
@@ -134,6 +138,7 @@ class NewNetNode extends Component {
              this.setState({ localComponent: localComponent },()=>{})
             });
           })
+        })
         })
 
       })

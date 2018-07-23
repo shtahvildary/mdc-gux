@@ -31,15 +31,20 @@ componentWillMount(){
   console.log("props.items",this.props.items)
   if(!this.props.items)return;
   var items=[];
+  items[0]=
+  <MenuItem 
+      disabled
+     >انتخاب کنید...</MenuItem>
   this.props.items.map((i,index)=>{
     console.log('i:',i)
     items.push(<MenuItem 
       key={i}
       // disabled={index === 0}
-      selected={index === this.state.selectedIndex}
-      onClick={event => this.handleMenuItemClick(event,index, i._id)}
+      selected={index+1 === this.state.selectedIndex}
+      onClick={event => this.handleMenuItemClick(event,index+1, i._id)}
       >{i.name}</MenuItem>)
   })
+  
   this.setState({items});
 }
 
