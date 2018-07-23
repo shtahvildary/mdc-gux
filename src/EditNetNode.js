@@ -24,22 +24,18 @@ class EditNetNode extends Component {
       switchId: '',
       switchPort: '',
       vlanId: '',
-      type: '',
+      // type: '',
       location: '',
 
       //for use in menu:
       vlans: [],
       switches: [],
       locations: [],
-      deviceTypes:[],
+      // deviceTypes:[],
       devices:[],
 
       editModalOpen:true,
     }
-    var {_id,cableNumber,switchId,switchPort,vlanId,type,location}=props.netNode
-    this.setState({_id,cableNumber,switchId,switchPort,vlanId,type,location})
-    console.log(_id,cableNumber,switchId,switchPort,vlanId,type,location)
-
   }
   setId(selectedId) {
     this.setState(selectedId, () => {
@@ -48,30 +44,34 @@ class EditNetNode extends Component {
   saveBtnClick(event) {
     // var self = this;
     //To be done:check for empty values before hitting submit
-    if (this.state.patchPanelNumber.length > 0 &&
-      this.state.cableNumber.length > 0 &&
-      this.state.switchId.length > 0 &&
-      this.state.switchPort.length > 0 &&
-      this.state.vlanId.length > 0 &&
-      this.state.device.length > 0 &&
-      this.state.location.length > 0&&
-      this.state.type.length > 0 ){
+    console.log("netNode: ",this.state)
+    // if (
+    //   this.state.netNode.patchPanelPort.length > 0 &&
+    //   this.state.netNode.cableNumber.length > 0 &&
+    //   this.state.netNode.switchId.length > 0 &&
+    //   this.state.netNode.switchPort.length > 0 &&
+    //   this.state.netNode.vlanId.length > 0 &&
+    //   this.state.netNode.device.length > 0 &&
+    //   this.state.netNode.location.length > 0 ){
       var payload = {
-        "patchPanelPort": this.state.patchPanelNumber,
+        "_id":this.state._id,
+        "patchPanelPort": this.state.patchPanelPort,
         "cableNumber": this.state.cableNumber,
         "switchId": this.state.switchId,
         "switchPort": this.state.switchPort,
         "vlan": this.state.vlanId,
-        "device": this.state.device,
-        "location": this.state.location,
+        "device": this.state.deviceId,
+        "description": this.state.description,
+        "location": this.state.locationId,
         //
-        "type": this.state.type,
+        // "type": this.state.type,
       }
       this.callApi(payload)
      
         .then(function (response) {
           if (response.status === 200) {
             console.log("update netNode is OK :D");
+            this.editModal
           }
           else {
             console.log("some error ocurred", response.status);
@@ -81,11 +81,11 @@ class EditNetNode extends Component {
           console.log(error);
         });
     }
-    else {
-      alert("Input field value is missing");
-    }
+    // else {
+    //   alert("Input field value is missing");
+    // }
 
-  }
+  // }
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/update', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);
@@ -101,40 +101,50 @@ class EditNetNode extends Component {
   };
   componentWillMount() {
     console.log(this.props)
-    var vlans, switches, locations;
+    var vlans, switches,devices, locations;
+    var { _id,patchPanelPort, cableNumber, switchId, switchPort, vlan, device, description, location,deviceId,locationId,vlanId} = this.props.netNode
+
+
     this.callApiMenus('vlans')
       .then(res => {
         vlans = res.data.vlans
         this.callApiMenus('switches').then(res => {
           switches = res.data.switches
+          this.callApiMenus('devices').then(res => {
+            devices = res.data.devices
           this.callApiMenus('locations').then(res => {
             locations = res.data.locations
-            this.setState({ vlans, switches, locations }, () => {
+            this.setState({ vlans, switches,devices, locations,_id,patchPanelPort, cableNumber, switchId, switchPort, vlan, device, description, location,deviceId,locationId ,vlanId}, () => {
 
               var localComponent = []
-              var netNode=this.props.netNode
+             
+              // this.setState({_id,patchPanelPort,cableNumber,switchName,switchPort,vlan,device,description,location,switchId,vlanId,deviceId,locationId},()=>{console.log("netNode: ",this.state)})
+              // console.log(_id,patchPanelPort,cableNumber,switchName,switchPort,vlan,device,description,location,switchId,vlanId,deviceId,locationId)
+              // console.log("vlanId: ",vlanId)
+              console.log("netNode: ",this.state)
+             
               localComponent.push(
                 
                 <MuiThemeProvider>
                   <div>
                     {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
                     {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-                    <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} defaultValue={netNode.patchPanelNumber} />
+                    <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} defaultValue={this.state.patchPanelPort} />
                     <br />
-                    <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} defaultValue={netNode.cableNumber} />
+                    <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} defaultValue={this.state.cableNumber} />
                     <br />
-                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)} defaultValue={netNode.vlanId}/>
+                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)} defaultValue={this.state.vlanId}/>
 
                     <br />
-                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} defaultValue={netNode.switchId} />
+                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} defaultValue={this.state.switchId} />
                     <br />
-                    <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} defaultValue={netNode.switchPort} />
+                    <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} defaultValue={this.state.switchPort} />
                     <br />
                      {/* <Menu id="type" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} /> */}
-                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} defaultValue={netNode.device} />
+                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} defaultValue={this.state.deviceId} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
-                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={netNode.location} />
+                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={this.state.locationId} />
                     <br />
                     <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
                   </div>
@@ -144,6 +154,7 @@ class EditNetNode extends Component {
              this.setState({ localComponent: localComponent },()=>{})
             });
           })
+        })
         })
 
       })
@@ -162,10 +173,9 @@ editModal(event){
         <MuiThemeProvider>
           <AppBar title="info sima" />
         </MuiThemeProvider>
-        {/* {this.editModal()} */}
+
         <Modal open={this.state.editModalOpen} components={this.state.localComponent} close={this.editModal.bind(this)}/>
        
-        {/* <Modal open="true" components={this.state.localComponent} close=/> */}
       </div>
     )
   }

@@ -28,7 +28,7 @@ class SimpleListMenu extends React.Component {
   }
 
 componentWillMount(){
-  console.log("props.items",this.props.items)
+  console.log("props.items",this.props)
   if(!this.props.items)return;
   var items=[];
   items[0]=
@@ -36,11 +36,11 @@ componentWillMount(){
       disabled
      >انتخاب کنید...</MenuItem>
   this.props.items.map((i,index)=>{
-    console.log('i:',i)
+    console.log('i:',i._id)
     items.push(<MenuItem 
       key={i}
       // disabled={index === 0}
-      selected={index+1 === this.state.selectedIndex}
+      selected={(index+1 === this.state.selectedIndex)||(i._id===this.props.defaultValue)}
       onClick={event => this.handleMenuItemClick(event,index+1, i._id)}
       >{i.name}</MenuItem>)
   })

@@ -8,7 +8,7 @@ import TextField from './components/TextField';
 import EditNetNode from './EditNetNode'
 
 
-class netNodeTable extends Component {
+class netNodes extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,8 +55,6 @@ class netNodeTable extends Component {
       this.callApi("search",input)
       .then(res => {
         this.setState({ response: res.data.netNodes }, () => {
-          
-          // console.log("this.state.response",this.state.response)
           this.setTblData()
         });
       })
@@ -71,7 +69,6 @@ console.log(n)
 
   }
   render() {
-
     return (
       <div>
         <MuiThemeProvider>
@@ -92,4 +89,4 @@ console.log(n)
   }
 }
 
-export default netNodeTable;
+export default netNodes;
