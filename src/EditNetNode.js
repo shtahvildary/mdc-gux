@@ -8,6 +8,7 @@ import Menu from './components/Menu'
 import Card from './components/Card'
 import './index.css';
 import Modal from './components/Modal'
+import Paper from '@material-ui/core/Paper'
 
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
@@ -169,14 +170,11 @@ editModal(event){
 }
   render() {
     return (
+      <Paper>
       <div>
-        <MuiThemeProvider>
-          <AppBar title="info sima" />
-        </MuiThemeProvider>
-
         <Modal open={this.state.editModalOpen} components={this.state.localComponent} close={this.editModal.bind(this)}/>
-       
       </div>
+      </Paper>
     )
   }
 }

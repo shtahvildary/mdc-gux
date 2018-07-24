@@ -327,7 +327,7 @@ class EnhancedTable extends React.Component {
                           <EditIcon />
                           
                         </IconButton>
-                        <IconButton aria-label="View" onClick={event=>this.viewModal(event)} >
+                        <IconButton aria-label="View" onClick={event=>this.props.showView(n)} >
                           <ViewListIcon />
                           {this.state.viewComponent}
                           {/* <Modal open={this.state.viewModalOpen} components={[n.name]} close={this.viewModal.bind(this)}/> */}

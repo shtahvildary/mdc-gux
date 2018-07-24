@@ -73,7 +73,7 @@ handleClickListItem = event => {
     const { anchorEl } = this.state;
     return (
       <div >
-        <Grid item xs={3} justify= 'center'>
+        <Grid item  justify= 'center'>
       {/* <div className={classes.root}> */}
       <List component="nav">
           <ListItem

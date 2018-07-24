@@ -50,8 +50,8 @@ class SimpleCard extends React.Component {
     const { classes } =this.props;
     // const bull = <span className={classes.bullet}>•</span>;
   return (
-    <div className="container">
-      <Card className={classes.card}>
+    <div className="container" >
+      <Card className={classes.card} xs={this.props.xs}>
         <CardContent>
           {/* <Typography className={classes.title} color="textSecondary">
           </Typography> */}

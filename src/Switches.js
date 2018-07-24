@@ -4,6 +4,7 @@ import SimpleTable from "./components/Table";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
 import Card from './components/Card'
+import Search from './components/Search';
 
 class switchesTable extends Component {
   constructor(props) {
@@ -35,7 +36,10 @@ class switchesTable extends Component {
       })
       .catch(err => console.log(err));
   }
+  searchResult(tblData){
+    this.setState({ response: tblData.response.switches }, () => {})
 
+  }
   setTblData() {
     var table = {
       switchesTable: <SimpleTable
@@ -50,9 +54,10 @@ class switchesTable extends Component {
   render() {
     return (
       <div>
-        <MuiThemeProvider>
+        {/* <MuiThemeProvider>
           <AppBar title="info sima" />
-        </MuiThemeProvider>
+        </MuiThemeProvider> */}
+        <Search model="Switches" searchResult={this.searchResult.bind(this)}/>
         <Card pageName="سوییچها" content={
           <SimpleTable
             columns={this.state.response.columns}

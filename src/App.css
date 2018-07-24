@@ -69,7 +69,10 @@
   display: block
 }
 
-
+.myPaper{
+  color: #9196e4;
+  
+}
 
 .btn{
        background-color:lightgray !important;

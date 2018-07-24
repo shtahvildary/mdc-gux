@@ -7,6 +7,7 @@ import MyTextField from './components/TextField';
 import Menu from './components/Menu'
 import Card from './components/Card'
 import './index.css';
+import Grid from "@material-ui/core/Grid"
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
 
@@ -99,39 +100,61 @@ class NewNetNode extends Component {
         this.callApiMenus('switches').then(res => {
           switches = res.data.switches
           this.callApiMenus('devices').then(res=>{
-            console.log("devices: ",res)
             devices=res.data.devices
           this.callApiMenus('locations').then(res => {
             locations = res.data.locations
             this.setState({ vlans, switches,devices, locations }, () => {
-              console.log(this.state.devices)
 
               var localComponent = []
               localComponent.push(
                 
                 <MuiThemeProvider>
                   <div>
-                    {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-                    {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
+        <Grid container spacing={24}>
+                    <Grid item xs>
                     <MyTextField id="patchPanelPort" label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
-                    <br />
+                    </Grid>
+                    <Grid item xs>
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
-                    <br />
+                    {/* <br /> */}
+                    </Grid>
+                    <Grid item xs>
                     <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
+                    </Grid>
+                    </Grid>
+        <Grid container spacing={24}>
 
-                    <br />
+                    <Grid item xs>
+                    {/* <br /> */}
                      <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} />
-                    <br />
+                    {/* <br /> */}
+                    </Grid>
+                    <Grid item xs>
                     <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
-                    <br />
+                    {/* <br /> */}
+                    </Grid>
+                    <Grid item xs>
                      {/* <Menu id="type" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} /> */}
                      <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
-                    <br />
+                    {/* <br /> */}</Grid>
+                    </Grid>
+        <Grid container spacing={24}>
+
+                    <Grid item xs>
                    <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} />
-                    <br />
+                    {/* <br /> */}
+                    </Grid>
+                    <Grid item xs>
+                    <MyTextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
+                    </Grid>
+                    </Grid>
+
                     <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
-                  </div>
+                  {/* </div> */}
+                  
+                    </div>
+
                 </MuiThemeProvider >
                 
               )

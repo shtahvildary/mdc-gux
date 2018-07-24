@@ -24,7 +24,7 @@ import NewLocation from '../NewLocation';
 import NewVlan from '../NewVlan';
 import NewDevice from '../NewDevice';
 import NewDeviceType from '../NewDeviceType';
-import NetNodesCard from '../NetNodesCard';
+import DashboardPage from '../Dashboard';
 // import Index from '../Index'
 
 import Dashboard from '@material-ui/icons/Dashboard';
@@ -192,14 +192,20 @@ class MiniDrawer extends React.Component {
           </ListItem>
           </Link>
 
+          <Link to="/سوییچها">
+          <ListItem>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText>سوییچها</ListItemText>
+          </ListItem>
+          </Link>
+          
+          <Divider />
           <Link to="/نود جدید">
           <ListItem>
           <ListItemIcon><Dashboard /></ListItemIcon>
             <ListItemText>افزودن نود جدید</ListItemText>
           </ListItem>
           </Link>
-          
-          <Divider />
           <Link to="/سوییچ جدید">
           <ListItem>
           <ListItemIcon>
@@ -257,7 +263,7 @@ class MiniDrawer extends React.Component {
 <div className="App">
         
           <Switch>
-            {/* <Route exact path="/" component={Index}/> */}
+            <Route exact path="/" component={DashboardPage}/>
             <Route path="/سوییچها" component={Switches} />
             <Route path="/نودها" component={NetNodes} />
             <Route path="/نود جدید" component={NewNetNode} />
