@@ -3,7 +3,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Drawer from './components/Drawer'
 import './App.css';
-import LoginScreen from './Loginscreen';
+// import LoginScreen from './Loginscreen';
+import LoginScreen from './Login';
 import Header from './components/Header';
 
 
@@ -25,7 +26,7 @@ class App extends Component {
   }
   componentWillMount() {
     var loginPage = [];
-    loginPage.push(<LoginScreen appContext={this} />);
+    loginPage.push(<LoginScreen  appContext={this} />);
     this.setState({
       loginPage: loginPage
     })
@@ -34,7 +35,7 @@ class App extends Component {
     if (!localStorage.getItem('token'))
       return (
 
-        <div className="App">
+        <div className={["App-login"]}>
 
           {this.state.loginPage}</div>)
     else

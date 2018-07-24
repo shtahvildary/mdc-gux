@@ -27,6 +27,16 @@ import NewDeviceType from '../NewDeviceType';
 import NetNodesCard from '../NetNodesCard';
 // import Index from '../Index'
 
+import Dashboard from '@material-ui/icons/Dashboard';
+import Computer from '@material-ui/icons/Computer'
+import Devices from '@material-ui/icons/Devices'
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+// import computerIcon from '../Icons/twotone-computer-24px'
+
 
 const drawerWidth = 240;
 
@@ -162,24 +172,81 @@ class MiniDrawer extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <li><Link to="/">داشبورد</Link></li>
+          <List>
+          <Link to="/">
+          <ListItem>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText>داشبورد</ListItemText>          
+          </ListItem>
+          </Link>
           <Divider />
 
-          <li><Link to="/نودها">نود ها</Link></li>
-          <li><Link to="/سوییچها">سوییچ ها</Link></li>
+          <Link to="/نودها">
+          <ListItem>
+          <ListItemIcon>
+            <Computer />
+            </ListItemIcon>
+            <ListItemText>نود ها  </ListItemText>
+          </ListItem>
+          </Link>
+
+          <Link to="/نود جدید">
+          <ListItem>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText>افزودن نود جدید</ListItemText>
+          </ListItem>
+          </Link>
+          
+          <Divider />
+          <Link to="/سوییچ جدید">
+          <ListItem>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText>افزودن سوییج جدید</ListItemText>
+          </ListItem>
+          </Link>
+          <Link to="/مکان جدید">
+          <ListItem>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText>افزودن مکان جدید</ListItemText>
+          </ListItem>
+          </Link>
+          <Link to="/شبکه مجازی جدید">
+          <ListItem>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText>افزودن شبکه مجازی جدید</ListItemText>
+          </ListItem>
+          </Link>
+          <Link to="/سخت افزار جدید">
+          <ListItem>
+          <ListItemIcon>
+            <Devices />
+            </ListItemIcon>
+            <ListItemText>افزودن سخت افزار جدید</ListItemText>
+          </ListItem>
+          </Link>
+
+          <Link to="/نوع جدید" >
+          <ListItem>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText>افزودن نوع جدید</ListItemText>
+          </ListItem>
+          </Link>
+
           <Divider />
           
-          <li><Link to="/نود جدید">افزودن نود جدید</Link></li>
-          <li><Link to="/سوییچ جدید">افزودن سوییج جدید</Link></li>
-          <li><Link to="/مکان جدید">افزودن مکان جدید</Link></li>
-          <li><Link to="/شبکه مجازی جدید">افزودن شبکه مجازی جدید</Link></li>
-          <li><Link to="/سخت افزار جدید">افزودن سخت افزار جدید</Link></li>
-          <li><Link to="/نوع جدید" >افزودن نوع جدید</Link></li>
+          
 
-          <Divider />
-          <li><Link to="/کارت نودها">کارت نود ها</Link></li>
-
-
+</List>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -199,8 +266,6 @@ class MiniDrawer extends React.Component {
             <Route path="/شبکه مجازی جدید" component={NewVlan} />
             <Route path="/سخت افزار جدید" component={NewDevice} />
             <Route path="/نوع جدید" component={NewDeviceType} />
-          <Route path="/کارت نودها" component={NetNodesCard}/>
-
           </Switch>
          
           </div>

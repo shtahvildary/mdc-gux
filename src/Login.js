@@ -6,6 +6,7 @@ import MyTextField from './components/TextField';
 import axios from 'axios';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import './App.css'
+import Card from "./components/Card"
 // import {Router,BrowserHistory} from 'react-router';
 
 class Login extends Component {
@@ -71,13 +72,10 @@ tbxReadValue(input){this.setState(input) }
     
   render() {
     return (
-      <div>
-        <MuiThemeProvider>
-        <AppBar
-             title="ورود"
-           />
-        </MuiThemeProvider>
-        {this.state.loginComponent}
+      <div className="App-login">
+   
+        <Card pageName="ورود" content={this.state.loginComponent}/>
+        
       </div>
     );
   }

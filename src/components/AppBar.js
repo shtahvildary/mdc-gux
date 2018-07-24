@@ -1,4 +1,5 @@
-import LoginScreen from '../Loginscreen';
+// import LoginScreen from '../Loginscreen';
+import LoginScreen from '../Login';
 
 import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
@@ -71,7 +72,7 @@ class ButtonAppBar extends Component {
     console.log(this.setState.loginPage)
     return (
 
-      <div className="App">
+      <div className="App-login">
 
         {this.state.loginPage}</div>)
 

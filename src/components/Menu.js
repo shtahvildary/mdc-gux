@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Grid from '@material-ui/core/Grid';
 
 
 const styles = theme => ({
@@ -72,6 +73,7 @@ handleClickListItem = event => {
     const { anchorEl } = this.state;
     return (
       <div >
+        <Grid item xs={3} justify= 'center'>
       {/* <div className={classes.root}> */}
       <List component="nav">
           <ListItem
@@ -96,6 +98,7 @@ handleClickListItem = event => {
         
           {this.state.items}
         </Menu>
+        </Grid>
       </div>
     );
   }

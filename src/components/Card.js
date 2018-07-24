@@ -11,7 +11,8 @@ const styles = {
   card: {
     maxWidth:'90%',
     // position:'center',
-    minWidth: 275,
+    minWidth: "auto",
+    // minWidth: 275,
     margin:50,
   },
   bullet: {

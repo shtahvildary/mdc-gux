@@ -53,6 +53,23 @@
 }
 
 /* my css */
+.App-login{
+  /* background-color: rgb(2, 2, 2); */
+  background-image: url("./pics/IMG_302122.jpg");
+  background-size: cover;
+  background-repeat:repeat;
+  background-position: center;
+  height: 100%;
+  /* height: 150px; */
+  /* padding: 20px; */
+  position:center;
+  color: white;
+  direction: rtl;
+  /* backdrop-filter:yellow; */
+  display: block
+}
+
+
 
 .btn{
        background-color:lightgray !important;
