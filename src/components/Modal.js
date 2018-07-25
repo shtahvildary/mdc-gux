@@ -49,8 +49,8 @@ class SimpleModal extends React.Component {
     // if(!newProps.components) return
     if (newProps.components == this.state.components) return;
 
-    var {open,components}=newProps
-    this.setState({open,components},()=>{
+    var {title,open,components}=newProps
+    this.setState({title,open,components},()=>{
     })
     
   }
@@ -70,7 +70,7 @@ class SimpleModal extends React.Component {
         >
           <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="title" id="modal-title">
-              Text in a modal
+              {this.state.title}
             </Typography>
             <Typography variant="subheading" id="simple-modal-description">
               {this.state.components}

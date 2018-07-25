@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import AppBar from '@material-ui/core/AppBar';
 import MyButton from './components/Button';
 import axios from 'axios';
 import MyTextField from './components/TextField';
 import Menu from './components/Menu'
-import Card from './components/Card'
 import './index.css';
 import Modal from './components/Modal'
 import Paper from '@material-ui/core/Paper'
 
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
+
 
 class EditNetNode extends Component {
   constructor(props) {
@@ -35,7 +32,7 @@ class EditNetNode extends Component {
       // deviceTypes:[],
       devices:[],
 
-      editModalOpen:true,
+      open:true,
     }
   }
   setId(selectedId) {
@@ -43,17 +40,6 @@ class EditNetNode extends Component {
     })
   }
   saveBtnClick(event) {
-    // var self = this;
-    //To be done:check for empty values before hitting submit
-    console.log("netNode: ",this.state)
-    // if (
-    //   this.state.netNode.patchPanelPort.length > 0 &&
-    //   this.state.netNode.cableNumber.length > 0 &&
-    //   this.state.netNode.switchId.length > 0 &&
-    //   this.state.netNode.switchPort.length > 0 &&
-    //   this.state.netNode.vlanId.length > 0 &&
-    //   this.state.netNode.device.length > 0 &&
-    //   this.state.netNode.location.length > 0 ){
       var payload = {
         "_id":this.state._id,
         "patchPanelPort": this.state.patchPanelPort,
@@ -82,11 +68,7 @@ class EditNetNode extends Component {
           console.log(error);
         });
     }
-    // else {
-    //   alert("Input field value is missing");
-    // }
-
-  // }
+  
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/update', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);
@@ -100,10 +82,11 @@ class EditNetNode extends Component {
 
     return response;
   };
-  componentWillMount() {
-    console.log(this.props)
+  fillComponent(input){
+    this.setState({ open: input.open })
+
     var vlans, switches,devices, locations;
-    var { _id,patchPanelPort, cableNumber, switchId, switchPort, vlan, device, description, location,deviceId,locationId,vlanId} = this.props.netNode
+    var { _id,patchPanelPort, cableNumber, switchId, switchPort, vlan, device, description, location,deviceId,locationId,vlanId} = input.netNode;
 
 
     this.callApiMenus('vlans')
@@ -118,18 +101,10 @@ class EditNetNode extends Component {
             this.setState({ vlans, switches,devices, locations,_id,patchPanelPort, cableNumber, switchId, switchPort, vlan, device, description, location,deviceId,locationId ,vlanId}, () => {
 
               var localComponent = []
-             
-              // this.setState({_id,patchPanelPort,cableNumber,switchName,switchPort,vlan,device,description,location,switchId,vlanId,deviceId,locationId},()=>{console.log("netNode: ",this.state)})
-              // console.log(_id,patchPanelPort,cableNumber,switchName,switchPort,vlan,device,description,location,switchId,vlanId,deviceId,locationId)
-              // console.log("vlanId: ",vlanId)
-              console.log("netNode: ",this.state)
-             
               localComponent.push(
                 
                 <MuiThemeProvider>
                   <div>
-                    {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-                    {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
                     <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} defaultValue={this.state.patchPanelPort} />
                     <br />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} defaultValue={this.state.cableNumber} />
@@ -161,18 +136,37 @@ class EditNetNode extends Component {
       })
       .catch(err => console.log(err));
   }
+  componentWillMount() {
+    var open = this.props.open
+    this.setState(
+      {
+        open,
+      },
+      () => {
+        this.fillComponent(this.props)
+      }
+    );
+   
+
+    
+  }
+  componentWillReceiveProps(newProps){
+    this.fillComponent(newProps)
+
+  }
 tbxReadValue(input){this.setState(input) }
 editModal(event){
-  // var editModalOpen=false
-  var editModalOpen=!this.state.editModalOpen
-  // return modalOpen
-  this.setState({editModalOpen},()=>{console.log("editModalOpen: ",this.state.editModalOpen)})   
+  
+    var open = !this.state.open;
+    this.setState({ open }, () => {
+    });
+   
 }
   render() {
     return (
       <Paper>
       <div>
-        <Modal open={this.state.editModalOpen} components={this.state.localComponent} close={this.editModal.bind(this)}/>
+        <Modal title="ویرایش نود" open={this.state.open} components={this.state.localComponent} close={this.editModal.bind(this)}/>
       </div>
       </Paper>
     )

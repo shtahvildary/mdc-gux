@@ -1,112 +1,63 @@
 import React, { Component } from "react";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-// import AppBar from '@material-ui/core/AppBar';
-// import MyButton from './components/Button';
-// import axios from 'axios';
-// import MyTextField from './components/TextField';
-// import Menu from './components/Menu'
-// import Card from './components/Card'
+import "./App.css"
 import "./index.css";
 import Modal from "./components/Modal";
 import Paper from "@material-ui/core/Paper";
 
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
-
 class ViewNetNode extends Component {
   constructor(props) {
     super(props);
-    // const { classes } = this.props;
     this.state = {
-      _id: "",
-      cableNumber: "",
-      switchId: "",
-      switchPort: "",
-      vlanId: "",
-      // type: '',
-      location: "",
-
-      //for use in menu:
-      vlans: [],
-      switches: [],
-      locations: [],
-      // deviceTypes:[],
-      devices: [],
-
-      viewModalOpen: true
+      open: true
     };
   }
-
   componentWillMount() {
-    console.log(this.props);
-    var vlans, switches, devices, locations;
-    var {
-      _id,
-      patchPanelPort,
-      cableNumber,
-      switchId,
-      switchPort,
-      vlan,
-      device,
-      description,
-      location,
-      deviceId,
-      locationId,
-      vlanId
-    } = this.props.netNode;
-
+    var open = this.props.open
     this.setState(
       {
-        _id,
-        patchPanelPort,
-        cableNumber,
-        switchId,
-        switchPort,
-        vlan,
-        device,
-        description,
-        location,
-        deviceId,
-        locationId,
-        vlanId
+        open,
       },
       () => {
-        var localComponent = [];
-        console.log("netNode: ", this.state);
-
-        localComponent.push(
-          <MuiThemeProvider>
-            <div>
-              {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-              {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-              <p>شماره patch panel: {this.state.patchPanelPort} </p>
-              <p>شماره کابل: {this.state.cableNumber} </p>
-              <p>شبکه مجازی: {this.state.vlanId} </p>
-              <p>سوییچ: {this.state.switchId} </p>
-              <p>شماره پورت سوییچ: {this.state.switchPort} </p>
-              <p>وسیله: {this.state.deviceId} </p>
-              <p>مکان: {this.state.locationId} </p>
-            </div>
-          </MuiThemeProvider>
-        );
-        this.setState({ localComponent: localComponent }, () => {});
+        this.fillComponent(this.props)
       }
     );
   }
+  fillComponent(input) {
+    var localComponent = [];
+    console.log("netNode: ", input);
+    this.setState({ open: input.open })
+
+    localComponent.push(
+      <MuiThemeProvider>
+        <div>
+          <p>شماره patch panel: {input.netNode.patchPanelPort} </p>
+          <p>شماره کابل: {input.netNode.cableNumber} </p>
+          <p>شبکه مجازی: {input.netNode.vlan} </p>
+          <p>سوییچ: {input.netNode.switchName} </p>
+          <p>شماره پورت سوییچ: {input.netNode.switchPort} </p>
+          <p>وسیله: {input.netNode.device} </p>
+          <p>مکان: {input.netNode.location} </p>
+        </div>
+      </MuiThemeProvider>
+    );
+    this.setState({ localComponent: localComponent }, () => { });
+
+  }
+  componentWillReceiveProps(newProps) {
+    this.fillComponent(newProps)
+  }
   viewModal(event) {
-    // var viewModalOpen=false
-    var viewModalOpen = !this.state.viewModalOpen;
-    // return modalOpen
-    this.setState({ viewModalOpen }, () => {
-      console.log("viewModalOpen: ", this.state.viewModalOpen);
+    var open = !this.state.open;
+    this.setState({ open }, () => {
     });
   }
   render() {
     return (
-      <Paper>
+      <Paper >
         <div>
-          <Modal
-            open={this.state.viewModalOpen}
+          <Modal title="مشخصات نود"
+            open={this.state.open}
             components={this.state.localComponent}
             close={this.viewModal.bind(this)}
           />
@@ -115,5 +66,4 @@ class ViewNetNode extends Component {
     );
   }
 }
-
 export default ViewNetNode;

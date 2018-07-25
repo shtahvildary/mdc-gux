@@ -16,6 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add'
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';
 import ViewListIcon from '@material-ui/icons/ViewList';
@@ -26,11 +27,6 @@ import normUrl from "normalize-url"
 
 import DeleteObjects from "../DeleteObjects"
 
-let counter = 0;
-function createData(name, calories, fat, carbs, protein) {
-  counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
-}
 
 function getSorting(order, orderBy) {
   return order === 'desc'
@@ -120,9 +116,9 @@ const toolbarStyles = theme => ({
     flex: '0 0 auto',
   },
 });
-
 let EnhancedTableToolbar = props => {
-  const { numSelected,dataLength, classes } = props;
+
+  const { numSelected, dataLength, classes, addNew } = props;
 
   return (
     <Toolbar
@@ -137,12 +133,13 @@ let EnhancedTableToolbar = props => {
           </Typography>
         ) : (
             <Typography variant="title" id="tableTitle">
-            تعداد کل: {dataLength}              
-          </Typography>
+              تعداد کل: {dataLength}
+            </Typography>
           )}
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
+
         {numSelected > 0 ? (
           <Tooltip title="Delete">
             <IconButton aria-label="Delete">
@@ -150,12 +147,20 @@ let EnhancedTableToolbar = props => {
             </IconButton>
           </Tooltip>
         ) : (
-            <Tooltip title="Filter list">
-              <IconButton aria-label="Filter list">
-                <FilterListIcon />
+            <Tooltip title="New">
+              <IconButton aria-label="New" onClick={event => addNew()}>
+                <AddIcon />
               </IconButton>
             </Tooltip>
-          )}
+          )
+          // : (
+          //     <Tooltip title="Filter list">
+          //       <IconButton aria-label="Filter list">
+          //         <FilterListIcon />
+          //       </IconButton>
+          //     </Tooltip>
+          //   )
+        }
       </div>
     </Toolbar>
   );
@@ -194,9 +199,6 @@ class EnhancedTable extends React.Component {
       columnData: [],
       page: 0,
       rowsPerPage: 5,
-
-      editModalOpen:false,
-      viewModalOpen:false,
     };
   }
   componentWillReceiveProps(newProps) {
@@ -210,10 +212,10 @@ class EnhancedTable extends React.Component {
       d.id = i;
       return d;
     })
-
+    var addNew = newProps.addNew
     var { orderBy } = this.state;
     if (!orderBy && columns[0]) orderBy = columns[0].id
-    this.setState({ columnData: columns, data, orderBy })
+    this.setState({ columnData: columns, data, orderBy, addNew })
   }
 
   handleRequestSort = (event, property) => {
@@ -267,24 +269,18 @@ class EnhancedTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
 
-
-  viewModal(event){
-    var viewModalOpen=!this.state.viewModalOpen
-    // return modalOpen
-    this.setState({viewModalOpen},()=>{console.log("viewModalOpen: ",this.state.viewModalOpen)})   
-  }
- 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page, columnData } = this.state;
+    const { data, order, orderBy, selected, rowsPerPage, page, columnData, addNew } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} dataLength={data.length}/>
+        <EnhancedTableToolbar addNew={addNew} numSelected={selected.length} dataLength={data.length} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
+
               columnData={columnData}
               numSelected={selected.length}
               order={order}
@@ -302,7 +298,6 @@ class EnhancedTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      // onClick={event => this.handleClick(event, n.id)}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
@@ -310,9 +305,9 @@ class EnhancedTable extends React.Component {
                       selected={isSelected}
                     >
                       <TableCell padding="checkbox"
-                      onClick={event => this.handleClick(event, n.id)}
+                        onClick={event => this.handleClick(event, n.id)}
                       >
-                        <Checkbox checked={isSelected}  />
+                        <Checkbox checked={isSelected} />
                       </TableCell>
                       {columnData.map(c => {
                         let txt = n[c.id];
@@ -321,16 +316,11 @@ class EnhancedTable extends React.Component {
                         return <TableCell>{txt}</TableCell>
                       })}
                       <TableCell >
-                      
-                        <IconButton aria-label="Edit" onClick={event=>this.props.showEdit(n)} >
-                        
+                        <IconButton aria-label="Edit" onClick={event => this.props.showEdit(n)} >
                           <EditIcon />
-                          
                         </IconButton>
-                        <IconButton aria-label="View" onClick={event=>this.props.showView(n)} >
+                        <IconButton aria-label="View" onClick={event => this.props.showView(n)} >
                           <ViewListIcon />
-                          {this.state.viewComponent}
-                          {/* <Modal open={this.state.viewModalOpen} components={[n.name]} close={this.viewModal.bind(this)}/> */}
                         </IconButton>
                       </TableCell>
                     </TableRow>
