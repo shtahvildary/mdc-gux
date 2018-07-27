@@ -10,10 +10,12 @@
   }
   body{
     font-family: 'BBadr' !important;
+    height: 100%;
   }
 .App {
   text-align: center;
   direction: rtl;
+  
 }
 
 .App-logo {
@@ -54,8 +56,10 @@
 
 /* my css */
 .App-login{
+  text-align: center;
+  direction: rtl;
   /* background-color: rgb(2, 2, 2); */
-  background-image: url("./pics/IMG_302122.jpg");
+  background-image: url("./pics/google_datacenter-wallpaper-960x600.jpg");
   background-size: cover;
   background-repeat:repeat;
   background-position: center;

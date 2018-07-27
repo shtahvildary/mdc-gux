@@ -25,25 +25,24 @@ class App extends Component {
     }
   }
   componentWillMount() {
-    var loginPage = [];
-    loginPage.push(<LoginScreen  appContext={this} />);
-    this.setState({
-      loginPage: loginPage
-    })
+    
   }
   render() {
     if (!localStorage.getItem('token'))
       return (
-
-        <div className={["App-login"]}>
-
-          {this.state.loginPage}</div>)
-    else
-
-      return (
-        <div dir="rtl">
         <muiThemeable>
-          <Header />
+          <Header/>
+        <div className={["App-login"]}>
+        <LoginScreen  appContext={this} />
+          </div>
+          </muiThemeable>
+          
+        )
+    else
+      return (
+        <div dir="rtl" >
+        <muiThemeable>
+          {/* <Header /> */}
           <Drawer  />
         </muiThemeable>
         </div>

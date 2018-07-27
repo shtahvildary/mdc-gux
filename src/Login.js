@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import AppBar from '@material-ui/core/AppBar';
+// import AppBar from '@material-ui/core/AppBar';
 import MyButton from './components/Button';
 import MyTextField from './components/TextField';
 import axios from 'axios';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
+import Card from "./components/Card";
 import './App.css'
-import Card from "./components/Card"
+// import red from '@material-ui/core/colors/blue';
 // import {Router,BrowserHistory} from 'react-router';
 
 class Login extends Component {
@@ -16,7 +17,7 @@ class Login extends Component {
     var localloginComponent=[];
     localloginComponent.push(
       <MuiThemeProvider>
-        <div className="App">
+        <div >
         <form className={classes.container} noValidate autoComplete="off">
         <MyTextField id="username" label="نام کاربری" change={this.tbxReadValue.bind(this)}/>  
          <br/>
@@ -72,16 +73,28 @@ tbxReadValue(input){this.setState(input) }
     
   render() {
     return (
-      <div className="App-login">
-   
+      <div className="App-Login">
         <Card pageName="ورود" content={this.state.loginComponent}/>
-        
-      </div>
+    </div>
     );
   }
 }
 
 const style = {
   margin: 15,
+  // body:{ /* background-color: rgb(2, 2, 2); */
+  //   // backgroundImage: url("./pics/IMG_302122.jpg"),
+  //   backgroundSize: "cover",
+  //   backgroundRepeat:"repeat",
+  //   backgroundPosition: "center",
+  //   backgroundColor:red,
+  //   height: "100%",
+  //   /* height: 150px; */
+  //   /* padding: 20px; */
+  //   position:"center",
+  //   color: "white",
+  //   direction: "rtl",
+  //   /* backdrop-filter:yellow; */
+  //   display: "block"}
 };
 export default withStyles(style)(Login)

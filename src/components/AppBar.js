@@ -72,7 +72,7 @@ class ButtonAppBar extends Component {
     console.log(this.setState.loginPage)
     return (
 
-      <div className="App-login">
+      <div>
 
         {this.state.loginPage}</div>)
 
