@@ -17,11 +17,9 @@ class netNodes extends Component {
       columns: {},
       search: ""
     };
-    <div>
-    <Switch>
-          <Route path="/نود جدید" component={NewNetNode} />
-        </Switch>
-        </div>
+   
+    
+    
   }
   callApi = async (path, payload) => {
     // console.log(path,payload)
@@ -36,7 +34,7 @@ class netNodes extends Component {
     return response;
   };
   componentWillMount() {
-    this.callApi("all", "")
+    this.callApi("all","")
       .then(res => {
         this.setState({ response: res.data.netNodes }, () => {
           this.setTblData();
@@ -64,6 +62,8 @@ class netNodes extends Component {
         .catch(err => console.log(err));
     });
   }
+  
+
   addNew() {
     console.log("hiiiii")
     // var path=addNew.path
@@ -89,6 +89,14 @@ class netNodes extends Component {
     console.log(tblData.response.netNodes);
   }
   render() {
+        // var sw=[]
+        // sw.push(<Switch>
+        //   <Route path="/نود جدید" component={NewNetNode} />
+        // </Switch>)
+        // var r=[]
+        // r.push(<Link to="/نود جدید" />)
+
+        
         
     return (
       <div>
@@ -99,7 +107,8 @@ class netNodes extends Component {
           pageName="نودها"
           content={
             <SimpleTable
-              addNew={this.addNew.bind(this)}
+              // addNew={this.addNew.bind(this)}
+              addNew={{path:"/نود جدید",link:"/نود جدید",component:NewNetNode}}
               columns={this.state.response.columns}
               data={this.state.response.netNodesData}
               showView={this.showView.bind(this)}

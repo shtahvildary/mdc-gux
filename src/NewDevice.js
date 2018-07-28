@@ -20,17 +20,11 @@ class NewDevice extends Component {
       description:"",
       deviceType:"",
       model:"", 
+      code:"",
       // vlan:"",
-    
-      location:"",
       managementUrl:"",
-     
-      //wifi:
-      password:"",
-      channel:"",
-
-      //todo: add pc config
-      
+      department:"",
+      specialProperties:{},
     }
     
   }
@@ -46,7 +40,7 @@ class NewDevice extends Component {
   saveBtnClick(event) {
     console.log("state: ",this.state)
     //To be done:check for empty values before hitting submit
-    if ( this.state.name.length > 0 && this.state.deviceType.length > 0&& this.state.location.length>0&&this.state.vlanId.length>0) {
+    if ( this.state.name.length > 0 && this.state.deviceType.length > 0&& this.state.department.length>0) {
       var payload = {
 
         "name": this.state.name,
@@ -54,15 +48,11 @@ class NewDevice extends Component {
         "description": this.state.description,
         "deviceType": this.state.deviceType,
         "model": this.state.model,
-        "vlan": this.state.vlan,
-        "location": this.state.location,
+        "code": this.state.code,
+        "department": this.state.department,
         "managementUrl": this.state.managementUrl,
-       
-        //wifi:
-        "password": this.state.password,
-        "channel": this.state.channel,
-  
-        //todo: add pc config
+        "specialProperties":this.state.specialProperties,
+
       }
       this.callApi(payload)
         .then(function (response) {
@@ -95,21 +85,21 @@ class NewDevice extends Component {
     return response;
   };
   componentWillMount(){
-    var vlans,deviceTypes,locations;
-    this.callApiMenus('vlans').then(res=>{
-      vlans=res.data.vlans
+    var vlans,deviceTypes,departments;
+    
       this.callApiMenus('devicetypes').then(res=>{
         deviceTypes=res.data.deviceTypes
-        this.callApiMenus('locations').then(res=>{
-          console.log("locations: ",res.data.locations)
-          locations=res.data.locations
-        this.setState({vlans,deviceTypes,locations},()=>{
+        console.log("sp: ",deviceTypes )
+
+        this.callApiMenus('departments').then(res=>{
+          console.log("departments: ",res.data.departments)
+          departments=res.data.departments
+        this.setState({vlans,deviceTypes,departments},()=>{
           var localComponent = []
     localComponent.push(
       <MuiThemeProvider>
         <div>
-          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
+
           <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} />
           <br />
           <TextField id="ip" label="ip" change={this.tbxReadValue.bind(this)} />
@@ -119,14 +109,13 @@ class NewDevice extends Component {
           <Menu id="deviceType" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} />
           
           <br /><TextField id="model" label="مدل" change={this.tbxReadValue.bind(this)} />
-          <br /><Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
+          <br /><TextField id="code" label="شماره اموال" change={this.tbxReadValue.bind(this)} />
+         <div id="specialProperties"></div>
           <br />
-          <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} />
+          <Menu id="department" name="واحد" items={this.state.departments} selectedId={this.setId.bind(this)} />
           <br /><TextField id="managementUrl" label="آدرس url" change={this.tbxReadValue.bind(this)} />
 
-          {/* wifi: */}
-          <br /><TextField id="password" type="password" label="کلمه عبور" change={this.tbxReadValue.bind(this)} />
-          <br /><TextField id="channel" label="کانال" change={this.tbxReadValue.bind(this)} />
+  {}
           <br />
           <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
         </div>
@@ -140,7 +129,7 @@ class NewDevice extends Component {
         })
       })
       })
-    })
+    
     .catch(err=>console.log(err));
   }
   render() {

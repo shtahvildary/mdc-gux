@@ -25,6 +25,11 @@ import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
 
+import { Link, Route, Switch } from 'react-router-dom';
+import NewNetNode from "../NewNetNode";
+
+
+
 import DeleteObjects from "../DeleteObjects"
 
 
@@ -119,6 +124,12 @@ const toolbarStyles = theme => ({
 let EnhancedTableToolbar = props => {
 
   const { numSelected, dataLength, classes, addNew } = props;
+  
+  if(addNew){
+    <Switch>
+    <Route path={addNew.path} component={addNew.component} /> 
+    </Switch> 
+  }
 
   return (
     <Toolbar
@@ -146,12 +157,15 @@ let EnhancedTableToolbar = props => {
               <DeleteIcon />
             </IconButton>
           </Tooltip>
-        ) : (
+        ) : (addNew?(
             <Tooltip title="New">
-              <IconButton aria-label="New" onClick={event => addNew()}>
+           
+               <IconButton aria-label="New" component={Link} to={addNew.link}>
+              {/* // <IconButton aria-label="New" onClick={event => addNew()}> */}
                 <AddIcon />
               </IconButton>
             </Tooltip>
+          ):('')
           )
           // : (
           //     <Tooltip title="Filter list">
@@ -215,7 +229,7 @@ class EnhancedTable extends React.Component {
     var addNew = newProps.addNew
     var { orderBy } = this.state;
     if (!orderBy && columns[0]) orderBy = columns[0].id
-    this.setState({ columnData: columns, data, orderBy, addNew })
+    this.setState({ columnData: columns, data, orderBy, addNew }) 
   }
 
   handleRequestSort = (event, property) => {
@@ -272,6 +286,7 @@ class EnhancedTable extends React.Component {
   render() {
     const { classes } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page, columnData, addNew } = this.state;
+    console.log(addNew)
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
