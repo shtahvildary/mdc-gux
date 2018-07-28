@@ -26,7 +26,7 @@ import validator from "validator"
 import normUrl from "normalize-url"
 
 import { Link, Route, Switch } from 'react-router-dom';
-import NewNetNode from "../NewNetNode";
+
 
 
 
