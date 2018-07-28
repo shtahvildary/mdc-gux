@@ -12,33 +12,55 @@ class NewDevice extends Component {
   constructor(props) {
 
     super(props);
-    // const { classes } = this.props;
     this.state = {
-      
       name:"",
       ip:"",
       description:"",
       deviceType:"",
       model:"", 
       code:"",
-      // vlan:"",
       managementUrl:"",
       department:"",
-      specialProperties:{},
+      specialProperties:[],
+      spTbx:[],
     }
     
   }
   tbxReadValue(input) {
     this.setState(input);
-    console.log(input)
   }
-  setId(selectedId) {
+  tbxSpReadValue(input){
+    var specialProperties=this.state.specialProperties;
+    var ind=specialProperties.findIndex(i=>i.name==Object.keys(input)[0])
+    var key=Object.keys(input)[0];
+    if(ind==-1)specialProperties.push({name:key,value:input[key]});
+    else specialProperties[ind]={name:key,value:input[key]};
+    this.setState({specialProperties},()=>{
+
+    })
+  }
+  setId(selectedId){
+    this.setState(selectedId, () => {})
+
+  }
+  setDeviceType(selectedId) {
     this.setState(selectedId, () => {
-      console.log(selectedId)
+      var index=this.state.deviceTypes.findIndex(i=>i._id==selectedId.deviceType)
+      var spTbx=[]
+      var sp=this.state.deviceTypes[index].specialProperties
+      if(sp)
+      sp.map(i=>{
+      spTbx.push(
+        <TextField id={i.en} label={i.fa} 
+        change={this.tbxSpReadValue.bind(this)} 
+        />
+      )})
+      this.setState({spTbx:spTbx},()=>{
+        this.setLocalComponent()
+      })
     })
   }
   saveBtnClick(event) {
-    console.log("state: ",this.state)
     //To be done:check for empty values before hitting submit
     if ( this.state.name.length > 0 && this.state.deviceType.length > 0&& this.state.department.length>0) {
       var payload = {
@@ -56,7 +78,6 @@ class NewDevice extends Component {
       }
       this.callApi(payload)
         .then(function (response) {
-          console.log(response);
           if (response.status === 200) {
             console.log("add new device is OK :D");
           }
@@ -84,18 +105,8 @@ class NewDevice extends Component {
 
     return response;
   };
-  componentWillMount(){
-    var vlans,deviceTypes,departments;
-    
-      this.callApiMenus('devicetypes').then(res=>{
-        deviceTypes=res.data.deviceTypes
-        console.log("sp: ",deviceTypes )
-
-        this.callApiMenus('departments').then(res=>{
-          console.log("departments: ",res.data.departments)
-          departments=res.data.departments
-        this.setState({vlans,deviceTypes,departments},()=>{
-          var localComponent = []
+  setLocalComponent(){
+    var localComponent = []
     localComponent.push(
       <MuiThemeProvider>
         <div>
@@ -106,7 +117,8 @@ class NewDevice extends Component {
           <br />
           <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
           <br />
-          <Menu id="deviceType" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} />
+          <Menu id="deviceType" name="نوع" items={this.state.deviceTypes} selectedId={this.setDeviceType.bind(this)} />
+          {this.state.spTbx}
           
           <br /><TextField id="model" label="مدل" change={this.tbxReadValue.bind(this)} />
           <br /><TextField id="code" label="شماره اموال" change={this.tbxReadValue.bind(this)} />
@@ -114,18 +126,27 @@ class NewDevice extends Component {
           <br />
           <Menu id="department" name="واحد" items={this.state.departments} selectedId={this.setId.bind(this)} />
           <br /><TextField id="managementUrl" label="آدرس url" change={this.tbxReadValue.bind(this)} />
-
-  {}
+          <br/>
+          
           <br />
           <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
         </div>
       </MuiThemeProvider>
     )
     this.setState({ localComponent: localComponent },()=>{
-
-      console.log("local component: ",this.state.localComponent)
     })
     
+  }
+  componentWillMount(){
+    var deviceTypes,departments;
+    
+      this.callApiMenus('devicetypes').then(res=>{
+        deviceTypes=res.data.deviceTypes
+
+        this.callApiMenus('departments').then(res=>{
+          departments=res.data.departments
+        this.setState({deviceTypes,departments},()=>{
+          this.setLocalComponent()    
         })
       })
       })
