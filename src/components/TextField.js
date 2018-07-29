@@ -79,7 +79,6 @@ class TextFields extends React.Component {
         type={this.state.type}
         InputLabelProps={this.state.InputLabelProps}
         helperText={this.state.helperText}
-
       />
 
       // InputProps={{

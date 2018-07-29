@@ -20,6 +20,7 @@ class EditLocation extends Component {
       
 
       _id:'',
+      name:'',
       building: '',
       floor: '',
       halfFloor: '',
@@ -37,6 +38,7 @@ class EditLocation extends Component {
   saveBtnClick(event) {
       var payload = {
         "_id":this.state._id,
+        "name":this.state.name,
         "building": this.state.building,
         "floor": this.state.floor,
         "halfFloor": this.state.halfFloor,
@@ -78,9 +80,10 @@ class EditLocation extends Component {
                 
                 <MuiThemeProvider>
                   <div>
-                    <TextField id="building" label="ساختمان" change={this.tbxReadValue.bind(this)} defaultValue={this.state.patchPanelPort} />
+                  <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} defaultValue={this.state.name} />
+                  <br/><TextField id="building" label="ساختمان" change={this.tbxReadValue.bind(this)} defaultValue={this.state.building} />
                     <br />
-          <Radiogroup items={[{label:"طبقه",value:0},{label:"نیم طبقه",value:1}]} selectedValue={this.setValue.bind(this)}/>
+          <Radiogroup items={[{label:"طبقه",value:"floor"},{label:"نیم طبقه",value:"halfFloor"}]} selectedValue={this.setValue.bind(this)}/>
                    
                     <br />
                     <TextField
@@ -92,6 +95,7 @@ class EditLocation extends Component {
           <TextField
             id="room"
             label="اتاق"
+            defaultValue={this.state.room}
             change={this.tbxReadValue.bind(this)}
           />
           <br />
@@ -107,11 +111,12 @@ class EditLocation extends Component {
                 
               )
              this.setState({ localComponent: localComponent },()=>{})
-            
-          
-
       })
-      .catch(err => console.log(err));
+      
+  }
+  setValue(value){
+    this.setState({halfFloor:value},()=>{})
+    
   }
   componentWillMount() {
     var open = this.props.open

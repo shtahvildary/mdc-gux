@@ -14,7 +14,7 @@ import Table2 from './components/Table2';
 import NewNetNode from "./NewNetNode"
 import netNodeTable from './NetNodes';
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-// import { muiThemeable } from '@material-ui/core/styles/muiThemeable';
+// import { MuiThemeable } from '@material-ui/core/styles/MuiThemeable';
 
 import Drawer from '@material-ui/core/Drawer';
 import PropTypes from 'prop-types';
@@ -256,7 +256,7 @@ class App extends Component {
         </div>         
           )
           return(
-            <muiThemeable>
+            <MuiThemeable>
           <Drawer elements={this.elements}/>
             
           <div className="App">
@@ -269,10 +269,10 @@ class App extends Component {
             <div><h1>...net nodes...</h1></div>
           <netNodeTable/>
           </div>
-          </muiThemeable>
+          </MuiThemeable>
         )
           case 11: return(
-            <muiThemeable>
+            <MuiThemeable>
           <div className="App">
             {/* <AppBar/> */}
 
@@ -284,12 +284,12 @@ class App extends Component {
             <div><h1>...net nodes...</h1></div>
           <NewNetNode/>
           </div>
-</muiThemeable>
+</MuiThemeable>
 
         )
         default:
         return(
-          <muiThemeable>
+          <MuiThemeable>
           <div className="App">
  {/* <AppBar classes={{
   root: {
@@ -322,7 +322,7 @@ class App extends Component {
         {/* <Table2/> */}
         {/* <NewNetNode/> */}
       </div>
-</muiThemeable>
+</MuiThemeable>
     );
   }
   }

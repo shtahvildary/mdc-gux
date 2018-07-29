@@ -62,10 +62,10 @@ class SimpleCard extends React.Component {
           {/* <Typography className={classes.pos} color="textSecondary">
             adjective
           </Typography> */}
-          <Typography component="p">
+          {/* <Typography component="p"> */}
             
             {this.props.content}
-          </Typography>
+          {/* </Typography> */}
         </CardContent>
         {/* <CardActions>
           <Button size="small">Learn More</Button>

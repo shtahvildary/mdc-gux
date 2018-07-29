@@ -207,21 +207,16 @@ class MiniDrawer extends React.Component {
           </ListItem>
           </Link>
 
+          
           <Divider />
+
           <Link to="/نود جدید">
           <ListItem>
           <ListItemIcon><Dashboard /></ListItemIcon>
             <ListItemText>افزودن نود جدید</ListItemText>
           </ListItem>
           </Link>
-          <Link to="/سوییچ جدید">
-          <ListItem>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText>افزودن سوییج جدید</ListItemText>
-          </ListItem>
-          </Link>
+          
           <Link to="/مکان جدید">
           <ListItem>
           <ListItemIcon>
@@ -238,6 +233,7 @@ class MiniDrawer extends React.Component {
             <ListItemText>افزودن شبکه مجازی جدید</ListItemText>
           </ListItem>
           </Link>
+          
           <Link to="/سخت افزار جدید">
           <ListItem>
           <ListItemIcon>

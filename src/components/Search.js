@@ -31,6 +31,7 @@ class Search extends Component {
           console.log("model: ",this.state.model)
           this.callApi(this.state.model,input)
           .then(res => {
+            console.log(res)
             this.props.searchResult({ response: res.data })
           })
           .catch(err => console.log(err));
@@ -39,7 +40,7 @@ class Search extends Component {
       render() {
         return (
           <div>
-              <Grid xs={24}>
+              <Grid item xs={12}>
             <TextField  type="search" margin="normal" xs id="search" label="جستجو" change={(event) => this.tbxReadValue(event)}/>
             </Grid>
           </div>

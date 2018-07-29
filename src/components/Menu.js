@@ -68,8 +68,7 @@ handleClickListItem = event => {
     // const { classes } = this.props;
     const { anchorEl } = this.state;
     return (
-      <div >
-        <Grid item  justify= 'center'>
+        <Grid container  justify= 'center'>
       {/* <div className={classes.root}> */}
       <List component="nav">
           <ListItem
@@ -95,7 +94,6 @@ handleClickListItem = event => {
           {this.state.items}
         </Menu>
         </Grid>
-      </div>
     );
   }
 }

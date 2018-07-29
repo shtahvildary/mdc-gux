@@ -109,7 +109,6 @@ class NewDevice extends Component {
     var localComponent = []
     localComponent.push(
       <MuiThemeProvider>
-        <div>
 
           <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} />
           <br />
@@ -130,7 +129,6 @@ class NewDevice extends Component {
           
           <br />
           <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
-        </div>
       </MuiThemeProvider>
     )
     this.setState({ localComponent: localComponent },()=>{

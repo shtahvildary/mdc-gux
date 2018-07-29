@@ -60,14 +60,14 @@ class App extends Component {
         else
   
         return(
-          <muiThemeable>
+          <MuiThemeable>
           <Header/>
         {/* <p className="App-intro">{this.state.response}</p> */}
         {/* <div><h1>...net nodes...</h1></div> */}
         <Drawer elements={[<Switches/>]}/>
         {/* <Drawer elements={[<Switches/>,<Header/>]}/> */}
       
-</muiThemeable>
+</MuiThemeable>
     );
   }
   }

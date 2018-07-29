@@ -70,8 +70,9 @@ class locations extends Component {
     this.setState({ viewComponent: <ViewLocation location={n} open="true" /> });
   }
   searchResult(tblData) {
+
     this.setState({ response: tblData.response.locations }, () => { });
-    console.log(tblData.response.locations);
+    console.log(tblData);
   }
   render() {
     console.log(this.state)

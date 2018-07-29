@@ -22,7 +22,7 @@ const styles = theme => ({
 
 class RadioButtonsGroup extends React.Component {
   state = {
-    value: 0,
+    value: "",
     items:[],
     radioList:[],
   };

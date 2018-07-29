@@ -33,11 +33,9 @@ class OutlinedButtons extends React.Component {
     }
     render() {
         return (
-            <div>
                 <Button id={this.props.id} variant="outlined" color="primary" className={this.state.classes.button} onClick={(event) => this.handleClick(event)}>
                     {this.state.label}
                 </Button>
-            </div>
         );
     }
 }
