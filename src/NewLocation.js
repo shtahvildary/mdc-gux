@@ -6,6 +6,7 @@ import axios from "axios";
 import TextField from "./components/TextField";
 import "./index.css";
 import Card from "./components/Card"
+import Radiogroup from "./components/Radiogroup";
 
 class NewLocation extends Component {
   constructor(props) {
@@ -19,11 +20,30 @@ class NewLocation extends Component {
     localComponent.push(
       <MuiThemeProvider>
         <div>
-          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-          <TextField
+          {/* <TextField
             id="name"
             label="نام"
+            change={this.tbxReadValue.bind(this)}
+          />
+        */}
+          <br />
+          <TextField
+            id="building"
+            label="ساختمان"
+            change={this.tbxReadValue.bind(this)}
+          />
+          <br />
+          <Radiogroup items={[{label:"طبقه",value:0},{label:"نیم طبقه",value:1}]} selectedValue={this.setValue.bind(this)}/>
+          {/* <Radiogroup items={[{label:"طبقه",value:0},{label:"نیم طبقه",value:1}]} selectedValue={this.createTbx.bind(this)}/> */}
+          <TextField
+            id="fHf"
+            label="شماره طبقه یا نیم طبقه"
+            change={this.tbxReadValue.bind(this)}
+          />
+          <br/>
+          <TextField
+            id="room"
+            label="اتاق"
             change={this.tbxReadValue.bind(this)}
           />
           <br />
@@ -33,6 +53,7 @@ class NewLocation extends Component {
             change={this.tbxReadValue.bind(this)}
           />
           <br />
+
           <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
         </div>
       </MuiThemeProvider>
@@ -41,16 +62,27 @@ class NewLocation extends Component {
       localComponent: localComponent
     };
   }
+  setValue(value){
+    this.setState({halfFloor:value},()=>{})
+    
+  }
+
   tbxReadValue(input) {
     this.setState(input);
   }
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if (this.state.name.length > 0 && this.state.description.length > 0) {
+    if ( this.state.building.length > 0) {
       var payload = {
-        name: this.state.name,
-        description: this.state.description
+        // name: this.state.name,
+        description: this.state.description,
+        building:this.state.building,
+        floor:"",
+        halfFloor:"",
+        room:this.state.room,        
       };
+      if(this.state.halfFloor==1) payload.halfFloor=this.state.fHf
+      else payload.floor=this.state.fHf;
 
       this.callApi(payload)
         .then(function(response) {

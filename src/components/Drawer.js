@@ -18,6 +18,7 @@ import MainAppBar from './AppBar'
 
 import NetNodes from '../NetNodes';
 import Switches from '../Switches';
+import Locations from '../Locations';
 import NewNetNode from '../NewNetNode';
 import NewSwitch from '../NewSwitch';
 import NewLocation from '../NewLocation';
@@ -199,6 +200,13 @@ class MiniDrawer extends React.Component {
           </ListItem>
           </Link>
           
+          <Link to="/مکانها">
+          <ListItem>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText>مکانها</ListItemText>
+          </ListItem>
+          </Link>
+
           <Divider />
           <Link to="/نود جدید">
           <ListItem>
@@ -266,6 +274,7 @@ class MiniDrawer extends React.Component {
             <Route exact path="/" component={DashboardPage}/>
             <Route path="/سوییچها" component={Switches} />
             <Route path="/نودها" component={NetNodes} />
+            <Route path="/مکانها" component={Locations} />
             <Route path="/نود جدید" component={NewNetNode} />
             <Route path="/سوییچ جدید" component={NewSwitch} />
             <Route path="/مکان جدید" component={NewLocation} />
