@@ -63,21 +63,6 @@ class netNodes extends Component {
     });
   }
   
-
-  addNew() {
-    console.log("hiiiii")
-    // var path=addNew.path
-    // var route = []
-    // route.push(
-    //   <div>
-    //     <Link to="/نود جدید" />
-    //   </div>
-    // )
-    return (
-      <Link to="/نود جدید" />
-      
-    )
-  }
   showEdit(n) {
     this.setState({ editComponent: <EditNetNode netNode={n} open="true" /> });
   }
@@ -89,15 +74,7 @@ class netNodes extends Component {
     console.log(tblData.response.netNodes);
   }
   render() {
-        // var sw=[]
-        // sw.push(<Switch>
-        //   <Route path="/نود جدید" component={NewNetNode} />
-        // </Switch>)
-        // var r=[]
-        // r.push(<Link to="/نود جدید" />)
 
-        
-        
     return (
       <div>
         <Search model="netnodes" searchResult={this.searchResult.bind(this)} />

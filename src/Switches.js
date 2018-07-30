@@ -5,6 +5,9 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
 import Card from './components/Card'
 import Search from './components/Search';
+import NewSwitch from './NewSwitch';
+import ViewSwitch from './ViewSwitch';
+import EditSwitch from './EditSwitch';
 
 class switchesTable extends Component {
   constructor(props) {
@@ -36,6 +39,12 @@ class switchesTable extends Component {
       })
       .catch(err => console.log(err));
   }
+  showEdit(n) {
+    this.setState({ editComponent: <EditSwitch sw={n} open="true" /> });
+  }
+  showView(n) {
+    this.setState({ viewComponent: <ViewSwitch sw={n} open="true" /> });
+  }
   searchResult(tblData){
     this.setState({ response: tblData.response.switches }, () => {})
 
@@ -54,14 +63,16 @@ class switchesTable extends Component {
   render() {
     return (
       <div>
-        {/* <MuiThemeProvider>
-          <AppBar title="info sima" />
-        </MuiThemeProvider> */}
         <Search model="Switches" searchResult={this.searchResult.bind(this)}/>
+        {this.state.editComponent}
+        {this.state.viewComponent}
         <Card pageName="سوییچها" content={
           <SimpleTable
-            columns={this.state.response.columns}
-            data={this.state.response.switchesData}
+          addNew={{path:"/سوییچ جدید",link:"/سوییچ جدید",component:NewSwitch}}
+          columns={this.state.response.columns}
+          data={this.state.response.switchesData}
+          showView={this.showView.bind(this)}
+          showEdit={this.showEdit.bind(this)}
           />}
         />
       </div>

@@ -20,12 +20,12 @@ class NewLocation extends Component {
     localComponent.push(
       <MuiThemeProvider>
         <div>
-          {/* <TextField
+          <TextField
             id="name"
             label="نام"
             change={this.tbxReadValue.bind(this)}
           />
-        */}
+       
           <br />
           <TextField
             id="building"
@@ -74,7 +74,7 @@ class NewLocation extends Component {
     //To be done:check for empty values before hitting submit
     if ( this.state.building.length > 0) {
       var payload = {
-        // name: this.state.name,
+        name: this.state.name,
         description: this.state.description,
         building:this.state.building,
         floor:"",

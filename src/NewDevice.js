@@ -19,7 +19,6 @@ class NewDevice extends Component {
       deviceType:"",
       model:"", 
       code:"",
-      managementUrl:"",
       department:"",
       specialProperties:[],
       spTbx:[],
@@ -72,9 +71,7 @@ class NewDevice extends Component {
         "model": this.state.model,
         "code": this.state.code,
         "department": this.state.department,
-        "managementUrl": this.state.managementUrl,
         "specialProperties":this.state.specialProperties,
-
       }
       this.callApi(payload)
         .then(function (response) {
@@ -124,7 +121,6 @@ class NewDevice extends Component {
          <div id="specialProperties"></div>
           <br />
           <Menu id="department" name="واحد" items={this.state.departments} selectedId={this.setId.bind(this)} />
-          <br /><TextField id="managementUrl" label="آدرس url" change={this.tbxReadValue.bind(this)} />
           <br/>
           
           <br />

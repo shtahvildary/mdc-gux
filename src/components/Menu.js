@@ -54,7 +54,13 @@ handleClickListItem = event => {
   handleMenuItemClick = (event, index,id) => {
     this.setState({ selectedIndex: index, anchorEl: null,selectedId:id });
     // var DOMname=this.props.id
-    var json={}
+
+
+    // var json={}
+    // json[this.props.id]=id
+    // this.props.selectedId(json)
+
+      var json={}
     json[this.props.id]=id
     this.props.selectedId(json)
   };
@@ -90,7 +96,6 @@ handleClickListItem = event => {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-        
           {this.state.items}
         </Menu>
         </Grid>

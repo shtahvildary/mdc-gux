@@ -8,6 +8,7 @@ import Menu from './components/Menu'
 import Card from './components/Card'
 import './index.css';
 import Grid from "@material-ui/core/Grid"
+import AlertDialog from "./components/AlertDialog";
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
 
@@ -34,8 +35,21 @@ class NewNetNode extends Component {
     }
 
   }
-  setId(selectedId) {
+  setId(model,selectedId) {
+    
+    console.log(model)
     this.setState(selectedId, () => {
+      console.log(selectedId)
+    var _id=selectedId[Object.keys(selectedId)[0]]
+      var payload={_id}
+
+      this.callApiSelect(model,payload).then(res=>
+        this.setState(res.data,()=>{
+          this.setLocalComponent()
+        })
+         
+      
+      )
     })
   }
   saveBtnClick(event) {
@@ -57,27 +71,26 @@ class NewNetNode extends Component {
         "device": this.state.device,
         "description": this.state.description,
         "location": this.state.location,
-        //
-        // "type": this.state.type,
       }
       this.callApi(payload)
-        // axios.post(global.serverAddress+'/switches/new', payload)
         .then(function (response) {
           if (response.status === 200) {
             console.log("add new netNode is OK :D");
+            <AlertDialog title="save" open={true} contentText="نود جدید با موفقیت اضافه شد." btnLbl="ok"/>
           }
           else {
             console.log("some error ocurred", response.status);
+            <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
           }
         })
         .catch(function (error) {
           console.log(error);
+          <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
         });
     }
     else {
       alert("Input field value is missing");
     }
-
   }
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/new', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
@@ -87,11 +100,53 @@ class NewNetNode extends Component {
 
   callApiMenus = async (model) => {
     var response = await axios({ method: 'post', url: global.serverAddress + '/' + model + '/all/names', headers: { "x-access-token": localStorage.getItem('token') } });
-    // const body = await response.json();
     if (response.status !== 200) throw Error(response.message);
-
     return response;
   };
+  callApiSelect = async (model,payload) => {
+    var response = await axios({ method: 'post', url: global.serverAddress + '/' + model + '/select/one', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
+    if (response.status !== 200) throw Error(response.message);
+    return response;
+  };
+setLocalComponent(){
+  var localComponent = []
+              localComponent.push(
+                <MuiThemeProvider>
+                  <div>
+                    <MyTextField id="patchPanelPort" label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
+                    <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
+                    <br />
+                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/>
+                    {this.state.vlanInfo?(
+                      <p> شبکه مجازی {this.state.vlanInfo.name} با شماره {this.state.vlanInfo.number} و آی پی {this.state.vlanInfo.ip}</p>
+                      // <p>نام: {this.state.vlanInfo.name}</p>
+                    ):("")}  
+                    <br />
+                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this,"switches")} />
+                    {this.state.switchInfo?(
+                     <p>سوییچ {this.state.switchInfo.name} با آی پی {this.state.switchInfo.ip} واقع در {this.state.switchInfo.location.name}</p>
+                    ):("")}  
+                    <br />                                        
+                    <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
+                    <br />                                   
+                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this,"devices")} />
+                     {this.state.deviceInfo?(
+                     <p> {this.state.deviceInfo.name} با آی پی {this.state.deviceInfo.ip} و شماره اموال {this.state.deviceInfo.code}</p>
+                    ):("")}  
+                    <br />      
+                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
+                   {this.state.locationInfo?(
+                     <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
+                    ):("")}
+                    <br />
+                    <MyTextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
+                    <br/>
+                    <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
+                  </div>
+                </MuiThemeProvider >      
+              )
+             this.setState({ localComponent: localComponent },()=>{})
+}
   componentWillMount() {
     var vlans, switches, devices,locations;
     this.callApiMenus('vlans')
@@ -104,66 +159,11 @@ class NewNetNode extends Component {
           this.callApiMenus('locations').then(res => {
             locations = res.data.locations
             this.setState({ vlans, switches,devices, locations }, () => {
-
-              var localComponent = []
-              localComponent.push(
-                
-                <MuiThemeProvider>
-                  <div>
-        <Grid container spacing={24}>
-                    <Grid item xs>
-                    <MyTextField id="patchPanelPort" label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
-                    </Grid>
-                    <Grid item xs>
-                    <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
-                    {/* <br /> */}
-                    </Grid>
-                    <Grid item xs>
-                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
-                    </Grid>
-                    </Grid>
-        <Grid container spacing={24}>
-
-                    <Grid item xs>
-                    {/* <br /> */}
-                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} />
-                    {/* <br /> */}
-                    </Grid>
-                    <Grid item xs>
-                    <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
-                    {/* <br /> */}
-                    </Grid>
-                    <Grid item xs>
-                     {/* <Menu id="type" name="نوع" items={this.state.deviceTypes} selectedId={this.setId.bind(this)} /> */}
-                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} />
-                    {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
-                    {/* <br /> */}</Grid>
-                    </Grid>
-        <Grid container spacing={24}>
-
-                    <Grid item xs>
-                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} />
-                    {/* <br /> */}
-                    </Grid>
-                    <Grid item xs>
-                    <MyTextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
-                    </Grid>
-                    </Grid>
-
-                    <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
-                  {/* </div> */}
-                  
-                    </div>
-
-                </MuiThemeProvider >
-                
-              )
-             this.setState({ localComponent: localComponent },()=>{})
+              this.setLocalComponent()
             });
           })
         })
         })
-
       })
       .catch(err => console.log(err));
   }
@@ -179,7 +179,6 @@ tbxReadValue(input){this.setState(input) }
     )
   }
 }
-
 export default NewNetNode
 
 
