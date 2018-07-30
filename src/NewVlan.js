@@ -13,8 +13,8 @@ class NewVlan extends Component {
     // const { classes } = this.props;
     this.state = {
 
-      number: '',
       name: '',
+      number: '',
       ip: '',
       description: '',
       firstIp: '',
@@ -25,8 +25,6 @@ class NewVlan extends Component {
     localComponent.push(
       <MuiThemeProvider>
         <div>
-          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
           <TextField id="number" label="شماره" change={this.tbxReadValue.bind(this)} />
           <br />
           <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} />

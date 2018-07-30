@@ -9,7 +9,6 @@ import Card from "./components/Card"
 class NewSwitch extends Component {
   constructor(props) {
     super(props);
-    // const { classes } = this.props;
     this.state = {
       name: "",
       ip: "",
@@ -17,17 +16,80 @@ class NewSwitch extends Component {
       model: "",
       diagramUrl: "",
       location: "",
-
-      //for use in menu:
-      vlans: [],
-    };
-    
+    };  
   }
   tbxReadValue(input) {
     this.setState(input);
   }
   setId(selectedId) {
     this.setState(selectedId, () => {
+    })
+  }
+  fillComponent(){
+
+    var localComponent = [];
+    localComponent.push(
+      <MuiThemeProvider>
+        <div>
+          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
+          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
+          <TextField
+            id="name"
+            label="نام سوییچ"
+            change={this.tbxReadValue.bind(this)}
+          />
+          <br />
+          <TextField
+            id="ip"
+            label="IP سوییچ"
+            change={this.tbxReadValue.bind(this)}
+          />
+          <br />
+          <TextField
+            id="description"
+            label="توضیحات"
+            change={this.tbxReadValue.bind(this)}
+          />
+          <br />
+          <TextField
+            id="model"
+            label="مدل سوییچ"
+            change={this.tbxReadValue.bind(this)}
+          />
+          <br />
+          <TextField
+            id="diagramUrl"
+            label="نمودار PRTG"
+            change={this.tbxReadValue.bind(this)}
+          />
+          <br />
+          <Menu
+            id="location"
+            name="مکان"
+            items={this.state.locations}
+            selectedId={this.setId.bind(this,"locations")}
+          />
+          {this.state.locationInfo?(
+                 <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
+                ):("")}
+          {/* <TextField id="location" label="مکان" change={this.tbxReadValue.bind(this)}/> */}
+          <br />
+          <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
+        </div>
+      </MuiThemeProvider>
+    );
+    this.setState ( {localComponent: localComponent},()=>{});
+  }
+  setId(model,selectedId) {
+    this.setState(selectedId, () => {
+    var _id=selectedId[Object.keys(selectedId)[0]]
+      var payload={_id}
+
+      this.callApiSelect(model,payload).then(res=>
+        this.setState(res.data,()=>{
+          this.fillComponent()
+        })
+      )
     })
   }
   saveBtnClick(event) {
@@ -87,61 +149,17 @@ class NewSwitch extends Component {
 
     return response;
   };
+  callApiSelect = async (model,payload) => {
+    var response = await axios({ method: 'post', url: global.serverAddress + '/' + model + '/select/one', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
+    if (response.status !== 200) throw Error(response.message);
+    return response;
+  };
   componentWillMount() {
     var locations;
     this.callApiMenus("locations").then(res => {
       locations = res.data.locations;
       this.setState({locations}, () => {
-        var localComponent = [];
-        localComponent.push(
-          <MuiThemeProvider>
-            <div>
-              {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-              {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-              <TextField
-                id="name"
-                label="نام سوییچ"
-                change={this.tbxReadValue.bind(this)}
-              />
-              <br />
-              <TextField
-                id="ip"
-                label="IP سوییچ"
-                change={this.tbxReadValue.bind(this)}
-              />
-              <br />
-              <TextField
-                id="description"
-                label="توضیحات"
-                change={this.tbxReadValue.bind(this)}
-              />
-              <br />
-              <TextField
-                id="model"
-                label="مدل سوییچ"
-                change={this.tbxReadValue.bind(this)}
-              />
-              <br />
-              <TextField
-                id="diagramUrl"
-                label="نمودار PRTG"
-                change={this.tbxReadValue.bind(this)}
-              />
-              <br />
-              <Menu
-                id="location"
-                name="مکان"
-                items={this.state.locations}
-                selectedId={this.setId.bind(this)}
-              />
-    
-              {/* <TextField id="location" label="مکان" change={this.tbxReadValue.bind(this)}/> */}
-              <br />
-              <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
-            </div>
-          </MuiThemeProvider>
-        );
-        this.setState ( {localComponent: localComponent},()=>{});
+        this.fillComponent()
       });
     });
   }

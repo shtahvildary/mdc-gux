@@ -19,6 +19,7 @@ import MainAppBar from './AppBar'
 import NetNodes from '../NetNodes';
 import Switches from '../Switches';
 import Locations from '../Locations';
+import Vlans from '../Vlans';
 import NewNetNode from '../NewNetNode';
 import NewSwitch from '../NewSwitch';
 import NewLocation from '../NewLocation';
@@ -206,7 +207,13 @@ class MiniDrawer extends React.Component {
             <ListItemText>مکانها</ListItemText>
           </ListItem>
           </Link>
-
+          
+          <Link to="/شبکه های مجازی">
+          <ListItem>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText>شبکه های مجازی</ListItemText>
+          </ListItem>
+          </Link>
           
           <Divider />
 
@@ -271,6 +278,7 @@ class MiniDrawer extends React.Component {
             <Route path="/سوییچها" component={Switches} />
             <Route path="/نودها" component={NetNodes} />
             <Route path="/مکانها" component={Locations} />
+            <Route path="/شبکه های مجازی" component={Vlans} />
             <Route path="/نود جدید" component={NewNetNode} />
             <Route path="/سوییچ جدید" component={NewSwitch} />
             <Route path="/مکان جدید" component={NewLocation} />

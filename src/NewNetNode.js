@@ -47,8 +47,6 @@ class NewNetNode extends Component {
         this.setState(res.data,()=>{
           this.setLocalComponent()
         })
-         
-      
       )
     })
   }
