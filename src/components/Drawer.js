@@ -20,6 +20,7 @@ import NetNodes from '../NetNodes';
 import Switches from '../Switches';
 import Locations from '../Locations';
 import Vlans from '../Vlans';
+import Devices from '../Devices';
 import NewNetNode from '../NewNetNode';
 import NewSwitch from '../NewSwitch';
 import NewLocation from '../NewLocation';
@@ -31,12 +32,13 @@ import DashboardPage from '../Dashboard';
 
 import Dashboard from '@material-ui/icons/Dashboard';
 import Computer from '@material-ui/icons/Computer'
-import Devices from '@material-ui/icons/Devices'
+import DevicesIcon from '@material-ui/icons/Devices'
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import NewDepartment from '../NewDepartment';
 // import computerIcon from '../Icons/twotone-computer-24px'
 
 
@@ -214,6 +216,13 @@ class MiniDrawer extends React.Component {
             <ListItemText>شبکه های مجازی</ListItemText>
           </ListItem>
           </Link>
+
+          <Link to="/سخت افزارها">
+          <ListItem>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText>سخت افزارها</ListItemText>
+          </ListItem>
+          </Link>
           
           <Divider />
 
@@ -244,7 +253,7 @@ class MiniDrawer extends React.Component {
           <Link to="/سخت افزار جدید">
           <ListItem>
           <ListItemIcon>
-            <Devices />
+            <DevicesIcon />
             </ListItemIcon>
             <ListItemText>افزودن سخت افزار جدید</ListItemText>
           </ListItem>
@@ -256,6 +265,15 @@ class MiniDrawer extends React.Component {
             <Dashboard />
             </ListItemIcon>
             <ListItemText>افزودن نوع جدید</ListItemText>
+          </ListItem>
+          </Link>
+
+          <Link to="/واحد جدید" >
+          <ListItem>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText>افزودن واحد جدید</ListItemText>
           </ListItem>
           </Link>
 
@@ -279,12 +297,14 @@ class MiniDrawer extends React.Component {
             <Route path="/نودها" component={NetNodes} />
             <Route path="/مکانها" component={Locations} />
             <Route path="/شبکه های مجازی" component={Vlans} />
+            <Route path="/سخت افزارها" component={Devices} />
             <Route path="/نود جدید" component={NewNetNode} />
             <Route path="/سوییچ جدید" component={NewSwitch} />
             <Route path="/مکان جدید" component={NewLocation} />
             <Route path="/شبکه مجازی جدید" component={NewVlan} />
             <Route path="/سخت افزار جدید" component={NewDevice} />
             <Route path="/نوع جدید" component={NewDeviceType} />
+            <Route path="/واحد جدید" component={NewDepartment} />
           </Switch>
          
           </div>

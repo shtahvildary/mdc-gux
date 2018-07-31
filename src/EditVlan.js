@@ -37,6 +37,7 @@ class EditVlan extends Component {
     })
   }
   saveBtnClick(event) {
+    console.log("this.state: ",this.state)
       var payload = {
         "_id":this.state._id,
         "number": this.state.number,
@@ -74,7 +75,7 @@ class EditVlan extends Component {
     this.setState({ open: input.open })
     var { _id,number, name, ip, firstIp,lastIp,subnetMask,  description} = input.vlan;
            
-            this.setState({ number, name, ip, firstIp,lastIp, subnetMask, description}, () => {
+            this.setState({ _id,number, name, ip, firstIp,lastIp, subnetMask, description}, () => {
 
               var localComponent = []
               localComponent.push(
@@ -107,6 +108,7 @@ class EditVlan extends Component {
     
   }
   componentWillMount() {
+
     var open = this.props.open
     this.setState(
       {
@@ -121,6 +123,7 @@ class EditVlan extends Component {
     
   }
   componentWillReceiveProps(newProps){
+    console.log("new props: ",newProps)
     this.fillComponent(newProps)
 
   }

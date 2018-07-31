@@ -21,6 +21,10 @@ class NewVlan extends Component {
       lastIp: '',
       subnetMask: '',
     }
+    
+  }
+
+  fillComponent(){
     var localComponent = []
     localComponent.push(
       <MuiThemeProvider>
@@ -41,10 +45,11 @@ class NewVlan extends Component {
         </div>
       </MuiThemeProvider>
     )
-    this.state = {
-      localComponent: localComponent,
-    }
+    this.setState = ({
+      localComponent
+    })
   }
+  
   tbxReadValue(input) {
     this.setState(input);
   }

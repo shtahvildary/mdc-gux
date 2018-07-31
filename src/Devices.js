@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 import SimpleTable from "./components/Table";
 import Card from "./components/Card";
-import EditVlan from "./EditVlan";
-import ViewVlan from "./ViewVlan";
+import EditDevice from "./EditDevice";
+import ViewDevice from "./ViewDevice";
 import Search from "./components/Search";
-import NewVlan from "./NewVlan";
+import NewDevice from "./NewDevice";
 import { Link, Route, Switch } from 'react-router-dom';
 
 
-class vlans extends Component {
+class Devices extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,10 +22,10 @@ class vlans extends Component {
     
   }
   callApi = async (path, payload) => {
-    // console.log(path,payload)
+    console.log(path,payload)
     const response = await axios({
       method: "post",
-      url: global.serverAddress + "/vlans/" + path,
+      url: global.serverAddress + "/devices/" + path,
       headers: { "x-access-token": localStorage.getItem("token") },
       data: payload
     });
@@ -36,7 +36,7 @@ class vlans extends Component {
   componentWillMount() {
     this.callApi("all","")
       .then(res => {
-        this.setState({ response: res.data.vlans }, () => {
+        this.setState({ response: res.data.devices }, () => {
           this.setTblData();
         });
       })
@@ -47,9 +47,9 @@ class vlans extends Component {
     {console.log("res.data: ",this.state.response)}
 
     <SimpleTable
-      addNew={<NewVlan />}
+      addNew={<NewDevice />}
       columns={this.state.response.columns}
-      data={this.state.response.vlansData}
+      data={this.state.response.devicesData}
     />;
   }
 
@@ -57,7 +57,7 @@ class vlans extends Component {
     this.setState(input, () => {
       this.callApi("search", input)
         .then(res => {
-          this.setState({ response: res.data.vlans }, () => {
+          this.setState({ response: res.data.devices }, () => {
             this.searchResult();
           });
         })
@@ -66,30 +66,30 @@ class vlans extends Component {
   }
 
   showEdit(n) {
-    this.setState({ editComponent: <EditVlan vlan={n} open="true" /> });
+    this.setState({ editComponent: <EditDevice device={n} open="true" /> });
   }
   showView(n) {
-    this.setState({ viewComponent: <ViewVlan vlan={n} open="true" /> });
+    this.setState({ viewComponent: <ViewDevice device={n} open="true" /> });
   }
   searchResult(tblData) {
     console.log(tblData);
-    this.setState({ response: tblData.response.vlans }, () => { });
+    this.setState({ response: tblData.response.devices }, () => { });
   }
   render() {
-    // console.log(this.state.response)
+    console.log(this.state.response)
     return (
       <div>
-        <Search model="vlans" searchResult={this.searchResult.bind(this)} />
+        <Search model="devices" searchResult={this.searchResult.bind(this)} />
         {this.state.editComponent}
         {this.state.viewComponent}
         <Card
-          pageName="شبکه های مجازی"
+          pageName="سخت افزارها"
           content={
             <SimpleTable
               // addNew={this.addNew.bind(this)}
-              addNew={{path:"/شبکه مجازی جدید",link:"/شبکه مجازی جدید",component:NewVlan}}
+              addNew={{path:"/سخت افزار جدید",link:"/سخت افزار جدید",component:NewDevice}}
               columns={this.state.response.columns}
-              data={this.state.response.vlansData}
+              data={this.state.response.devicesData}
               showView={this.showView.bind(this)}
               showEdit={this.showEdit.bind(this)}
             />
@@ -100,4 +100,4 @@ class vlans extends Component {
   }
 }
 
-export default vlans;
+export default Devices;
