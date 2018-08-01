@@ -15,27 +15,56 @@ class NewDeviceType extends Component {
     this.state = {
       name:'',
       description: '',
-      
-    }
-    var localComponent = []
-    localComponent.push(
-      <MuiThemeProvider>
-        <div>
-          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
-          <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} />
-          <br />
-          <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
-          <br />
-          <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
-        </div>
-      </MuiThemeProvider>
-    )
-    this.state = {
-      localComponent: localComponent,
-
+      spTbxCount:0,  
     }
   }
+    fillComponent(){
+      var {spTbxCount}=this.state;
+      var phoneTbx=[];
+      for(var i=0;i<spTbxCount;i++)
+      phoneTbx.push(<div>
+                      <TextField id={"name"+i} label="ویژگی" change={this.tbxReadSPValue.bind(this)} />
+                      <br/>
+                    </div>
+      )
+      var localComponent = []
+      localComponent.push(
+        <MuiThemeProvider>
+          <div>
+            <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} />
+            <br />
+            <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
+            <br />
+            <Button label="افزودن ویژگی" click={this.addTbxSP.bind(this,spTbxCount)} />
+            <br/>
+            <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
+          </div>
+        </MuiThemeProvider>
+      )
+      this.state = {
+        localComponent: localComponent,
+  
+      }
+    }
+    componentWillMount(){
+      this.fillComponent()
+    }
+
+    addTbxSP(spTbxCount,event){
+      console.log(spTbxCount)
+      spTbxCount++
+      this.setState({spTbxCount})
+      this.fillComponent()
+    }
+
+    tbxReadSPValue(input){
+      var specialProperties=this.state.specialProperties;
+      var ind=specialProperties.findIndex(i=>i.name==Object.keys(input)[0])
+      var key=Object.keys(input)[0];
+      if(ind==-1)specialProperties.push({name:key,value:input[key]});
+      else specialProperties[ind]={name:key,value:input[key]};
+      this.setState({specialProperties},()=>{})
+    }
   tbxReadValue(input) {
     this.setState(input);
   }

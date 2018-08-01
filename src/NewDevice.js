@@ -54,7 +54,7 @@ class NewDevice extends Component {
         change={this.tbxSpReadValue.bind(this)} 
         />
       )})
-      this.setState({spTbx:spTbx},()=>{
+      this.setState({spTbx},()=>{
         this.setLocalComponent()
       })
     })

@@ -45,9 +45,7 @@ class NewVlan extends Component {
         </div>
       </MuiThemeProvider>
     )
-    this.setState = ({
-      localComponent
-    })
+    this.setState ({localComponent})
   }
   
   tbxReadValue(input) {
@@ -90,7 +88,10 @@ class NewVlan extends Component {
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
-
+ 
+componentWillMount(){
+  this.fillComponent()
+}
   render() {
     return (
       <div>
