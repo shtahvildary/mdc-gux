@@ -6,8 +6,6 @@ import EditLocation from "./EditLocation";
 import ViewLocation from "./ViewLocation";
 import Search from "./components/Search";
 import NewLocation from "./NewLocation";
-import { Link, Route, Switch } from 'react-router-dom';
-
 
 class locations extends Component {
   constructor(props) {

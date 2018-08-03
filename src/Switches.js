@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SimpleTable from "./components/Table";
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import AppBar from '@material-ui/core/AppBar';
 import Card from './components/Card'
 import Search from './components/Search';
 import NewSwitch from './NewSwitch';

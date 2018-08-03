@@ -6,7 +6,6 @@ import EditDevice from "./EditDevice";
 import ViewDevice from "./ViewDevice";
 import Search from "./components/Search";
 import NewDevice from "./NewDevice";
-import { Link, Route, Switch } from 'react-router-dom';
 
 
 class Devices extends Component {
@@ -44,8 +43,6 @@ class Devices extends Component {
   }
 
   setTblData() {
-    {console.log("res.data: ",this.state.response)}
-
     <SimpleTable
       addNew={<NewDevice />}
       columns={this.state.response.columns}

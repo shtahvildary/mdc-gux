@@ -6,7 +6,7 @@ import './App.css';
 // import LoginScreen from './Loginscreen';
 import LoginScreen from './Login';
 import Header from './components/Header';
-// import { muiThemeable } from '@material-ui/core/styles/MuiThemeable';
+// import { MuiThemeable } from '@material-ui/core/styles/MuiThemeable';
 
 
 
@@ -31,24 +31,24 @@ class App extends Component {
   }
   render() {
     if (!localStorage.getItem('token'))
-      return (
-        <muiThemeable>
-          <Header/>
-        <div className={["App-login"]}>
-        <LoginScreen  appContext={this} />
+      return [
+        // <muiThemeable>
+          <Header/>,
+        <div className={["App-login"]}>,
+        <LoginScreen  appContext={this} />,
           </div>
-          </muiThemeable>
+          // {/* </muiThemeable> */}
           
-        )
+      ]
     else
-      return (
-        <div dir="rtl" >
-        <muiThemeable>
+      return [
+        <div dir="rtl" >,
+        {/* <muiThemeable> */}
           {/* <Header /> */}
-          <Drawer  />
-        </muiThemeable>
-        </div>
-      );
+          <Drawer  />,
+        {/* </muiThemeable> */}
+        </div>,
+      ];
   }
 }
 

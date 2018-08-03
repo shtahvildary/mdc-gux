@@ -81,7 +81,7 @@ class NewLocation extends Component {
         halfFloor:"",
         room:this.state.room,        
       };
-      if(this.state.halfFloor==1) payload.halfFloor=this.state.fHf
+      if(this.state.halfFloor===1) payload.halfFloor=this.state.fHf
       else payload.floor=this.state.fHf;
 
       this.callApi(payload)

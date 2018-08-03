@@ -6,8 +6,6 @@ import EditNetNode from "./EditNetNode";
 import ViewNetNode from "./ViewNetNode";
 import Search from "./components/Search";
 import NewNetNode from "./NewNetNode";
-import { Link, Route, Switch } from 'react-router-dom';
-
 
 class netNodes extends Component {
   constructor(props) {

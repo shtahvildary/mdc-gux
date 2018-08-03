@@ -30,9 +30,9 @@ class NewDevice extends Component {
   }
   tbxSpReadValue(input){
     var specialProperties=this.state.specialProperties;
-    var ind=specialProperties.findIndex(i=>i.name==Object.keys(input)[0])
+    var ind=specialProperties.findIndex(i=>i.name===Object.keys(input)[0])
     var key=Object.keys(input)[0];
-    if(ind==-1)specialProperties.push({name:key,value:input[key]});
+    if(ind===-1)specialProperties.push({name:key,value:input[key]});
     else specialProperties[ind]={name:key,value:input[key]};
     this.setState({specialProperties},()=>{
 
@@ -43,8 +43,9 @@ class NewDevice extends Component {
 
   }
   setDeviceType(selectedId) {
+    console.log(selectedId)
     this.setState(selectedId, () => {
-      var index=this.state.deviceTypes.findIndex(i=>i._id==selectedId.deviceType)
+      var index=this.state.deviceTypes.findIndex(i=>i._id===selectedId.deviceType)
       var spTbx=[]
       var sp=this.state.deviceTypes[index].specialProperties
       if(sp)

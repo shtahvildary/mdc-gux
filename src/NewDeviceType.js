@@ -15,15 +15,20 @@ class NewDeviceType extends Component {
     this.state = {
       name:'',
       description: '',
-      spTbxCount:0,  
+      spTbxCount:0, 
+      specialProperties:[] ,
+      tmpSP:[],
     }
   }
     fillComponent(){
       var {spTbxCount}=this.state;
-      var phoneTbx=[];
+      console.log(spTbxCount)
+      var spTbx=[];
       for(var i=0;i<spTbxCount;i++)
-      phoneTbx.push(<div>
-                      <TextField id={"name"+i} label="ویژگی" change={this.tbxReadSPValue.bind(this)} />
+      spTbx.push(<div>
+                      <TextField id="en" label="please enter in english..." change={this.tbxReadSPValue.bind(this)} />
+                      
+                      <TextField id="fa" label="لطفا نام مورد نظر را به زبان فارسی بنویسید..." change={this.tbxReadSPValue.bind(this)} />
                       <br/>
                     </div>
       )
@@ -35,16 +40,14 @@ class NewDeviceType extends Component {
             <br />
             <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} />
             <br />
+            {spTbx}
             <Button label="افزودن ویژگی" click={this.addTbxSP.bind(this,spTbxCount)} />
             <br/>
             <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
           </div>
         </MuiThemeProvider>
       )
-      this.state = {
-        localComponent: localComponent,
-  
-      }
+      this.setState({localComponent})
     }
     componentWillMount(){
       this.fillComponent()
@@ -53,16 +56,30 @@ class NewDeviceType extends Component {
     addTbxSP(spTbxCount,event){
       console.log(spTbxCount)
       spTbxCount++
-      this.setState({spTbxCount})
-      this.fillComponent()
+      this.setState({spTbxCount},()=>{
+        this.fillComponent()
+      })
     }
 
     tbxReadSPValue(input){
-      var specialProperties=this.state.specialProperties;
-      var ind=specialProperties.findIndex(i=>i.name==Object.keys(input)[0])
+      console.log(input)
+      var {specialProperties,tmpSP}=this.state;
+      var ind=tmpSP.findIndex(i=>i.name==Object.keys(input)[0])
+
       var key=Object.keys(input)[0];
-      if(ind==-1)specialProperties.push({name:key,value:input[key]});
-      else specialProperties[ind]={name:key,value:input[key]};
+      if(ind==-1){
+        var json={}
+        json[key]=input[key]
+        console.log(json)
+        specialProperties.push(json);
+        tmpSP.push({name:key,value:input[key]});
+    }
+      else {
+        tmpSP[ind]={name:key,value:input[key]};
+        specialProperties[key]=input[key]
+  }
+      console.log("specialProperties: ",specialProperties)
+      console.log("tmpSP: ",tmpSP)
       this.setState({specialProperties},()=>{})
     }
   tbxReadValue(input) {
@@ -71,11 +88,12 @@ class NewDeviceType extends Component {
   
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if ( this.state.name.length > 0 && this.state.description.length > 0) {
+    if ( this.state.name.length > 0 ) {
       var payload = {
 
         "name": this.state.name,
         "description": this.state.description,
+        "specialProperties":this.state.specialProperties
       }
 
       this.callApi(payload)
@@ -103,14 +121,14 @@ class NewDeviceType extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <MuiThemeProvider>
-          <AppBar title="new device type" />
-        </MuiThemeProvider>
-        <Card pageName="افزودن نوع جدید" content={this.state.localComponent}/>
-      </div>
-    )
+    return [
+      
+        <MuiThemeProvider >,
+          <AppBar  title="new device type" />,
+        </MuiThemeProvider>,
+        <Card  pageName="افزودن نوع جدید" content={this.state.localComponent}/>,
+      
+    ]
   }
 }
 export default NewDeviceType

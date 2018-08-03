@@ -21,10 +21,10 @@ class NewSwitch extends Component {
   tbxReadValue(input) {
     this.setState(input);
   }
-  setId(selectedId) {
-    this.setState(selectedId, () => {
-    })
-  }
+  // setId(selectedId) {
+  //   this.setState(selectedId, () => {
+  //   })
+  // }
   fillComponent(){
 
     var localComponent = [];

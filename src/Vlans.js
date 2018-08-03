@@ -6,7 +6,6 @@ import EditVlan from "./EditVlan";
 import ViewVlan from "./ViewVlan";
 import Search from "./components/Search";
 import NewVlan from "./NewVlan";
-import { Link, Route, Switch } from 'react-router-dom';
 
 
 class vlans extends Component {
