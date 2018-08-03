@@ -106,6 +106,8 @@ class NewNetNode extends Component {
     return response;
   };
 setLocalComponent(){
+console.log(global.userType)
+
   var localComponent = []
               localComponent.push(
                 <MuiThemeProvider>

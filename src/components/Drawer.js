@@ -42,6 +42,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import NewDepartment from '../NewDepartment';
+import Register from '../Register';
 // import computerIcon from '../Icons/twotone-computer-24px'
 
 
@@ -234,9 +235,19 @@ class MiniDrawer extends React.Component {
             <ListItemText>سخت افزارها</ListItemText>
           </ListItem>
           </Link>
+          {global.userType<20?(
+          <Link to="/کاربران">
+          <ListItem>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText>کاربران</ListItemText>
+          </ListItem>
+          </Link>
+          ):("")
+          }
           
           <Divider />
-
+{global.userType<2?(
+  <div>
 
         <ListItem button onClick={this.handleClickManagement}>
             <ListItemIcon>
@@ -301,9 +312,21 @@ class MiniDrawer extends React.Component {
             <ListItemText inset primary="افزودن واحد جدید"/>
           </ListItem>
           </Link>
+{global.userType===0?(
+          <Link to="/کاربر جدید" >
+          <ListItem button className={classes.nested}>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText inset primary="افزودن کاربر جدید"/>
+          </ListItem>
+          </Link>
+          ):("")}
 
            </List>
           </Collapse>
+          </div>
+          ):("")}
 
           <Divider />
           
@@ -326,6 +349,7 @@ class MiniDrawer extends React.Component {
             <Route path="/مکانها" component={Locations} />
             <Route path="/شبکه های مجازی" component={Vlans} />
             <Route path="/سخت افزارها" component={Devices} />
+            {/* <Route path="/کاربران" component={Users} /> */}
             <Route path="/نود جدید" component={NewNetNode} />
             <Route path="/سوییچ جدید" component={NewSwitch} />
             <Route path="/مکان جدید" component={NewLocation} />
@@ -333,6 +357,7 @@ class MiniDrawer extends React.Component {
             <Route path="/سخت افزار جدید" component={NewDevice} />
             <Route path="/نوع جدید" component={NewDeviceType} />
             <Route path="/واحد جدید" component={NewDepartment} />
+            <Route path="/کاربر جدید" component={Register} />
           </Switch>
          
           </div>
