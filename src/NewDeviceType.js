@@ -67,7 +67,7 @@ class NewDeviceType extends Component {
       var ind=tmpSP.findIndex(i=>i.name==Object.keys(input)[0])
 
       var key=Object.keys(input)[0];
-      if(ind==-1){
+      if(ind===-1){
         var json={}
         json[key]=input[key]
         console.log(json)

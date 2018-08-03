@@ -23,7 +23,7 @@ class AlertDialog extends React.Component {
   componentWillReceiveProps(newProps){
     console.log("HIIIII")
     // if(!newProps.components) return
-    if (newProps.title == this.state.title) return;
+    if (newProps.title === this.state.title) return;
     var {title,open,contentText,btnLbl}=newProps
     this.setState({title,open,contentText,btnLbl},()=>{
     })

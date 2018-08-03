@@ -1,4 +1,4 @@
-import React, { component } from "react";
+import React from "react";
 import Card from "./components/Card";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -10,15 +10,6 @@ import Vlans from "./Vlans";
 import "./App.css";
 
 function Dashboard() {
-  <div>
-    <Switch>
-      <Route path="/سوییچها" component={Switches} />
-      <Route path="/نودها" component={NetNodes} />
-      <Route path="/مکانها" component={Locations} />
-      <Route path="/شبکه های مجازی" component={Vlans} />
-
-    </Switch>
-  </div>;
   var localComponents = [];
   localComponents.push(
     <Paper className="myPaper">
@@ -76,7 +67,17 @@ function Dashboard() {
       </div>
     </Paper>
   );
-  return localComponents;
+  return (
+    <div>
+    <Switch>
+      <Route path="/سوییچها" component={Switches} />
+      <Route path="/نودها" component={NetNodes} />
+      <Route path="/مکانها" component={Locations} />
+      <Route path="/شبکه های مجازی" component={Vlans} />
+
+    </Switch>
+  </div>,
+  localComponents);
 }
 
 export default Dashboard;

@@ -17,7 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add'
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
@@ -216,7 +216,7 @@ class EnhancedTable extends React.Component {
     };
   }
   componentWillReceiveProps(newProps) {
-    if (newProps.data == this.state.data) return;
+    if (newProps.data === this.state.data) return;
 
     var columns = [];
     _.mapKeys(newProps.columns, (v, k) => {

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import Grid from "@material-ui/core/Grid"
 import TextField from './TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search'
 
 
 class Search extends Component {
@@ -41,7 +43,13 @@ class Search extends Component {
         return (
           <div>
               <Grid item xs={12}>
-            <TextField  type="search" margin="normal" xs id="search" label="جستجو" change={(event) => this.tbxReadValue(event)}/>
+            <TextField  type="search" margin="normal" xs id="search" label="جستجو"   InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}change={(event) => this.tbxReadValue(event)}/>
             </Grid>
           </div>
         );

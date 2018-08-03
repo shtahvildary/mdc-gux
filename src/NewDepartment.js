@@ -36,18 +36,20 @@ class NewDepartment extends Component {
   }
   tbxReadPhoneValue(input){
     var phones=this.state.phones;
-    var ind=phones.findIndex(i=>i.name==Object.keys(input)[0])
+    var ind=phones.findIndex(i=>i.name===Object.keys(input)[0])
     var key=Object.keys(input)[0];
-    if(ind==-1)phones.push({name:key,value:input[key]});
+    if(ind===-1)phones.push({name:key,value:input[key]});
     else phones[ind]={name:key,value:input[key]};
     this.setState({phones},()=>{})
   }
   addMenuLocation(event){
 var {locationMenus,locations,selectedLocations,locationMenuCount}=this.state
 if(selectedLocations.length>0){
+  // locations=locations.map(l=>l._id)
 selectedLocations.map(l=>{
-  console.log(l)
-  var index=locations.indexOf(l.locations)
+  console.log(locations)
+  // var index=locations.findIndex(l)
+  var index=locations.indexOf(l)
   (index!=-1?(
     locations.splice(index,1)
   ):(""))

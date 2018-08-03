@@ -230,7 +230,7 @@ class EnhancedTable extends React.Component {
     };
   }
   componentWillReceiveProps(newProps) {
-    if (newProps.data == this.state.data) return;
+    if (newProps.data === this.state.data) return;
 
     var columns = [];
     _.mapKeys(newProps.columns, (v, k) => {

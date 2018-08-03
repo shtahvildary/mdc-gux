@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import { FormControl } from '../../node_modules/@material-ui/core';
 
 const styles = theme => ({
   container: {
@@ -36,8 +37,8 @@ class TextFields extends React.Component {
       defaultValue: '',
       InputLabelProps: '',
       helperText: '',
-      //
       inputValue: '',
+      InputProps:'',
 
     }
   }
@@ -52,6 +53,8 @@ class TextFields extends React.Component {
     this.setState({ type: this.props.type })
     this.setState({ InputLabelProps: this.props.InputLabelProps })
     this.setState({ helperText: this.props.helperText })
+    this.setState({ InputProps: this.props.InputProps })
+
     // this.setState({})
   }
 
@@ -66,8 +69,8 @@ class TextFields extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
+      // <FormControl fullWidth>
       <TextField
         id={this.state.id}
         label={this.state.label}
@@ -79,7 +82,9 @@ class TextFields extends React.Component {
         type={this.state.type}
         InputLabelProps={this.state.InputLabelProps}
         helperText={this.state.helperText}
+        InputProps={this.state.InputProps}
       />
+      // </FormControl>
 
       // InputProps={{
       //   readOnly: true,
