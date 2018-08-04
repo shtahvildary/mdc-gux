@@ -30,7 +30,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 
 
 
-import DeleteObjects from "../DeleteObjects"
+// import DeleteObjects from "../DeleteObjects"
 
 
 function getSorting(order, orderBy) {
@@ -46,7 +46,7 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, columnData } = this.props;
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, columnData,selectedIds } = this.props;
 
     return (
       <TableHead>
@@ -123,14 +123,12 @@ const toolbarStyles = theme => ({
 });
 let EnhancedTableToolbar = props => {
 
-  const { numSelected, dataLength, classes, addNew } = props;
-  
+  const { numSelected, dataLength, classes, addNew,selectedIds ,Delete} = props;
   if(addNew){
     <Switch>
     <Route path={addNew.path} component={addNew.component} /> 
     </Switch> 
   }
-
   return (
     <Toolbar
       className={classNames(classes.root, {
@@ -153,7 +151,7 @@ let EnhancedTableToolbar = props => {
 
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
+            <IconButton aria-label="Delete" onClick={event=>Delete(selectedIds)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -208,6 +206,7 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: null,
       selected: [],
+      selectedIds:[],
       data: [
       ],
       columnData: [],
@@ -227,9 +226,10 @@ class EnhancedTable extends React.Component {
       return d;
     })
     var addNew = newProps.addNew
+    var Delete=newProps.delete
     var { orderBy } = this.state;
     if (!orderBy && columns[0]) orderBy = columns[0].id
-    this.setState({ columnData: columns, data, orderBy, addNew }) 
+    this.setState({ columnData: columns, data, orderBy, addNew ,Delete}) 
   }
 
   handleRequestSort = (event, property) => {
@@ -246,32 +246,42 @@ class EnhancedTable extends React.Component {
   handleSelectAllClick = (event, checked) => {
     if (checked) {
       this.setState(state => ({ selected: state.data.map(n => n.id) }));
+      this.setState(state => ({selectedIds:state.map(n=>n._id)}));
       return;
     }
     this.setState({ selected: [] });
   };
 
-  handleClick = (event, id) => {
-    const { selected } = this.state;
+  handleClick = (event, id,_id) => {
+    // handleClick = (event, id) => {
+    const { selected,selectedIds } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
+    let newSelectedIds = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
+      newSelectedIds=newSelectedIds.concat(selectedIds,_id)
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
+      newSelectedIds = newSelectedIds.concat(selectedIds.slice(1));
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelectedIds = newSelectedIds.concat(selectedIds.slice(0, -1));
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1),
       );
+      newSelectedIds = newSelectedIds.concat(
+        selectedIds.slice(0, selectedIndex),
+        selectedIds.slice(selectedIndex + 1),
+      );
     }
-
-    this.setState({ selected: newSelected });
+    this.setState({ selected: newSelected },()=>{});
+    this.setState({selectedIds:newSelectedIds},()=>{})
   };
-
+  
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -285,13 +295,12 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page, columnData, addNew } = this.state;
-    console.log(addNew)
+    const { data, order, orderBy, selected, rowsPerPage, page, columnData, addNew,selectedIds,Delete } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar addNew={addNew} numSelected={selected.length} dataLength={data.length} />
+        <EnhancedTableToolbar addNew={addNew} numSelected={selected.length} dataLength={data.length} selectedIds={selectedIds} Delete={Delete}/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -320,7 +329,8 @@ class EnhancedTable extends React.Component {
                       selected={isSelected}
                     >
                       <TableCell padding="checkbox"
-                        onClick={event => this.handleClick(event, n.id)}
+                        // onClick={event => this.handleClick(event, n)}
+                        onClick={event => this.handleClick(event, n.id,n._id)}
                       >
                         <Checkbox checked={isSelected} />
                       </TableCell>
