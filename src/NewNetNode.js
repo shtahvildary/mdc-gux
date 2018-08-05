@@ -17,11 +17,11 @@ class NewNetNode extends Component {
     super(props);
     // const { classes } = this.props;
     this.state = {
-
+      patchPanelPort:'',
       cableNumber: '',
       switchId: '',
       switchPort: '',
-      vlanId: '',
+      // vlanId: '',
       type: '',
       location: '',
 
@@ -54,10 +54,6 @@ class NewNetNode extends Component {
     //To be done:check for empty values before hitting submit
     console.log(this.state)
     if (this.state.patchPanelPort.length > 0 &&
-      this.state.switchId.length > 0 &&
-      this.state.switchPort.length > 0 &&
-      this.state.vlanId.length > 0 &&
-      this.state.device.length > 0 &&
       this.state.location.length > 0 ){
       var payload = {
         "patchPanelPort": this.state.patchPanelPort,

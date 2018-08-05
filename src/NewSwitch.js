@@ -96,11 +96,7 @@ class NewSwitch extends Component {
     //To be done:check for empty values before hitting submit
     if (
       this.state.name.length > 0 &&
-      this.state.ip.length > 0 &&
-      this.state.description.length > 0 &&
-      this.state.model.length > 0 &&
-      this.state.diagramUrl.length > 0 &&
-      this.state.location.length > 0
+      this.state.model.length > 0 
     ) {
       var payload = {
         name: this.state.name,

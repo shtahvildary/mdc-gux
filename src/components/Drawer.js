@@ -268,6 +268,13 @@ class MiniDrawer extends React.Component {
             <ListItemText inset primary="افزودن نود جدید"/>
           </ListItem>
           </Link>
+
+          <Link to="/سوییچ جدید">
+          <ListItem button className={classes.nested}>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText inset primary="افزودن سوییچ جدید"/>
+          </ListItem>
+          </Link>
           
           <Link to="/مکان جدید">
           <ListItem button className={classes.nested}>

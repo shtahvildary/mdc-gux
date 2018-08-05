@@ -46,6 +46,7 @@ class EditLocation extends Component {
         "description": this.state.description,
      
       }
+      console.log(payload)
       this.callApi(payload)
      
         .then(function (response) {
@@ -70,10 +71,10 @@ class EditLocation extends Component {
 
   fillComponent(input){
     this.setState({ open: input.open })
-    var { _id,building, floor, halfFloor, room,  description} = input.location;
+    var { _id,name,building, floor, halfFloor, room,  description} = input.location;
    
            
-            this.setState({ building, floor, halfFloor, room,  description}, () => {
+            this.setState({ _id,name,building, floor, halfFloor, room,  description}, () => {
 
               var localComponent = []
               localComponent.push(
@@ -107,12 +108,10 @@ class EditLocation extends Component {
                     <br />
                     <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
                   </div>
-                </MuiThemeProvider >
-                
+                </MuiThemeProvider >        
               )
              this.setState({ localComponent: localComponent },()=>{})
-      })
-      
+      })  
   }
   setValue(value){
     this.setState({halfFloor:value},()=>{})
@@ -127,10 +126,7 @@ class EditLocation extends Component {
       () => {
         this.fillComponent(this.props)
       }
-    );
-   
-
-    
+    );  
   }
   componentWillReceiveProps(newProps){
     this.fillComponent(newProps)
