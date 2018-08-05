@@ -17,7 +17,9 @@ class NewDeviceType extends Component {
       description: '',
       spTbxCount:0, 
       specialProperties:[] ,
-      tmpSP:[],
+      tmpSPEn:[],
+      tmpSPFa:[],
+      // tmpSP:[],
     }
   }
     fillComponent(){
@@ -26,9 +28,11 @@ class NewDeviceType extends Component {
       var spTbx=[];
       for(var i=0;i<spTbxCount;i++)
       spTbx.push(<div>
-                      <TextField id="en" label="please enter in english..." change={this.tbxReadSPValue.bind(this)} />
+                      <TextField id={"en"+i} label="please enter in english..." change={this.tbxReadSPEn.bind(this)} />
+                      {/* <TextField id={"en"+i} label="please enter in english..." change={this.tbxReadSPValue.bind(this)} /> */}
                       
-                      <TextField id="fa" label="لطفا نام مورد نظر را به زبان فارسی بنویسید..." change={this.tbxReadSPValue.bind(this)} />
+                      <TextField id={"fa"+i} label="لطفا نام مورد نظر را به زبان فارسی بنویسید..." change={this.tbxReadSPFa.bind(this)} />
+                      {/* <TextField id={"fa"+i} label="لطفا نام مورد نظر را به زبان فارسی بنویسید..." change={this.tbxReadSPValue.bind(this)} /> */}
                       <br/>
                     </div>
       )
@@ -60,28 +64,68 @@ class NewDeviceType extends Component {
         this.fillComponent()
       })
     }
-
-    tbxReadSPValue(input){
+    tbxReadSPEn(input){
       console.log(input)
-      var {specialProperties,tmpSP}=this.state;
-      var ind=tmpSP.findIndex(i=>i.name==Object.keys(input)[0])
+      var {specialProperties,tmpSPEn}=this.state;
+      var ind=tmpSPEn.findIndex(i=>i.name===Object.keys(input)[0])
+      console.log("tmpSPEn: ",tmpSPEn)
 
       var key=Object.keys(input)[0];
       if(ind===-1){
-        var json={}
-        json[key]=input[key]
-        console.log(json)
-        specialProperties.push(json);
-        tmpSP.push({name:key,value:input[key]});
+        tmpSPEn.push({name:key,value:input[key]});
     }
       else {
-        tmpSP[ind]={name:key,value:input[key]};
-        specialProperties[key]=input[key]
+        tmpSPEn[ind]={name:key,value:input[key]};
+        if(specialProperties[ind]) specialProperties[ind].en=input[key]
+        else specialProperties.push({en:input[key]})
   }
       console.log("specialProperties: ",specialProperties)
-      console.log("tmpSP: ",tmpSP)
+      console.log("tmpSPEn: ",tmpSPEn)
       this.setState({specialProperties},()=>{})
     }
+
+    tbxReadSPFa(input){
+      console.log(input)
+      var {specialProperties,tmpSPFa}=this.state;
+      var ind=tmpSPFa.findIndex(i=>i.name===Object.keys(input)[0])
+      console.log("tmpSP: ",tmpSPFa)
+
+      var key=Object.keys(input)[0];
+      if(ind===-1){
+        tmpSPFa.push({name:key,value:input[key]});
+    }
+      else {
+        tmpSPFa[ind]={name:key,value:input[key]};
+        if(specialProperties[ind]) specialProperties[ind].fa=input[key]
+        else specialProperties.push({fa:input[key]})
+  }
+      console.log("specialProperties: ",specialProperties)
+      console.log("tmpSPFa: ",tmpSPFa)
+      this.setState({specialProperties},()=>{})
+    }
+
+  //   tbxReadSPValue(input){
+  //     console.log(input)
+  //     var {specialProperties,tmpSP}=this.state;
+  //     var ind=tmpSP.findIndex(i=>i.name===Object.keys(input)[0])
+  //     console.log("tmpSP: ",tmpSP)
+
+  //     var key=Object.keys(input)[0];
+  //     if(ind===-1){
+  //       var json={}
+  //       json[key]=input[key]
+  //       console.log(json)
+  //       specialProperties.push(json);
+  //       tmpSP.push({name:key,value:input[key]});
+  //   }
+  //     else {
+  //       tmpSP[ind]={name:key,value:input[key]};
+  //       specialProperties[key]=input[key]
+  // }
+  //     console.log("specialProperties: ",specialProperties)
+  //     console.log("tmpSP: ",tmpSP)
+  //     this.setState({specialProperties},()=>{})
+  //   }
   tbxReadValue(input) {
     this.setState(input);
   }
