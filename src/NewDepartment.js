@@ -149,7 +149,7 @@ locationMenuCount++
         });
     }
     else {
-      alert("Input field value is missing");
+      alert("تمامی فیلدهای ستاره دار را پر کنید.");
     }
   } 
   callApi = async (payload) => {

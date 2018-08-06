@@ -4,8 +4,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Drawer from './components/Drawer'
 import './App.css';
 // import LoginScreen from './Loginscreen';
-import LoginScreen from './Login';
-import Header from './components/Header';
+import Login from './Login';
+// import Header from './components/Header';
 // import { MuiThemeable } from '@material-ui/core/styles/MuiThemeable';
 
 
@@ -33,9 +33,9 @@ class App extends Component {
     if (!localStorage.getItem('token'))
       return [
         // <muiThemeable>
-          <Header/>,
+          // <Header/>,
         <div className={["App-login"]}>,
-        <LoginScreen  appContext={this} />,
+        <Login  appContext={this} />,
           </div>
           // {/* </muiThemeable> */}
           

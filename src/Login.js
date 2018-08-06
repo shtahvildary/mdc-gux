@@ -12,10 +12,21 @@ import './App.css'
 
 class Login extends Component {
   constructor(props){
-    const { classes } = props;
     super(props);
-    var localloginComponent=[];
-    localloginComponent.push(
+  
+    this.state={
+      username:'',
+      password:'',
+      loginComponent:[],
+      // loginRole:'student'
+    }
+  }
+  componentWillMount(){
+    const { classes } = this.props;
+
+    var loginComponent=[];
+
+    loginComponent.push(
       <MuiThemeProvider>
         <div >
         <form className={classes.container} noValidate autoComplete="off">
@@ -28,12 +39,7 @@ class Login extends Component {
        </div>
        </MuiThemeProvider>
     )
-    this.state={
-      username:'',
-      password:'',
-      loginComponent:localloginComponent,
-      // loginRole:'student'
-    }
+    this.setState({loginComponent})
   }
   enter(event){
     // handleClick(event){
@@ -49,20 +55,15 @@ class Login extends Component {
      if(response.status === 200){
        console.log("Login successfull");
        localStorage.setItem('token',response.data.token)
-       console.log(localStorage.getItem('token'))
+      //  console.log(localStorage.getItem('token'))
        var indexScreen=[];
       //  indexScreen.push(<redirect to='/App1' />)
        indexScreen.push(<indexPage appContext={self.props.appContext} />)
-       self.props.appContext.setState({loginPage:[],indexScreen:indexScreen})
-       
-     }
-     else
-       {
-         console.log("Username does not exists");
-       alert("نام کاربری یا رمز عبور اشتباه است");
-      }    
+       self.props.appContext.setState({loginPage:[],indexScreen:indexScreen}) 
+     }    
    })
    .catch(function (error) {
+    alert("نام کاربری یا رمز عبور اشتباه است");
      console.log(error);
    });
   }
@@ -73,9 +74,9 @@ tbxReadValue(input){this.setState(input) }
     
   render() {
     return (
-      <div className="App-Login">
+      // <div className="App-Login">
         <Card pageName="ورود" content={this.state.loginComponent}/>
-    </div>
+    // </div>
     );
   }
 }

@@ -88,7 +88,9 @@ class NewDevice extends Component {
         });
     }
     else {
-      alert("Input field value is missing");
+      alert("تمامی فیلدهای ستاره دار را پر کنید.");
+
+      // alert("Input field value is missing");
     }
   }
   callApi = async (payload) => {
