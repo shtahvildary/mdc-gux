@@ -25,23 +25,19 @@ class ViewLocation extends Component {
   }
   fillComponent(input) {
     var localComponent = [];
-    console.log("location: ", input);
     this.setState({ open: input.open })
-    var fHf={}
-if(input.location.floor) fHf={name:"طبقه",value:input.location.floor}
-if(input.location.halfFloor) fHf={name:"نیم طبقه",value:input.location.halfFloor}
+
     localComponent.push(
       <MuiThemeProvider>
         <div>
           <p>آدرس:  </p>
-          <p>ساختمان {input.location.building}، {fHf.name} {fHf.value}, 
+          <p>ساختمان {input.location.building}، {input.location.fHfLevel} , 
           اتاق {input.location.room} </p>
           <p>توضیحات: {input.location.description} </p>
         </div>
       </MuiThemeProvider>
     );
-    this.setState({ localComponent: localComponent }, () => { });
-
+    this.setState({ localComponent: localComponent }, () => {});
   }
   componentWillReceiveProps(newProps) {
     this.fillComponent(newProps)
