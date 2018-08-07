@@ -53,7 +53,7 @@ class NewVlan extends Component {
   }
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if (this.state.number.length > 0 && this.state.name.length > 0 && this.state.ip.length > 0 && this.state.description.length > 0 && this.state.firstIp.length > 0 && this.state.lastIp.length > 0 && this.state.subnetMask.length > 0) {
+    if (this.state.number.length > 0 && this.state.name.length > 0 && this.state.ip.length > 0  && this.state.firstIp.length > 0 && this.state.lastIp.length > 0 && this.state.subnetMask.length > 0) {
       var payload = {
         "number": this.state.number,
         "name": this.state.name,
@@ -70,6 +70,9 @@ class NewVlan extends Component {
           console.log(response);
           if (response.status === 200) {
             console.log("add new vlan is OK :D");
+      alert("ذخیره سازی با موفقیت انجام شد.");
+      // window.location.reload
+
           }
           else {
             console.log("some error ocurred", response.status);
