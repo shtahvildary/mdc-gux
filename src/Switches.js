@@ -15,20 +15,20 @@ class switchesTable extends Component {
       columns: {}
     };
   }
-  callApi = async () => {
+  callApi = async (path, payload) => {
     const response = await axios({
       method: "post",
-      url: global.serverAddress + "/switches/all",
-      headers: { "x-access-token": localStorage.getItem("token") }
+      url: global.serverAddress + "/switches/"+path,
+      headers: { "x-access-token": localStorage.getItem("token")},
+      data: payload
+     
     });
-    const body = await response;
-    if (response.status !== 200) throw Error(body.message);
-
-    return body;
+    if (response.status !== 200) throw Error(response.message);
+    return response;
   };
   componentWillMount() {
 
-    this.callApi()
+    this.callApi("all","")
       .then(res => {
         this.setState({ response: res.data.switches }, () => {
           this.setTblData()
@@ -47,6 +47,10 @@ class switchesTable extends Component {
     this.setState({ response: tblData.response.switches }, () => {})
 
   }
+  delete(arrayOfIds){
+    console.log("arrayOfIds: ",arrayOfIds)   
+     this.callApi("delete",{arrayOfIds})    
+   }
   setTblData() {
     var table = {
       switchesTable: <SimpleTable
@@ -71,6 +75,7 @@ class switchesTable extends Component {
           data={this.state.response.switchesData}
           showView={this.showView.bind(this)}
           showEdit={this.showEdit.bind(this)}
+          delete={this.delete.bind(this)}          
           />}
         />
       </div>

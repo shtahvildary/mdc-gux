@@ -36,9 +36,7 @@ class NewNetNode extends Component {
   }
   setId(model,selectedId) {
     
-    console.log(model)
     this.setState(selectedId, () => {
-      console.log(selectedId)
     var _id=selectedId[Object.keys(selectedId)[0]]
       var payload={_id}
 
@@ -109,7 +107,7 @@ console.log(global.userType)
               localComponent.push(
                 <MuiThemeProvider>
                   <div>
-                    <MyTextField id="patchPanelPort" label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
+                    <MyTextField id="patchPanelPort" required label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
                     <br />
                     <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/>
@@ -130,7 +128,7 @@ console.log(global.userType)
                      <p> {this.state.deviceInfo.name} با آی پی {this.state.deviceInfo.ip} و شماره اموال {this.state.deviceInfo.code}</p>
                     ):("")}  
                     <br />      
-                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
+                   <Menu id="location" name={"*"+"مکان"} items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
                    {this.state.locationInfo?(
                      <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
                     ):("")}

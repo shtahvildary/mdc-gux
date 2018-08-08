@@ -16,24 +16,21 @@ class NewSwitch extends Component {
       model: "",
       diagramUrl: "",
       location: "",
+      code:"",
     };  
   }
   tbxReadValue(input) {
     this.setState(input);
   }
-  // setId(selectedId) {
-  //   this.setState(selectedId, () => {
-  //   })
-  // }
+  
   fillComponent(){
 
     var localComponent = [];
     localComponent.push(
       <MuiThemeProvider>
         <div>
-          {/* <TextField id="search" label="Search field" type="search" className={classes.textField} margin="normal"/> */}
-          {/* <TextField id="name" label="Name" className={classes.textField} value={this.state.name} onChange={this.handleChange('name')} margin="normal"/> */}
           <TextField
+          required
             id="name"
             label="نام سوییچ"
             change={this.tbxReadValue.bind(this)}
@@ -46,17 +43,19 @@ class NewSwitch extends Component {
           />
           <br />
           <TextField
-            id="description"
-            label="توضیحات"
-            change={this.tbxReadValue.bind(this)}
-          />
-          <br />
-          <TextField
+          required
             id="model"
             label="مدل سوییچ"
             change={this.tbxReadValue.bind(this)}
           />
           <br />
+          <TextField
+                id="code"
+                label="شماره اموال"
+                change={this.tbxReadValue.bind(this)}
+                defaultValue={this.state.code}
+              />
+              <br />
           <TextField
             id="diagramUrl"
             label="نمودار PRTG"
@@ -73,6 +72,12 @@ class NewSwitch extends Component {
                  <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
                 ):("")}
           {/* <TextField id="location" label="مکان" change={this.tbxReadValue.bind(this)}/> */}
+          <br />
+          <TextField
+            id="description"
+            label="توضیحات"
+            change={this.tbxReadValue.bind(this)}
+          />
           <br />
           <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
         </div>
@@ -103,6 +108,7 @@ class NewSwitch extends Component {
         ip: this.state.ip,
         description: this.state.description,
         model: this.state.model,
+        code:this.state.code,
         diagramUrl: this.state.diagramUrl,
         location: this.state.location
       };

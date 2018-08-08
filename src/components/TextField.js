@@ -54,6 +54,7 @@ class TextFields extends React.Component {
     this.setState({ InputLabelProps: this.props.InputLabelProps })
     this.setState({ helperText: this.props.helperText })
     this.setState({ InputProps: this.props.InputProps })
+    this.setState({ required: this.props.required })
 
     // this.setState({})
   }
@@ -72,6 +73,7 @@ class TextFields extends React.Component {
     return (
       // <FormControl fullWidth>
       <TextField
+      required={this.state.required}
         id={this.state.id}
         label={this.state.label}
         className={classes.textField}

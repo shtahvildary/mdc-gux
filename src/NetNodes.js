@@ -20,7 +20,6 @@ class netNodes extends Component {
     
   }
   callApi = async (path, payload) => {
-    console.log(path,payload)
     const response = await axios({
       method: "post",
       url: global.serverAddress + "/netnodes/" + path,
@@ -72,13 +71,8 @@ class netNodes extends Component {
     console.log(tblData.response.netNodes);
   }
   delete(arrayOfIds){
-   console.log("arrayOfIds: ",arrayOfIds)
-   
-    
-    // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
-
-    this.callApi("delete",{arrayOfIds})
-      
+     // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
+    this.callApi("delete",{arrayOfIds}) 
   }
   render() {
 

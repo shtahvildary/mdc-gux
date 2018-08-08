@@ -74,6 +74,7 @@ class vlans extends Component {
     console.log(tblData);
     this.setState({ response: tblData.response.vlans }, () => { });
   }
+  delete(arrayOfIds){this.callApi("delete",{arrayOfIds})}
   render() {
     // console.log(this.state.response)
     return (
@@ -91,6 +92,7 @@ class vlans extends Component {
               data={this.state.response.vlansData}
               showView={this.showView.bind(this)}
               showEdit={this.showEdit.bind(this)}
+              delete={this.delete.bind(this)}
             />
           }
         />

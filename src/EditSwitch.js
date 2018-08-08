@@ -93,17 +93,18 @@ class EditSwitch extends Component {
   fillComponent(input) {
     console.log(input);
     this.setState({ open: input.open });
-    var { _id, name, ip, model, diagramUrl, description, location } = input.sw;
+    var { _id, name, ip, model, diagramUrl, description, location,code } = input.sw;
     console.log("_id: ", _id);
 
     this.setState(
-      { _id, name, ip, model, diagramUrl, description, location },
+      { _id, name, ip, model, diagramUrl, description, location,code },
       () => {
         var localComponent = [];
         localComponent.push(
           <MuiThemeProvider>
             <div>
               <TextField
+              required
                 id="name"
                 label="نام سوییچ"
                 change={this.tbxReadValue.bind(this)}
@@ -118,17 +119,18 @@ class EditSwitch extends Component {
               />
               <br />
               <TextField
-                id="description"
-                label="توضیحات"
-                change={this.tbxReadValue.bind(this)}
-                defaultValue={this.state.description}
-              />
-              <br />
-              <TextField
+              required
                 id="model"
                 label="مدل سوییچ"
                 change={this.tbxReadValue.bind(this)}
                 defaultValue={this.state.model}
+              />
+              <br />
+              <TextField
+                id="code"
+                label="شماره اموال"
+                change={this.tbxReadValue.bind(this)}
+                defaultValue={this.state.code}
               />
               <br />
               <TextField
@@ -156,6 +158,13 @@ class EditSwitch extends Component {
                 ""
               )}
               <br />
+              <TextField
+                id="description"
+                label="توضیحات"
+                change={this.tbxReadValue.bind(this)}
+                defaultValue={this.state.description}
+              />
+              <br />
               <MyButton label="ذخیره" click={this.saveBtnClick.bind(this)} />
             </div>
           </MuiThemeProvider>
@@ -163,9 +172,6 @@ class EditSwitch extends Component {
         this.setState({ localComponent: localComponent }, () => {});
       }
     );
-  }
-  setValue(value) {
-    this.setState({ halfFloor: value }, () => {});
   }
   componentWillMount() {
     var locations;

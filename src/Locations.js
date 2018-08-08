@@ -72,6 +72,10 @@ class locations extends Component {
     this.setState({ response: tblData.response.locations }, () => { });
     console.log(tblData);
   }
+  delete(arrayOfIds){
+    console.log("arrayOfIds: ",arrayOfIds)   
+     this.callApi("delete",{arrayOfIds})    
+   }
   render() {
     console.log(this.state)
     return (
@@ -89,6 +93,7 @@ class locations extends Component {
               data={this.state.response.locationsData}
               showView={this.showView.bind(this)}
               showEdit={this.showEdit.bind(this)}
+              delete={this.delete.bind(this)}          
             />
           }
         />

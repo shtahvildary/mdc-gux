@@ -72,6 +72,7 @@ class Devices extends Component {
     console.log(tblData);
     this.setState({ response: tblData.response.devices }, () => { });
   }
+  delete(arrayOfIds){this.callApi("delete",{arrayOfIds})}
   render() {
     console.log(this.state.response)
     return (
@@ -89,6 +90,7 @@ class Devices extends Component {
               data={this.state.response.devicesData}
               showView={this.showView.bind(this)}
               showEdit={this.showEdit.bind(this)}
+              delete={this.delete.bind(this)}
             />
           }
         />

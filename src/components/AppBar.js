@@ -59,7 +59,7 @@ class ButtonAppBar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" className={this.state.flex}>
-              مدیاسنتر
+              فناوری اطلاعات سیما
           </Typography>
             <Button color="inherit" onClick={(event) => this.handleClick(event)}>خروج</Button>
           </Toolbar>

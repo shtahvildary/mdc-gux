@@ -8,7 +8,7 @@ import Modal from "./components/Modal";
 import Paper from "@material-ui/core/Paper";
 import Menu from "./components/Menu";
 
-class EditSwitch extends Component {
+class EditDevice extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,33 +17,58 @@ class EditSwitch extends Component {
       ip: "",
       description: "",
       model: "",
-      diagramUrl: "",
-      location: "",
-
+      code:"",
+      department:"",
+      specialProperties:[],
+      spTbx:[],
       open: true
     };
   }
-  setId(model, selectedId) {
+  tbxReadValue(input) {
+    this.setState(input);
+  }
+  tbxSpReadValue(input){
+    var specialProperties=this.state.specialProperties;
+    var ind=specialProperties.findIndex(i=>i.name===Object.keys(input)[0])
+    var key=Object.keys(input)[0];
+    if(ind===-1)specialProperties.push({name:key,value:input[key]});
+    else specialProperties[ind]={name:key,value:input[key]};
+    this.setState({specialProperties},()=>{
+
+    })
+  }
+  setId(selectedId){this.setState(selectedId, () => {})}
+  setDeviceType(selectedId) {
+    console.log(selectedId)
     this.setState(selectedId, () => {
-      var _id = selectedId[Object.keys(selectedId)[0]];
-      var payload = { _id };
-      this.callApiSelect(model, payload).then(res =>
-        this.setState(res.data, () => {
-          this.fillComponent(this.state.input);
-        })
-      );
-    });
+      var index=this.state.deviceTypes.findIndex(i=>i._id===selectedId.deviceType)
+      var spTbx=[]
+      var sp=this.state.deviceTypes[index].specialProperties
+      if(sp)
+      sp.map(i=>{
+      spTbx.push(
+        <TextField id={i.en} label={i.fa} 
+        change={this.tbxSpReadValue.bind(this)} 
+        />
+      )})
+      this.setState({spTbx},()=>{
+        this.setLocalComponent()
+      })
+    })
   }
   saveBtnClick(event) {
-    var payload = {
-      _id: this.state._id,
-      name: this.state.name,
-      ip: this.state.ip,
-      model: this.state.model,
-      diagramUrl: this.state.diagramUrl,
-      location: this.state.location,
-      description: this.state.description
-    };
+    if ( this.state.name.length > 0 && this.state.deviceType.length > 0&& this.state.department.length>0) {
+      var payload = {
+
+        "name": this.state.name,
+        "ip": this.state.ip,
+        "description": this.state.description,
+        "deviceType": this.state.deviceType,
+        "model": this.state.model,
+        "code": this.state.code,
+        "department": this.state.department,
+        "specialProperties":this.state.specialProperties,
+      }
     this.callApi(payload)
       .then(function(response) {
         if (response.status === 200) {
@@ -56,12 +81,20 @@ class EditSwitch extends Component {
       .catch(function(error) {
         console.log(error);
       });
+     
   }
+  else {
+    alert("تمامی فیلدهای ستاره دار را پر کنید.");
+
+    // alert("Input field value is missing");
+  }
+}
+
 
   callApi = async payload => {
     const response = await axios({
       method: "post",
-      url: global.serverAddress + "/switches/update",
+      url: global.serverAddress + "/devices/update",
       headers: { "x-access-token": localStorage.getItem("token") },
       data: payload
     });
@@ -79,25 +112,17 @@ class EditSwitch extends Component {
 
     return response;
   };
-  callApiSelect = async (model, payload) => {
-    var response = await axios({
-      method: "post",
-      url: global.serverAddress + "/" + model + "/select/one",
-      headers: { "x-access-token": localStorage.getItem("token") },
-      data: payload
-    });
-    if (response.status !== 200) throw Error(response.message);
-    return response;
-  };
+ 
 
-  fillComponent(input) {
+  setLocalComponent(input) {
     console.log(input);
     this.setState({ open: input.open });
-    var { _id, name, ip, model, diagramUrl, description, location } = input.sw;
+
+    var { _id, name, ip, model, deviceType, description, code,specialProperties,department } = input.sw;
     console.log("_id: ", _id);
 
     this.setState(
-      { _id, name, ip, model, diagramUrl, description, location },
+      { _id, name, ip, model, deviceType, description, code,specialProperties,department },
       () => {
         var localComponent = [];
         localComponent.push(
@@ -105,14 +130,14 @@ class EditSwitch extends Component {
             <div>
               <TextField
                 id="name"
-                label="نام سوییچ"
+                label="نام"
                 change={this.tbxReadValue.bind(this)}
                 defaultValue={this.state.name}
               />
               <br />
               <TextField
                 id="ip"
-                label="IP سوییچ"
+                label="IP"
                 change={this.tbxReadValue.bind(this)}
                 defaultValue={this.state.ip}
               />
@@ -124,38 +149,17 @@ class EditSwitch extends Component {
                 defaultValue={this.state.description}
               />
               <br />
-              <TextField
-                id="model"
-                label="مدل سوییچ"
-                change={this.tbxReadValue.bind(this)}
-                defaultValue={this.state.model}
-              />
-              <br />
-              <TextField
-                id="diagramUrl"
-                label="نمودار PRTG"
-                change={this.tbxReadValue.bind(this)}
-                defaultValue={this.state.diagramUrl}
-              />
-              <br />
-              <Menu
-                id="location"
-                name="مکان"
-                items={this.state.locations}
-                selectedId={this.setId.bind(this, "locations")}
-                defaultValue={this.state.locationName}
-              />
-              {this.state.locationInfo ? (
-                <p>
-                  {" "}
-                  {this.state.locationInfo.name} واقع در ساختمان{" "}
-                  {this.state.locationInfo.building}، اتاق{" "}
-                  {this.state.locationInfo.room}
-                </p>
-              ) : (
-                ""
-              )}
-              <br />
+              <Menu id="deviceType" name="نوع" items={this.state.deviceTypes} selectedId={this.setDeviceType.bind(this)}
+                defaultValue={this.state.deviceType}
+                />
+          {this.state.spTbx}
+             
+          <br /><TextField id="model" label="مدل" change={this.tbxReadValue.bind(this)} />
+          <br /><TextField id="code" label="شماره اموال" change={this.tbxReadValue.bind(this)} />
+         <div id="specialProperties"></div>
+          <br />
+          <Menu id="department" name="واحد" items={this.state.departments} selectedId={this.setId.bind(this)} />
+          <br/>
               <MyButton label="ذخیره" click={this.saveBtnClick.bind(this)} />
             </div>
           </MuiThemeProvider>
@@ -164,11 +168,10 @@ class EditSwitch extends Component {
       }
     );
   }
-  setValue(value) {
-    this.setState({ halfFloor: value }, () => {});
-  }
   componentWillMount() {
-    var locations;
+    console.log("hiiii")
+    var deviceTypes,departments;
+   
     var open = this.props.open;
     var input = this.props;
     this.setState(
@@ -178,19 +181,23 @@ class EditSwitch extends Component {
       },
       () => {
         console.log(this.props);
-        this.callApiMenus("locations").then(res => {
-          locations = res.data.locations;
-          this.setState({ locations }, () => {
+        this.callApiMenus('devicetypes').then(res=>{
+          deviceTypes=res.data.deviceTypes
+        this.callApiMenus("departments").then(res => {
+          departments = res.data.departments;
+          this.setState({ deviceTypes,departments }, () => {
             console.log(this.props);
 
-            this.fillComponent(this.props);
+            this.setLocalComponent(this.props);
           });
+        
         });
       }
     );
+  })
   }
   componentWillReceiveProps(newProps) {
-    this.fillComponent(newProps);
+    this.setLocalComponent(newProps);
   }
   tbxReadValue(input) {
     this.setState(input);
@@ -204,7 +211,7 @@ class EditSwitch extends Component {
       <Paper>
         <div>
           <Modal
-            title="ویرایش سوییچ"
+            title="ویرایش سخت افزار"
             open={this.state.open}
             components={this.state.localComponent}
             close={this.editModal.bind(this)}
@@ -215,4 +222,4 @@ class EditSwitch extends Component {
   }
 }
 
-export default EditSwitch;
+export default EditDevice;
