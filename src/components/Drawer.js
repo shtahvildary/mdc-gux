@@ -42,7 +42,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import NewDepartment from '../NewDepartment';
-import Register from '../Register';
+import newUser from '../NewUser';
+import NewUser from '../NewUser';
+// import Register from '../Register';
 // import computerIcon from '../Icons/twotone-computer-24px'
 
 
@@ -364,7 +366,8 @@ class MiniDrawer extends React.Component {
             <Route path="/سخت افزار جدید" component={NewDevice} />
             <Route path="/نوع جدید" component={NewDeviceType} />
             <Route path="/واحد جدید" component={NewDepartment} />
-            <Route path="/کاربر جدید" component={Register} />
+            <Route path="/کاربر جدید" component={NewUser} />
+            {/* <Route path="/کاربر جدید" component={Register} /> */}
           </Switch>
          
           </div>

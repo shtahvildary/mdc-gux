@@ -15,7 +15,8 @@ import NewNetNode from './NewNetNode';
 import NewSwitch from './NewSwitch';
 import NewLocation from './NewLocation';
 import NewDepartment from './NewDepartment';
-import Register from './Register';
+import NewUser from './NewUser';
+// import Register from './Register';
 import Switches from './Switches';
 import NewVlan from './NewVlan';
 import NewDevice from './NewDevice';
@@ -48,7 +49,8 @@ global.serverAddress = "http://localhost:5000/api";
     <Route path="/سخت افزار جدید" component={NewDevice} />
     <Route path="/نوع جدید" component={NewDeviceType} />
     <Route path="/واحد جدید" component={NewDepartment} />
-    <Route path="/کاربر جدید" component={Register} />
+    <Route path="/کاربر جدید" component={NewUser} />
+    {/* <Route path="/کاربر جدید" component={Register} /> */}
   </Switch>
   </BrowserRouter>
   )
