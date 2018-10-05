@@ -24,6 +24,7 @@ import Switches from '../Switches';
 import Locations from '../Locations';
 import Vlans from '../Vlans';
 import Devices from '../Devices';
+import Streams from '../Streams';
 import NewNetNode from '../NewNetNode';
 import NewSwitch from '../NewSwitch';
 import NewLocation from '../NewLocation';
@@ -44,6 +45,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import NewDepartment from '../NewDepartment';
 import newUser from '../NewUser';
 import NewUser from '../NewUser';
+import NewStream from '../NewStream';
 // import Register from '../Register';
 // import computerIcon from '../Icons/twotone-computer-24px'
 
@@ -237,7 +239,13 @@ class MiniDrawer extends React.Component {
             <ListItemText>سخت افزارها</ListItemText>
           </ListItem>
           </Link>
-          {global.userType<20?(
+          <Link to="/استریم ها">
+          <ListItem>
+          <ListItemIcon><Dashboard /></ListItemIcon>
+            <ListItemText>استریم ها</ListItemText>
+          </ListItem>
+          </Link>
+          {global.userType<2?(
           <Link to="/کاربران">
           <ListItem>
           <ListItemIcon><Dashboard /></ListItemIcon>
@@ -321,6 +329,15 @@ class MiniDrawer extends React.Component {
             <ListItemText inset primary="افزودن واحد جدید"/>
           </ListItem>
           </Link>
+
+          <Link to="/استریم جدید" >
+          <ListItem button className={classes.nested}>
+          <ListItemIcon>
+            <Dashboard />
+            </ListItemIcon>
+            <ListItemText inset primary="افزودن استریم جدید"/>
+          </ListItem>
+          </Link>
 {global.userType===0?(
           <Link to="/کاربر جدید" >
           <ListItem button className={classes.nested}>
@@ -358,6 +375,7 @@ class MiniDrawer extends React.Component {
             <Route path="/مکانها" component={Locations} />
             <Route path="/شبکه های مجازی" component={Vlans} />
             <Route path="/سخت افزارها" component={Devices} />
+            <Route path="/استریم ها" component={Streams} />
             {/* <Route path="/کاربران" component={Users} /> */}
             <Route path="/نود جدید" component={NewNetNode} />
             <Route path="/سوییچ جدید" component={NewSwitch} />
@@ -367,6 +385,7 @@ class MiniDrawer extends React.Component {
             <Route path="/نوع جدید" component={NewDeviceType} />
             <Route path="/واحد جدید" component={NewDepartment} />
             <Route path="/کاربر جدید" component={NewUser} />
+            <Route path="/استریم جدید" component={NewStream} />
             {/* <Route path="/کاربر جدید" component={Register} /> */}
           </Switch>
          

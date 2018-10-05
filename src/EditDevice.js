@@ -72,7 +72,7 @@ class EditDevice extends Component {
     this.callApi(payload)
       .then(function(response) {
         if (response.status === 200) {
-          console.log("update location is OK :D");
+          console.log("update device is OK :D");
           // this.editModal
         } else {
           console.log("some error ocurred", response.status);
