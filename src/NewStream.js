@@ -5,6 +5,7 @@ import Button from './components/Button';
 import axios from 'axios';
 import TextField from './components/TextField';
 import './index.css';
+import AlertDialog from "./components/AlertDialog";
 import Card from './components/Card'
 
 class NewStream extends Component {
@@ -12,7 +13,8 @@ class NewStream extends Component {
 
     super(props);
     this.state = {
-      name:"",
+      nameEn:"",
+      nameFa:"",
       address:"",  
     }
     
@@ -25,29 +27,38 @@ class NewStream extends Component {
 
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if ( this.state.name.length > 0 ) {
+    if ( this.state.nameEn.length && this.state.address.length> 0 ) {
+      var name={}
+      name.en=this.state.nameEn;
+      name.fa=this.state.nameFa;
       var payload = {
 
-        "name": this.state.name,
+        "name":name,
         "address": this.state.address,
       }
       this.callApi(payload)
         .then(function (response) {
           if (response.status === 200) {
             console.log("add new stream is OK :D");
+            <AlertDialog title="save" open={true} contentText="استریم جدید با موفقیت اضافه شد." btnLbl="ok"/>
+
           }
           else {
             console.log("some error ocurred", response.status);
+            <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
+     
+
           }
         })
         .catch(function (error) {
           console.log(error);
+          <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
+     
+
         });
     }
     else {
       alert("تمامی فیلدهای ستاره دار را پر کنید.");
-
-      // alert("Input field value is missing");
     }
   }
   callApi = async (payload) => {
@@ -55,6 +66,9 @@ class NewStream extends Component {
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
+  componentWillMount() {
+    this.setLocalComponent()
+  }
   
   setLocalComponent(){
     var localComponent = []
@@ -63,9 +77,9 @@ class NewStream extends Component {
 
           <TextField id="nameFa" label="نام فارسی" change={this.tbxReadValue.bind(this)} />
           <br />
-          <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} />
+         * <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} />
           <br />
-          <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} />
+         * <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} />
           
           <br />
           <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />

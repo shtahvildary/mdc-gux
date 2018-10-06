@@ -3,10 +3,14 @@ import axios from "axios";
 import SimpleTable from "./components/Table";
 import Card from "./components/Card";
 import EditStream from "./EditStream";
-// import ViewDevice from "./ViewDevice";
+// import ViewStream from "./ViewStream";
 import Search from "./components/Search";
 import NewStream from "./NewStream";
 import Button from "./components/Button"
+import IconButton from '@material-ui/core/IconButton';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayIcon from '@material-ui/icons/PlayArrow';
+
 
 import io from "socket.io-client";
 
@@ -46,13 +50,42 @@ class Streams extends Component {
     })
     this.callApi("all", "")
       .then(res => {
-        // console.log(res.data)
-        this.setState({ response: res.data.streams }, () => {
-          // console.log('this.state.response: ',this.state.response)
+        var response=res.data.streams
+        response.columns.changePlayState="تغییر وضعیت"
+        var playBtn=[]
+        var pauseBtn=[]
+        response.streamsData.map((str,index)=>{
+       playBtn=[<IconButton aria-label="play{nameEn}" onClick={event => this.props.playStream(str.address)} >
+        <PlayIcon />
+        </IconButton> ]
+        pauseBtn=[<IconButton aria-label="pause{nameEn}" onClick={event => this.props.playStream(str.address)} >
+        <PlayIcon />
+        </IconButton> ]
+          if(str.playStateValue===0){
+          str.changePlayState=playBtn
+          /* <PlayIcon />
+        </IconButton> */
+        }
+        else if(str.playStateValue===1){
+          str.changePlayState=pauseBtn
+          {/* <PauseIcon />
+          
+          </IconButton> */}
+        }
+        })
+
+
+        console.log("resaponse: ",response)
+        this.setState({ response }, () => {
           this.setTblData();
         });
       })
       .catch(err => console.log(err));
+  }
+
+  playStream(address){
+    ///////////
+
   }
 
   setTblData() {
@@ -81,9 +114,9 @@ class Streams extends Component {
   showEdit(n) {
     this.setState({ editComponent: <EditStream stream={n} open="true" /> });
   }
-  // showView(n) {
-  //   this.setState({ viewComponent: <ViewDevice device={n} open="true" /> });
-  // }
+  showView(n) {
+    // this.setState({ viewComponent: <ViewStream stream={n} open="true" /> });
+  }
   searchResult(tblData) {
     console.log(tblData);
     this.setState({ response: tblData.response.streams }, () => {});
@@ -113,7 +146,7 @@ class Streams extends Component {
               }}
               columns={this.state.response.columns}
               data={this.state.response.streamsData}
-              // showView={this.showView.bind(this)}
+              showView={this.showView.bind(this)}
               showEdit={this.showEdit.bind(this)}
               delete={this.delete.bind(this)}
             />
