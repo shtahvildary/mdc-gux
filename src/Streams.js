@@ -39,43 +39,46 @@ class Streams extends Component {
     return response;
   };
   componentWillMount() {
-    var socket=io("http://localhost:3000")
-    socket.on("connection",()=>{
+    var socket = io("http://localhost:3000")
+    socket.on("connection", () => {
       console.log("connected succ")
     })
-    socket.on("changes",(data)=>{
-      console.log("hiiiiiiii data: ",data)
+    socket.on("changes", (data) => {
+      console.log("hiiiiiiii data: ", data)
 
       //////////
     })
     this.callApi("all", "")
       .then(res => {
-        var response=res.data.streams
-        response.columns.changePlayState="تغییر وضعیت"
-        var playBtn=[]
-        var pauseBtn=[]
-        response.streamsData.map((str,index)=>{
-       playBtn=[<IconButton aria-label="play{nameEn}" onClick={event => this.props.playStream(str.address)} >
-        <PlayIcon />
-        </IconButton> ]
-        pauseBtn=[<IconButton aria-label="pause{nameEn}" onClick={event => this.props.playStream(str.address)} >
-        <PlayIcon />
-        </IconButton> ]
-          if(str.playStateValue===0){
-          str.changePlayState=playBtn
-          /* <PlayIcon />
-        </IconButton> */
-        }
-        else if(str.playStateValue===1){
-          str.changePlayState=pauseBtn
-          {/* <PauseIcon />
-          
-          </IconButton> */}
-        }
+        var response = res.data.streams
+        response.columns.changePlayState = "تغییر وضعیت"
+        var playBtn = []
+        var pauseBtn = []
+
+
+
+        // click={this.saveBtnClick.bind(this)}
+
+
+
+        response.streamsData.map((str, index) => {
+          console.log('str:',str)
+          playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str.address)} >
+            <PlayIcon />
+          </IconButton>
+          pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.playStream(str.address)} >
+            <PauseIcon />
+          </IconButton>
+          if (str.playStateValue === 0) {
+            str.changePlayState = playBtn
+          }
+          else if (str.playStateValue === 1) {
+            str.changePlayState = pauseBtn
+          }
         })
 
 
-        console.log("resaponse: ",response)
+        console.log("resaponse: ", response)
         this.setState({ response }, () => {
           this.setTblData();
         });
@@ -83,7 +86,8 @@ class Streams extends Component {
       .catch(err => console.log(err));
   }
 
-  playStream(address){
+  playStream(address) {
+    console.log('address: ', address)
     ///////////
 
   }
@@ -107,8 +111,8 @@ class Streams extends Component {
         .catch(err => console.log(err));
     });
   }
-  playBtnClick(){
-    
+  playBtnClick() {
+
   }
 
   showEdit(n) {
@@ -119,7 +123,7 @@ class Streams extends Component {
   }
   searchResult(tblData) {
     console.log(tblData);
-    this.setState({ response: tblData.response.streams }, () => {});
+    this.setState({ response: tblData.response.streams }, () => { });
   }
   delete(arrayOfIds) {
     this.callApi("delete", { arrayOfIds });
@@ -129,12 +133,12 @@ class Streams extends Component {
     return (
       <div>
         <Search model="streams" searchResult={this.searchResult.bind(this)} />
-        <Button label="اجرا"  click={this.playBtnClick.bind(this)} />
-        
+        <Button label="اجرا" click={this.playBtnClick.bind(this)} />
+
         {this.state.editComponent}
         {/* {this.state.viewComponent} */}
         <Card
-        
+
           pageName="استریم ها"
           content={
             <SimpleTable

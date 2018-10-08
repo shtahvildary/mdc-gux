@@ -337,7 +337,7 @@ class EnhancedTable extends React.Component {
                       {columnData.map(c => {
                         let txt = n[c.id];
                         if (!txt) txt = "-";
-                        if (validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
+                        if (typeof txt ==='string' && validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
                         return <TableCell>{txt}</TableCell>
                       })}
                       <TableCell >
