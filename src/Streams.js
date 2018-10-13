@@ -38,6 +38,20 @@ class Streams extends Component {
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
+  
+  callStreamApi = async (path, payload) => {
+    console.log(path, payload);
+    const response = await axios({
+      method: "post",
+      url: global.streamServerAddress + "/streams/" + path,
+      // headers: { "x-access-token": localStorage.getItem("token") },
+      data: payload
+    });
+    // const body = await response;
+    if (response.status !== 200) throw Error(response.message);
+    return response;
+  };
+
   componentWillMount() {
     var socket = io("http://localhost:3000")
     socket.on("connection", () => {
@@ -62,8 +76,7 @@ class Streams extends Component {
 
 
         response.streamsData.map((str, index) => {
-          console.log('str:',str)
-          playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str.address)} >
+          playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str)} >
             <PlayIcon />
           </IconButton>
           pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.playStream(str.address)} >
@@ -77,8 +90,6 @@ class Streams extends Component {
           }
         })
 
-
-        console.log("resaponse: ", response)
         this.setState({ response }, () => {
           this.setTblData();
         });
@@ -86,8 +97,11 @@ class Streams extends Component {
       .catch(err => console.log(err));
   }
 
-  playStream(address) {
-    console.log('address: ', address)
+  playStream(str) {
+    console.log('str: ', str)
+    this.callStreamApi("state/change",{name:str.name,address:str.address})
+
+
     ///////////
 
   }
@@ -129,7 +143,6 @@ class Streams extends Component {
     this.callApi("delete", { arrayOfIds });
   }
   render() {
-    console.log("this.state.response: ", this.state.response);
     return (
       <div>
         <Search model="streams" searchResult={this.searchResult.bind(this)} />
