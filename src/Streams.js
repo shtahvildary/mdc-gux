@@ -79,7 +79,7 @@ class Streams extends Component {
           playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str)} >
             <PlayIcon />
           </IconButton>
-          pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.playStream(str.address)} >
+          pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(str.address)} >
             <PauseIcon />
           </IconButton>
           if (str.playStateValue === 0) {
@@ -99,11 +99,16 @@ class Streams extends Component {
 
   playStream(str) {
     console.log('str: ', str)
-    this.callStreamApi("state/change",{name:str.name,address:str.address})
+  
+    this.callStreamApi("start",[{name:str.nameEn,address:str.address,dshow:0}])
 
 
     ///////////
 
+  }
+
+  pauseStream(str){
+    this.callStreamApi("stop",{name:str.nameEn,address:str.address,dshow:0})
   }
 
   setTblData() {
@@ -125,9 +130,6 @@ class Streams extends Component {
         .catch(err => console.log(err));
     });
   }
-  playBtnClick() {
-
-  }
 
   showEdit(n) {
     this.setState({ editComponent: <EditStream stream={n} open="true" /> });
@@ -136,7 +138,6 @@ class Streams extends Component {
     // this.setState({ viewComponent: <ViewStream stream={n} open="true" /> });
   }
   searchResult(tblData) {
-    console.log(tblData);
     this.setState({ response: tblData.response.streams }, () => { });
   }
   delete(arrayOfIds) {
@@ -146,7 +147,6 @@ class Streams extends Component {
     return (
       <div>
         <Search model="streams" searchResult={this.searchResult.bind(this)} />
-        <Button label="اجرا" click={this.playBtnClick.bind(this)} />
 
         {this.state.editComponent}
         {/* {this.state.viewComponent} */}
