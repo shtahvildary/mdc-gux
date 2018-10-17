@@ -79,7 +79,7 @@ class Streams extends Component {
           playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str)} >
             <PlayIcon />
           </IconButton>
-          pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(str.address)} >
+          pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(str)} >
             <PauseIcon />
           </IconButton>
           if (str.playStateValue === 0) {
@@ -100,7 +100,7 @@ class Streams extends Component {
   playStream(str) {
     console.log('str: ', str)
   
-    this.callStreamApi("start",[{name:str.nameEn,address:str.address,dshow:0}])
+    this.callStreamApi("start",[{name:str.nameEn,address:str.address,id:str._id,dshow:0}])
 
 
     ///////////
@@ -108,7 +108,9 @@ class Streams extends Component {
   }
 
   pauseStream(str){
-    this.callStreamApi("stop",{name:str.nameEn,address:str.address,dshow:0})
+    console.log('str: ', str)
+
+    this.callStreamApi("stop",{name:str.nameEn,address:str.address,id:str._id,dshow:0})
   }
 
   setTblData() {
