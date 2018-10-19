@@ -3,7 +3,7 @@ import axios from "axios";
 import SimpleTable from "./components/Table";
 import Card from "./components/Card";
 import EditStream from "./EditStream";
-// import ViewStream from "./ViewStream";
+import ViewStream from "./ViewStream";
 import Search from "./components/Search";
 import NewStream from "./NewStream";
 import Button from "./components/Button"
@@ -41,7 +41,7 @@ class Streams extends Component {
   callStreamApi = async (path,streamServer, payload) => {
     const response = await axios({
       method: "post",
-      url: "http://"+streamServer + ":8001/api/streams/" + path,
+      url: "http://"+streamServer + ":8001/api/" + path,
       data: payload
     });
     if (response.status !== 200) throw Error(response.message);
@@ -77,16 +77,15 @@ class Streams extends Component {
     })
     this.callApi("all", "")
       .then(res => {
-        var response = res.data.streams
+        this.changeStateBtns(res.data.streams)
+      })
+      .catch(err => console.log(err));
+  }
+  changeStateBtns(response){
+            // var response = res.data.streams
         response.columns.changePlayState = "تغییر وضعیت"
         var playBtn = []
         var pauseBtn = []
-
-
-
-        // click={this.saveBtnClick.bind(this)}
-
-
 
         response.streamsData.map((str, index) => {
           playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str)} >
@@ -105,26 +104,44 @@ class Streams extends Component {
 
         this.setState({ response }, () => {
         });
-      })
-      .catch(err => console.log(err));
   }
 
   playStream(str) {
-    this.callStreamApi("start",str.streamServer,[{name:str.nameEn,address:str.address,id:str._id,dshow:0}])
+    console.log("str:",str)
+    if(!str.isMosaic)
+
+    
+    this.callStreamApi("streams/start",str.streamServer,[{name:str.nameEn,address:str.address,id:str._id,dshow:0}])
+  else    //call mosaic
+    {
+    //example: {"name":"mosaic1","mosaicInputs":[{"name":"out","address":"/Users/shadab/Downloads/video_2017-08-09_18-26-12.mp4"},{"name":"out2","address":"/Users/shadab/Desktop/webstream/ffmpeg/out2.mp4"}]}
+      var mosaicInputs=[];
+      str.mosaicInputs.map(i=>{
+      mosaicInputs.push(i.address)
+    this.callStreamApi("mosaic/start",str.streamServer,[{name:str.nameEn,address:str.mosaicInputs,id:str._id,dshow:0}])
+      })
+      }
+
   }
 
   pauseStream(str){
-    this.callStreamApi("stop",str.streamServer,{id:str._id,dshow:0})
+    if(!str.isMosaic)
+    this.callStreamApi("streams/stop",str.streamServer,{id:str._id,dshow:0})
+    else    //call mosaic
+    {
+      var mosaicInputs=[];
+      str.mosaicInputs.map(i=>{
+      mosaicInputs.push(i.address)
+    this.callStreamApi("mosaic/stop",str.streamServer,{id:str._id,dshow:0})
+      })
+    }
+    
+////////////////
   }
 
   tbxReadValue(input) {
     this.setState(input, () => {
       this.callApi("search", input)
-        .then(res => {
-          this.setState({ response: res.data.streams }, () => {
-            this.searchResult();
-          });
-        })
         .catch(err => console.log(err));
     });
   }
@@ -133,9 +150,11 @@ class Streams extends Component {
     this.setState({ editComponent: <EditStream stream={n} open="true" /> });
   }
   showView(n) {
-    // this.setState({ viewComponent: <ViewStream stream={n} open="true" /> });
+    this.setState({ viewComponent: <ViewStream stream={n} open="true" /> });
   }
   searchResult(tblData) {
+        this.changeStateBtns(tblData.response.streams)
+
     this.setState({ response: tblData.response.streams }, () => { });
   }
   delete(arrayOfIds) {
@@ -147,7 +166,7 @@ class Streams extends Component {
         <Search model="streams" searchResult={this.searchResult.bind(this)} />
 
         {this.state.editComponent}
-        {/* {this.state.viewComponent} */}
+        {this.state.viewComponent}
         <Card
 
           pageName="استریم ها"
