@@ -12,8 +12,10 @@ class EditStream extends Component {
     super(props);
     this.state = {
       _id: "",
-      name: "",
+      nameEn: "",
+      nameFa:"",
       address: "",
+      streamServer:"",
       open: true
     };
   }
@@ -23,11 +25,15 @@ class EditStream extends Component {
 
 
   saveBtnClick(event) {
-    if ( this.state.name.length > 0 ) {
+    if ( this.state.nameEn.length && this.state.address.length&&this.state.streamServer.length> 0 ) {
+      var name={}
+      name.en=this.state.nameEn;
+      name.fa=this.state.nameFa;
       var payload = {
-
-        "name": this.state.name,
-        "address": this.state.ip,
+        "_id":this.state._id,
+        "name": name,
+        "address": this.state.address,
+        "streamServer":this.state.streamServer,
       }
     this.callApi(payload)
       .then(function(response) {
@@ -68,21 +74,23 @@ class EditStream extends Component {
     console.log(input);
     this.setState({ open: input.open });
 
-    var { _id, name, address } = input.sw;
+    var { _id, nameEn,nameFa, address ,streamServer} = input.stream;
     console.log("_id: ", _id);
 
     this.setState(
-      { _id, name, address },
+      { _id, nameEn,nameFa, address,streamServer },
       () => {
         var localComponent = [];
         localComponent.push(
           <MuiThemeProvider>
             <div>
-            <TextField id="nameFa" label="نام فارسی" change={this.tbxReadValue.bind(this)} />
+            <TextField id="nameFa" label="نام فارسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameFa} />
           <br />
-          <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} />
+          <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameEn}/>
           <br />
-          <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} />
+          <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} defaultValue={this.state.address}/>
+          <br/>
+           <TextField id="streamServer" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer}/>
           <br/>
               <MyButton label="ذخیره" click={this.saveBtnClick.bind(this)} />
             </div>

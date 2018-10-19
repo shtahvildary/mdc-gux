@@ -27,7 +27,6 @@ class Streams extends Component {
     };
   }
   callApi = async (path, payload) => {
-    console.log(path, payload);
     const response = await axios({
       method: "post",
       url: global.serverAddress + "/streams/" + path,
@@ -39,15 +38,12 @@ class Streams extends Component {
     return response;
   };
   
-  callStreamApi = async (path, payload) => {
-    console.log(path, payload);
+  callStreamApi = async (path,streamServer, payload) => {
     const response = await axios({
       method: "post",
-      url: global.streamServerAddress + "/streams/" + path,
-      // headers: { "x-access-token": localStorage.getItem("token") },
+      url: "http://"+streamServer + ":8001/api/streams/" + path,
       data: payload
     });
-    // const body = await response;
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
@@ -58,9 +54,26 @@ class Streams extends Component {
       console.log("connected succ")
     })
     socket.on("changes", (data) => {
-      console.log("hiiiiiiii data: ", data)
+      var ind=this.state.response.streamsData.findIndex(i=>String(i._id)===String(data.id));
+      var {streamsData}=this.state.response;
+      if(data.playState===0){
+        var changePlayState=<IconButton aria-label="play{nameEn}" onClick={event => this.playStream(this.state.response.streamsData[ind])} >
+            <PlayIcon />
+          </IconButton>
+         var playState="متوقف شده"
 
-      //////////
+      }
+      else{
+        var changePlayState=<IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(this.state.response.streamsData[ind])} >
+            <PauseIcon />
+          </IconButton>
+         var playState="در حال پخش"
+      }
+      streamsData[ind].changePlayState=changePlayState;
+      streamsData[ind].playStateText=playState;
+      var {response}=this.state;
+      response.streamsData=streamsData
+      this.setState({response},()=>{})
     })
     this.callApi("all", "")
       .then(res => {
@@ -91,34 +104,17 @@ class Streams extends Component {
         })
 
         this.setState({ response }, () => {
-          this.setTblData();
         });
       })
       .catch(err => console.log(err));
   }
 
   playStream(str) {
-    console.log('str: ', str)
-  
-    this.callStreamApi("start",[{name:str.nameEn,address:str.address,id:str._id,dshow:0}])
-
-
-    ///////////
-
+    this.callStreamApi("start",str.streamServer,[{name:str.nameEn,address:str.address,id:str._id,dshow:0}])
   }
 
   pauseStream(str){
-    console.log('str: ', str)
-
-    this.callStreamApi("stop",{name:str.nameEn,address:str.address,id:str._id,dshow:0})
-  }
-
-  setTblData() {
-    <SimpleTable
-      addNew={<NewStream />}
-      columns={this.state.response.columns}
-      data={this.state.response}
-    />;
+    this.callStreamApi("stop",str.streamServer,{id:str._id,dshow:0})
   }
 
   tbxReadValue(input) {

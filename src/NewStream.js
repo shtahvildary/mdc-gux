@@ -15,7 +15,8 @@ class NewStream extends Component {
     this.state = {
       nameEn:"",
       nameFa:"",
-      address:"",  
+      address:"", 
+      streamServer:"" 
     }
     
   }
@@ -27,7 +28,7 @@ class NewStream extends Component {
 
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if ( this.state.nameEn.length && this.state.address.length> 0 ) {
+    if ( this.state.nameEn.length && this.state.address.length&&this.state.streamServer.length> 0 ) {
       var name={}
       name.en=this.state.nameEn;
       name.fa=this.state.nameFa;
@@ -35,26 +36,22 @@ class NewStream extends Component {
 
         "name":name,
         "address": this.state.address,
+        "streamServer":this.state.streamServer
       }
       this.callApi(payload)
         .then(function (response) {
           if (response.status === 200) {
             console.log("add new stream is OK :D");
             <AlertDialog title="save" open={true} contentText="استریم جدید با موفقیت اضافه شد." btnLbl="ok"/>
-
           }
           else {
             console.log("some error ocurred", response.status);
             <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
-     
-
           }
         })
         .catch(function (error) {
           console.log(error);
           <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
-     
-
         });
     }
     else {
@@ -80,7 +77,8 @@ class NewStream extends Component {
          * <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} />
           <br />
          * <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} />
-          
+          <br />
+          * <TextField id="streamServer" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} />
           <br />
           <Button label="ذخیره"  click={this.saveBtnClick.bind(this)} />
       </MuiThemeProvider>

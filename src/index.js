@@ -23,7 +23,7 @@ import NewDevice from './NewDevice';
 import NewDeviceType from './NewDeviceType';
 
 global.serverAddress = "http://localhost:5000/api";
-global.streamServerAddress = "http://localhost:8001/api";
+// global.streamServerAddress = "http://localhost:8001/api";
 
  var callApi=async () => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/users/me', headers: { "x-access-token": localStorage.getItem('token') } });
