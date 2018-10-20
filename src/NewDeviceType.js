@@ -169,8 +169,8 @@ class NewDeviceType extends Component {
   render() {
     return [
       
-        <MuiThemeProvider >,
-          <AppBar  title="new device type" />,
+        <MuiThemeProvider >
+          <AppBar  title="new device type" />
         </MuiThemeProvider>,
         <Card  pageName="افزودن نوع جدید" content={this.state.localComponent}/>,
       

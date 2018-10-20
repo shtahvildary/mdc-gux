@@ -29,8 +29,6 @@ class Search extends Component {
       };
     tbxReadValue(input) {
         this.setState(input,()=>{
-          console.log("input: ",input)
-          console.log("model: ",this.state.model)
           this.callApi(this.state.model,input)
           .then(res => {
             console.log(res)

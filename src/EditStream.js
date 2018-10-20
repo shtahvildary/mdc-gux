@@ -81,6 +81,15 @@ class EditStream extends Component {
       { _id, nameEn,nameFa, address,streamServer },
       () => {
         var localComponent = [];
+        if(input.stream.isMosaic===1){
+          var mosaicInputs=[];
+          input.stream.mosaicInputs.map((i,index)=>{
+          mosaicInputs.push(
+            <TextField id="mosaicInputs" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer}/>
+          
+          )
+          })
+        }
         localComponent.push(
           <MuiThemeProvider>
             <div>
@@ -100,6 +109,7 @@ class EditStream extends Component {
       }
     );
   }
+
   componentWillMount() {
     console.log("hiiii")
    

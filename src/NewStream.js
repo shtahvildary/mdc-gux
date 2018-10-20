@@ -16,7 +16,8 @@ class NewStream extends Component {
       nameEn:"",
       nameFa:"",
       address:"", 
-      streamServer:"" 
+      streamServer:"" ,
+      mosaicInputs:[],
     }
     
   }
@@ -28,7 +29,7 @@ class NewStream extends Component {
 
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if ( this.state.nameEn.length && this.state.address.length&&this.state.streamServer.length> 0 ) {
+    if ( this.state.nameEn.length && this.state.address.length&&(this.state.streamServer.length> 0||this.state.mosaicInputs.length>0) ) {
       var name={}
       name.en=this.state.nameEn;
       name.fa=this.state.nameFa;

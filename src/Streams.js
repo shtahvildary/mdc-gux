@@ -37,11 +37,11 @@ class Streams extends Component {
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
-  
-  callStreamApi = async (path,streamServer, payload) => {
+
+  callStreamApi = async (path, streamServer, payload) => {
     const response = await axios({
       method: "post",
-      url: "http://"+streamServer + ":8001/api/" + path,
+      url: "http://" + streamServer + ":8001/api/" + path,
       data: payload
     });
     if (response.status !== 200) throw Error(response.message);
@@ -54,26 +54,26 @@ class Streams extends Component {
       console.log("connected succ")
     })
     socket.on("changes", (data) => {
-      var ind=this.state.response.streamsData.findIndex(i=>String(i._id)===String(data.id));
-      var {streamsData}=this.state.response;
-      if(data.playState===0){
-        var changePlayState=<IconButton aria-label="play{nameEn}" onClick={event => this.playStream(this.state.response.streamsData[ind])} >
-            <PlayIcon />
-          </IconButton>
-         var playState="متوقف شده"
+      var ind = this.state.response.streamsData.findIndex(i => String(i._id) === String(data.id));
+      var { streamsData } = this.state.response;
+      if (data.playState === 0) {
+        var changePlayState = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(this.state.response.streamsData[ind])} >
+          <PlayIcon />
+        </IconButton>
+        var playState = "متوقف شده"
 
       }
-      else{
-        var changePlayState=<IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(this.state.response.streamsData[ind])} >
-            <PauseIcon />
-          </IconButton>
-         var playState="در حال پخش"
+      else {
+        var changePlayState = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(this.state.response.streamsData[ind])} >
+          <PauseIcon />
+        </IconButton>
+        var playState = "در حال پخش"
       }
-      streamsData[ind].changePlayState=changePlayState;
-      streamsData[ind].playStateText=playState;
-      var {response}=this.state;
-      response.streamsData=streamsData
-      this.setState({response},()=>{})
+      streamsData[ind].changePlayState = changePlayState;
+      streamsData[ind].playStateText = playState;
+      var { response } = this.state;
+      response.streamsData = streamsData
+      this.setState({ response }, () => { })
     })
     this.callApi("all", "")
       .then(res => {
@@ -81,62 +81,60 @@ class Streams extends Component {
       })
       .catch(err => console.log(err));
   }
-  changeStateBtns(response){
-            // var response = res.data.streams
-        response.columns.changePlayState = "تغییر وضعیت"
-        var playBtn = []
-        var pauseBtn = []
+  changeStateBtns(response) {
+    // var response = res.data.streams
+    response.columns.changePlayState = "تغییر وضعیت"
+    var playBtn = []
+    var pauseBtn = []
 
-        response.streamsData.map((str, index) => {
-          playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str)} >
-            <PlayIcon />
-          </IconButton>
-          pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(str)} >
-            <PauseIcon />
-          </IconButton>
-          if (str.playStateValue === 0) {
-            str.changePlayState = playBtn
-          }
-          else if (str.playStateValue === 1) {
-            str.changePlayState = pauseBtn
-          }
-        })
+    response.streamsData.map((str, index) => {
+      playBtn = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(str)} >
+        <PlayIcon />
+      </IconButton>
+      pauseBtn = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(str)} >
+        <PauseIcon />
+      </IconButton>
+      if (str.playStateValue === 0) {
+        str.changePlayState = playBtn
+      }
+      else if (str.playStateValue === 1) {
+        str.changePlayState = pauseBtn
+      }
+    })
 
-        this.setState({ response }, () => {
-        });
+    this.setState({ response }, () => {
+    });
   }
 
   playStream(str) {
-    console.log("str:",str)
-    if(!str.isMosaic)
-
-    
-    this.callStreamApi("streams/start",str.streamServer,[{name:str.nameEn,address:str.address,id:str._id,dshow:0}])
-  else    //call mosaic
+    console.log("str:", str)
+    if (!str.isMosaic) this.callStreamApi("streams/start", str.streamServer, [{ name: str.nameEn, address: str.address, id: str._id, dshow: 0 }])
+    else    //call mosaic
     {
-    //example: {"name":"mosaic1","mosaicInputs":[{"name":"out","address":"/Users/shadab/Downloads/video_2017-08-09_18-26-12.mp4"},{"name":"out2","address":"/Users/shadab/Desktop/webstream/ffmpeg/out2.mp4"}]}
-      var mosaicInputs=[];
-      str.mosaicInputs.map(i=>{
-      mosaicInputs.push(i.address)
-    this.callStreamApi("mosaic/start",str.streamServer,[{name:str.nameEn,address:str.mosaicInputs,id:str._id,dshow:0}])
+      //example: {"name":"mosaic1","mosaicInputs":[{"name":"out","address":"/Users/shadab/Downloads/video_2017-08-09_18-26-12.mp4"},{"name":"out2","address":"/Users/shadab/Desktop/webstream/ffmpeg/out2.mp4"}]}
+      var mosaicInputs = [];
+      str.mosaicInputs.map(i => {
+        console.log("iiiii", i)
+        mosaicInputs.push({ "name": i.name.en, "address": i.address })
       })
-      }
+      console.log("mosaicInputs", mosaicInputs)
+      this.callStreamApi("mosaic/start", str.streamServer, { name: str.nameEn,  mosaicInputs, id: str._id, dshow: 0 })
+    }
 
   }
 
-  pauseStream(str){
-    if(!str.isMosaic)
-    this.callStreamApi("streams/stop",str.streamServer,{id:str._id,dshow:0})
+  pauseStream(str) {
+    if (!str.isMosaic) this.callStreamApi("streams/stop", str.streamServer, { id: str._id, dshow: 0 })
     else    //call mosaic
     {
-      var mosaicInputs=[];
-      str.mosaicInputs.map(i=>{
-      mosaicInputs.push(i.address)
-    this.callStreamApi("mosaic/stop",str.streamServer,{id:str._id,dshow:0})
+      var mosaicInputs = [];
+      str.mosaicInputs.map(i => {
+        mosaicInputs.push(i.address)
       })
+      this.callStreamApi("mosaic/stop", str.streamServer, { id: str._id, dshow: 0 })
     }
-    
-////////////////
+
+    ////////////////
   }
 
   tbxReadValue(input) {
@@ -153,7 +151,7 @@ class Streams extends Component {
     this.setState({ viewComponent: <ViewStream stream={n} open="true" /> });
   }
   searchResult(tblData) {
-        this.changeStateBtns(tblData.response.streams)
+    this.changeStateBtns(tblData.response.streams)
 
     this.setState({ response: tblData.response.streams }, () => { });
   }

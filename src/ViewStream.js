@@ -25,14 +25,12 @@ class ViewStream extends Component {
   }
   fillComponent(input) {
     var localComponent = [];
-    console.log("stream: ", input);
     this.setState({ open: input.open })
     if(input.stream.isMosaic===1){
       var mosaicInputs=[];
       input.stream.mosaicInputs.map(i=>{
       mosaicInputs.push(i.name.fa)
       })
-      console.log(mosaicInputs)
     }
     localComponent.push(
       <MuiThemeProvider>
