@@ -256,7 +256,12 @@ class MiniDrawer extends React.Component {
           }
           
           <Divider />
-{global.userType<2?(
+          {
+  console.log("userType",global.userType)
+
+          }
+{global.userType<2?
+  (
   <div>
 
         <ListItem button onClick={this.handleClickManagement}>

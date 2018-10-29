@@ -31,30 +31,9 @@ global.serverAddress = "http://localhost:5000/api";
     return response;
   };
   callApi().then(res=>{
+    console.log("res: ",res)
     global.userType =res.data.userType
   })
-  const routes=(
-    <BrowserRouter>
-    <Switch>
-    <Route exact path="/" component={Dashboard}/>
-    <Route path="/سوییچها" component={Switches} />
-    <Route path="/نودها" component={netNodes} />
-    <Route path="/مکانها" component={locations} />
-    <Route path="/شبکه های مجازی" component={vlans} />
-    <Route path="/سخت افزارها" component={Devices} />
-    {/* <Route path="/کاربران" component={Users} /> */}
-    <Route path="/نود جدید" component={NewNetNode} />
-    <Route path="/سوییچ جدید" component={NewSwitch} />
-    <Route path="/مکان جدید" component={NewLocation} />
-    <Route path="/شبکه مجازی جدید" component={NewVlan} />
-    <Route path="/سخت افزار جدید" component={NewDevice} />
-    <Route path="/نوع جدید" component={NewDeviceType} />
-    <Route path="/واحد جدید" component={NewDepartment} />
-    <Route path="/کاربر جدید" component={NewUser} />
-    {/* <Route path="/کاربر جدید" component={Register} /> */}
-  </Switch>
-  </BrowserRouter>
-  )
 ReactDOM.render(
     // routes,
     <BrowserRouter>

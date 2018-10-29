@@ -51,11 +51,9 @@ class Login extends Component {
    
     axios.post(global.serverAddress+'/users/login', payload)
    .then(function (response) {
-     console.log("response: ",response);
      if(response.status === 200){
        console.log("Login successfull");
        localStorage.setItem('token',response.data.token)
-      //  console.log(localStorage.getItem('token'))
        var indexScreen=[];
       //  indexScreen.push(<redirect to='/App1' />)
        indexScreen.push(<indexPage appContext={self.props.appContext} />)
