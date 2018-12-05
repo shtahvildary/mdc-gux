@@ -33,6 +33,7 @@ class netNodes extends Component {
   componentWillMount() {
     this.callApi("all","")
       .then(res => {
+        console.log("netNodes: ",res.data.netNodes)
         this.setState({ response: res.data.netNodes }, () => {
           this.setTblData();
         });

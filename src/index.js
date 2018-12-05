@@ -22,7 +22,8 @@ import NewVlan from './NewVlan';
 import NewDevice from './NewDevice';
 import NewDeviceType from './NewDeviceType';
 
-global.serverAddress = "http://localhost:5000/api";
+global.serverAddress = "http://172.16.17.195:5000/api";
+// global.serverAddress = "http://localhost:5000/api";
 // global.streamServerAddress = "http://localhost:8001/api";
 
  var callApi=async () => {

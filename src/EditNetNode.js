@@ -37,6 +37,7 @@ class EditNetNode extends Component {
   }
   setId(selectedId) {
     this.setState(selectedId, () => {
+      console.log("state: ",this.state)
     })
   }
   saveBtnClick(event) {
@@ -47,12 +48,13 @@ class EditNetNode extends Component {
         "switchId": this.state.switchId,
         "switchPort": this.state.switchPort,
         "vlan": this.state.vlanId,
-        "device": this.state.deviceId,
+        "device": this.state.device,
         "description": this.state.description,
         "location": this.state.locationId,
         //
         // "type": this.state.type,
       }
+      console.log("payload: ",payload)
       this.callApi(payload)
      
         .then(function (response) {
@@ -121,6 +123,8 @@ class EditNetNode extends Component {
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
                    <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={this.state.locationId} />
+                    <br />
+                    <MyTextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} defaultValue={this.state.description} />
                     <br />
                     <MyButton label="ذخیره"  click={this.saveBtnClick.bind(this)} />
                   </div>
