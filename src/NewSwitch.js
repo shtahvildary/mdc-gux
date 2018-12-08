@@ -116,9 +116,11 @@ class NewSwitch extends Component {
 
       this.callApi(payload)
         .then(function(response) {
-          console.log(response);
           if (response.status === 200) {
             console.log("add new switch is OK :D");
+            alert("ذخیره سازی با موفقیت انجام شد.");
+            window.location.reload()
+
           } else {
             console.log("some error ocurred", response.status);
           }
@@ -128,7 +130,6 @@ class NewSwitch extends Component {
         });
     } else {
       alert("تمامی فیلدهای ستاره دار را پر کنید.");
-      // alert("Input field value is missing");
     }
   }
   callApi = async payload => {

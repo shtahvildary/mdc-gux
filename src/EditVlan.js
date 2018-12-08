@@ -53,7 +53,10 @@ class EditVlan extends Component {
         .then(function (response) {
           if (response.status === 200) {
             console.log("update vlan is OK :D");
-            this.editModal
+            alert("ذخیره سازی با موفقیت انجام شد.");
+            // var open=false;
+            // this.setState(open,()=>{})
+            
           }
           else {
             console.log("some error ocurred", response.status);

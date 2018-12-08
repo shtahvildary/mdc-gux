@@ -139,6 +139,8 @@ locationMenuCount++
           console.log(response);
           if (response.status === 200) {
             console.log("add new Department is OK :D");
+            alert("ذخیره سازی با موفقیت انجام شد.");
+            window.location.reload()
           }
           else {
             console.log("some error ocurred", response.status);

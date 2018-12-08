@@ -87,6 +87,9 @@ class NewLocation extends Component {
           console.log("response: ", response);
           if (response.status === 200) {
             console.log("add new location is OK :D");
+            alert("ذخیره سازی با موفقیت انجام شد.");
+            window.location.reload()
+
           } else {
             console.log("some error ocurred", response.status);
           }

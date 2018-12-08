@@ -67,7 +67,10 @@ class NewNetNode extends Component {
         .then(function (response) {
           if (response.status === 200) {
             console.log("add new netNode is OK :D");
-            <AlertDialog title="save" open={true} contentText="نود جدید با موفقیت اضافه شد." btnLbl="ok"/>
+            // <AlertDialog title="save" open={true} contentText="نود جدید با موفقیت اضافه شد." btnLbl="ok"/>
+            alert("ذخیره سازی با موفقیت انجام شد.");
+            window.location.reload()
+         
           }
           else {
             console.log("some error ocurred", response.status);

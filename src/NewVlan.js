@@ -21,10 +21,10 @@ class NewVlan extends Component {
       lastIp: '',
       subnetMask: '',
     }
-    
+
   }
 
-  fillComponent(){
+  fillComponent() {
     var localComponent = []
     localComponent.push(
       <MuiThemeProvider>
@@ -45,15 +45,15 @@ class NewVlan extends Component {
         </div>
       </MuiThemeProvider>
     )
-    this.setState ({localComponent})
+    this.setState({ localComponent })
   }
-  
+
   tbxReadValue(input) {
     this.setState(input);
   }
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
-    if (this.state.number.length > 0 && this.state.name.length > 0 && this.state.ip.length > 0  && this.state.firstIp.length > 0 && this.state.lastIp.length > 0 && this.state.subnetMask.length > 0) {
+    if (this.state.number.length > 0 && this.state.name.length > 0 && this.state.ip.length > 0 && this.state.firstIp.length > 0 && this.state.lastIp.length > 0 && this.state.subnetMask.length > 0) {
       var payload = {
         "number": this.state.number,
         "name": this.state.name,
@@ -67,12 +67,10 @@ class NewVlan extends Component {
       this.callApi(payload)
         // axios.post(global.serverAddress+'/switches/new', payload)
         .then(function (response) {
-          console.log(response);
           if (response.status === 200) {
             console.log("add new vlan is OK :D");
-      alert("ذخیره سازی با موفقیت انجام شد.");
-      // window.location.reload
-
+            alert("ذخیره سازی با موفقیت انجام شد.");
+            window.location.reload()
           }
           else {
             console.log("some error ocurred", response.status);
@@ -92,17 +90,17 @@ class NewVlan extends Component {
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
- 
-componentWillMount(){
-  this.fillComponent()
-}
+
+  componentWillMount() {
+    this.fillComponent()
+  }
   render() {
     return (
       <div>
         <MuiThemeProvider>
           <AppBar title="new vlan" />
         </MuiThemeProvider>
-        <Card pageName="افزودن شبکه مجازی جدید" content={this.state.localComponent}/>
+        <Card pageName="افزودن شبکه مجازی جدید" content={this.state.localComponent} />
       </div>
     )
   }

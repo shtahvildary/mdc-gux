@@ -44,6 +44,7 @@ class NewStream extends Component {
           if (response.status === 200) {
             console.log("add new stream is OK :D");
             <AlertDialog title="save" open={true} contentText="استریم جدید با موفقیت اضافه شد." btnLbl="ok"/>
+            window.location.reload()          
           }
           else {
             console.log("some error ocurred", response.status);
