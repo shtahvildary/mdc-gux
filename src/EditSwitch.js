@@ -47,17 +47,17 @@ class EditSwitch extends Component {
     this.callApi(payload)
       .then(function(response) {
         if (response.status === 200) {
-          console.log("update location is OK :D");
-          // this.editModal
+          console.log("update switch is OK :D");
+          alert("ذخیره سازی با موفقیت انجام شد.");
         } else {
           console.log("some error ocurred", response.status);
         }
-      })
+      }).then(this.closeModal())      
       .catch(function(error) {
         console.log(error);
       });
   }
-
+  closeModal() { this.props.close(true) }
   callApi = async payload => {
     const response = await axios({
       method: "post",
@@ -90,7 +90,7 @@ class EditSwitch extends Component {
     return response;
   };
 
-  fillComponent(input) {
+  00(input) {
     console.log(input);
     this.setState({ open: input.open });
     var { _id, name, ip, model, diagramUrl, description, location,code } = input.sw;

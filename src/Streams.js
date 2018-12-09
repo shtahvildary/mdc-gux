@@ -6,7 +6,7 @@ import EditStream from "./EditStream";
 import ViewStream from "./ViewStream";
 import Search from "./components/Search";
 import NewStream from "./NewStream";
-import Button from "./components/Button"
+// import Button from "./components/Button"
 import IconButton from '@material-ui/core/IconButton';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayIcon from '@material-ui/icons/PlayArrow';
@@ -143,9 +143,11 @@ class Streams extends Component {
         .catch(err => console.log(err));
     });
   }
-
+  refreshPage(close){
+    if(close) window.location.reload()
+  }
   showEdit(n) {
-    this.setState({ editComponent: <EditStream stream={n} open="true" /> });
+    this.setState({ editComponent: <EditStream stream={n} open="true" close={this.refreshPage.bind(this)} />},()=>{});
   }
   showView(n) {
     this.setState({ viewComponent: <ViewStream stream={n} open="true" /> });

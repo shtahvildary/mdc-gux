@@ -39,11 +39,12 @@ class EditStream extends Component {
       .then(function(response) {
         if (response.status === 200) {
           console.log("update stream is OK :D");
-          // this.editModal
+          alert("ذخیره سازی با موفقیت انجام شد.");
         } else {
           console.log("some error ocurred", response.status);
         }
-      })
+      }).then(this.closeModal())
+      
       .catch(function(error) {
         console.log(error);
       });
@@ -55,7 +56,7 @@ class EditStream extends Component {
     // alert("Input field value is missing");
   }
 }
-
+closeModal() { this.props.close(true) }
 
   callApi = async payload => {
     const response = await axios({

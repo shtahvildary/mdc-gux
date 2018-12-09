@@ -60,9 +60,11 @@ class netNodes extends Component {
         .catch(err => console.log(err));
     });
   }
-  
+  refreshPage(close){
+    if(close) window.location.reload()
+  }
   showEdit(n) {
-    this.setState({ editComponent: <EditNetNode netNode={n} open="true" /> });
+    this.setState({ editComponent: <EditNetNode netNode={n} open="true" close={this.refreshPage.bind(this)} />},()=>{});
   }
   showView(n) {
     this.setState({ viewComponent: <ViewNetNode netNode={n} open="true" /> });

@@ -60,17 +60,17 @@ class EditNetNode extends Component {
         .then(function (response) {
           if (response.status === 200) {
             console.log("update netNode is OK :D");
-            this.editModal
+          alert("ذخیره سازی با موفقیت انجام شد.");
           }
           else {
             console.log("some error ocurred", response.status);
           }
-        })
+        }).then(this.closeModal())   
         .catch(function (error) {
           console.log(error);
         });
     }
-  
+    closeModal() { this.props.close(true) }  
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/update', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);

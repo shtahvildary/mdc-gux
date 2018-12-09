@@ -15,13 +15,9 @@ class vlans extends Component {
       response: [],
       columns: {},
       search: ""
-    };
-   
-    
-    
+    }; 
   }
   callApi = async (path, payload) => {
-    // console.log(path,payload)
     const response = await axios({
       method: "post",
       url: global.serverAddress + "/vlans/" + path,
@@ -43,8 +39,6 @@ class vlans extends Component {
   }
 
   setTblData() {
-    {console.log("res.data: ",this.state.response)}
-
     <SimpleTable
       addNew={<NewVlan />}
       columns={this.state.response.columns}
@@ -63,20 +57,20 @@ class vlans extends Component {
         .catch(err => console.log(err));
     });
   }
-
+refreshPage(close){
+  if(close) window.location.reload()
+}
   showEdit(n) {
-    this.setState({ editComponent: <EditVlan vlan={n} open="true" /> });
+    this.setState({ editComponent: <EditVlan vlan={n} open="true" close={this.refreshPage.bind(this)} />},()=>{});
   }
   showView(n) {
     this.setState({ viewComponent: <ViewVlan vlan={n} open="true" /> });
   }
   searchResult(tblData) {
-    console.log(tblData);
     this.setState({ response: tblData.response.vlans }, () => { });
   }
   delete(arrayOfIds){this.callApi("delete",{arrayOfIds})}
   render() {
-    // console.log(this.state.response)
     return (
       <div>
         <Search model="vlans" searchResult={this.searchResult.bind(this)} />

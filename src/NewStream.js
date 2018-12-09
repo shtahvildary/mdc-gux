@@ -43,7 +43,8 @@ class NewStream extends Component {
         .then(function (response) {
           if (response.status === 200) {
             console.log("add new stream is OK :D");
-            <AlertDialog title="save" open={true} contentText="استریم جدید با موفقیت اضافه شد." btnLbl="ok"/>
+            alert("ذخیره سازی با موفقیت انجام شد.");
+            // <AlertDialog title="save" open={true} contentText="استریم جدید با موفقیت اضافه شد." btnLbl="ok"/>
             window.location.reload()          
           }
           else {

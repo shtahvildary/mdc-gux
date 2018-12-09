@@ -16,12 +16,12 @@ class Devices extends Component {
       columns: {},
       search: ""
     };
-   
-    
-    
+
+
+
   }
   callApi = async (path, payload) => {
-    console.log(path,payload)
+    console.log(path, payload)
     const response = await axios({
       method: "post",
       url: global.serverAddress + "/devices/" + path,
@@ -33,7 +33,7 @@ class Devices extends Component {
     return response;
   };
   componentWillMount() {
-    this.callApi("all","")
+    this.callApi("all", "")
       .then(res => {
         this.setState({ response: res.data.devices }, () => {
           this.setTblData();
@@ -61,10 +61,13 @@ class Devices extends Component {
         .catch(err => console.log(err));
     });
   }
-
-  showEdit(n) {
-    this.setState({ editComponent: <EditDevice device={n} open="true" /> });
+  refreshPage(close) {
+    if (close) window.location.reload()
   }
+  showEdit(n) {
+    this.setState({ editComponent: <EditDevice device={n} open="true" close={this.refreshPage.bind(this)} /> }, () => { });
+  }
+
   showView(n) {
     this.setState({ viewComponent: <ViewDevice device={n} open="true" /> });
   }
@@ -72,7 +75,7 @@ class Devices extends Component {
     console.log(tblData);
     this.setState({ response: tblData.response.devices }, () => { });
   }
-  delete(arrayOfIds){this.callApi("delete",{arrayOfIds})}
+  delete(arrayOfIds) { this.callApi("delete", { arrayOfIds }) }
   render() {
     console.log(this.state.response)
     return (
@@ -85,7 +88,7 @@ class Devices extends Component {
           content={
             <SimpleTable
               // addNew={this.addNew.bind(this)}
-              addNew={{path:"/سخت افزار جدید",link:"/سخت افزار جدید",component:NewDevice}}
+              addNew={{ path: "/سخت افزار جدید", link: "/سخت افزار جدید", component: NewDevice }}
               columns={this.state.response.columns}
               data={this.state.response.devicesData}
               showView={this.showView.bind(this)}

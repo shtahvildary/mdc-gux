@@ -12,13 +12,12 @@ import Paper from '@material-ui/core/Paper'
 
 class EditVlan extends Component {
   constructor(props) {
-
     super(props);
     // const { classes } = this.props;
     this.state = {
-      
 
-      _id:'',
+
+      _id: '',
       name: '',
       number: '',
       ip: '',
@@ -28,7 +27,7 @@ class EditVlan extends Component {
       subnetMask: '',
 
 
-      open:true,
+      open: true,
     }
   }
   setId(selectedId) {
@@ -36,78 +35,73 @@ class EditVlan extends Component {
     })
   }
   saveBtnClick(event) {
-    console.log("this.state: ",this.state)
-      var payload = {
-        "_id":this.state._id,
-        "number": this.state.number,
-        "name": this.state.name,
-        "ip": this.state.ip,
-        "description": this.state.description,
-        "firstIp": this.state.firstIp,
-        "lastIp": this.state.lastIp,
-        "subnetMask": this.state.subnetMask,
-     
-      }
-      this.callApi(payload)
-     
-        .then(function (response) {
-          if (response.status === 200) {
-            console.log("update vlan is OK :D");
-            alert("ذخیره سازی با موفقیت انجام شد.");
-            // var open=false;
-            // this.setState(open,()=>{})
-            
-          }
-          else {
-            console.log("some error ocurred", response.status);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    var payload = {
+      "_id": this.state._id,
+      "number": this.state.number,
+      "name": this.state.name,
+      "ip": this.state.ip,
+      "description": this.state.description,
+      "firstIp": this.state.firstIp,
+      "lastIp": this.state.lastIp,
+      "subnetMask": this.state.subnetMask,
+
     }
-  
+    this.callApi(payload)
+      .then(function (response) {
+        if (response.status === 200) {
+          console.log("update vlan is OK :D");
+          alert("ذخیره سازی با موفقیت انجام شد.");
+        }
+        else {
+          console.log("some error ocurred", response.status);
+        }
+      }).then(this.closeModal())
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  closeModal() { this.props.close(true) }
+
   callApi = async (payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/vlans/update', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
 
-  fillComponent(input){
+  fillComponent(input) {
     this.setState({ open: input.open })
-    var { _id,number, name, ip, firstIp,lastIp,subnetMask,  description} = input.vlan;
-           
-            this.setState({ _id,number, name, ip, firstIp,lastIp, subnetMask, description}, () => {
+    var { _id, number, name, ip, firstIp, lastIp, subnetMask, description } = input.vlan;
 
-              var localComponent = []
-              localComponent.push(
-                <MuiThemeProvider>
-        <div>
-          
-          <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} defaultValue={this.state.name} />
-          <br />
-          <TextField id="number" label="شماره" change={this.tbxReadValue.bind(this)} defaultValue={this.state.number}/>
-          <br />
-          <TextField id="ip" label="IP" change={this.tbxReadValue.bind(this)} defaultValue={this.state.ip}/>
-          <br />
-          <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} defaultValue={this.state.description}/>
-          <br /><TextField id="firstIp" label="اولین IP" change={this.tbxReadValue.bind(this)} defaultValue={this.state.firstIp}/>
-          <br /><TextField id="lastIp" label="آخرین IP" change={this.tbxReadValue.bind(this)} defaultValue={this.state.lastIp}/>
-          <br />
-          <TextField id="subnetMask" label="subnetMask" change={this.tbxReadValue.bind(this)} defaultValue={this.state.subnetMask}/>
-          <br />
-          <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
-        </div>
-      </MuiThemeProvider>
-                
-              )
-             this.setState({ localComponent: localComponent },()=>{})
-      })
-      
+    this.setState({ _id, number, name, ip, firstIp, lastIp, subnetMask, description }, () => {
+
+      var localComponent = []
+      localComponent.push(
+        <MuiThemeProvider>
+          <div>
+            <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)} defaultValue={this.state.name} />
+            <br />
+            <TextField id="number" label="شماره" change={this.tbxReadValue.bind(this)} defaultValue={this.state.number} />
+            <br />
+            <TextField id="ip" label="IP" change={this.tbxReadValue.bind(this)} defaultValue={this.state.ip} />
+            <br />
+            <TextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} defaultValue={this.state.description} />
+            <br /><TextField id="firstIp" label="اولین IP" change={this.tbxReadValue.bind(this)} defaultValue={this.state.firstIp} />
+            <br /><TextField id="lastIp" label="آخرین IP" change={this.tbxReadValue.bind(this)} defaultValue={this.state.lastIp} />
+            <br />
+            <TextField id="subnetMask" label="subnetMask" change={this.tbxReadValue.bind(this)} defaultValue={this.state.subnetMask} />
+            <br />
+            <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
+          </div>
+        </MuiThemeProvider>
+
+      )
+      this.setState({ localComponent: localComponent }, () => { })
+    })
+
   }
-  setValue(value){
-    this.setState({halfFloor:value},()=>{})
-    
+  setValue(value) {
+    this.setState({ halfFloor: value }, () => { })
+
   }
   componentWillMount() {
 
@@ -120,29 +114,28 @@ class EditVlan extends Component {
         this.fillComponent(this.props)
       }
     );
-   
 
-    
+
+
   }
-  componentWillReceiveProps(newProps){
-    console.log("new props: ",newProps)
+  componentWillReceiveProps(newProps) {
     this.fillComponent(newProps)
 
   }
-tbxReadValue(input){this.setState(input) }
-editModal(event){
-  
+  tbxReadValue(input) { this.setState(input) }
+  editModal(event) {
+
     var open = !this.state.open;
     this.setState({ open }, () => {
     });
-   
-}
+
+  }
   render() {
     return (
       <Paper>
-      <div>
-        <Modal title="ویرایش مکان" open={this.state.open} components={this.state.localComponent} close={this.editModal.bind(this)}/>
-      </div>
+        <div>
+          <Modal title="ویرایش شبکه مجازی" open={this.state.open} components={this.state.localComponent} close={this.editModal.bind(this)} />
+        </div>
       </Paper>
     )
   }

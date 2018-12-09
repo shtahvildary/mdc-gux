@@ -60,10 +60,12 @@ class locations extends Component {
         .catch(err => console.log(err));
     });
   }
-
-  showEdit(n) {
-    this.setState({ editComponent: <EditLocation location={n} open="true" /> });
+  refreshPage(close){
+    if(close) window.location.reload()
   }
+    showEdit(n) {
+      this.setState({ editComponent: <EditLocation location={n} open="true" close={this.refreshPage.bind(this)} />},()=>{});
+    }  
   showView(n) {
     this.setState({ viewComponent: <ViewLocation location={n} open="true" /> });
   }

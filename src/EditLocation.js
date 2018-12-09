@@ -53,16 +53,17 @@ class EditLocation extends Component {
         .then(function (response) {
           if (response.status === 200) {
             console.log("update location is OK :D"); 
+          alert("ذخیره سازی با موفقیت انجام شد.");
           }
           else {
             console.log("some error ocurred", response.status);
           }
-        })
+      }).then(this.closeModal())        
         .catch(function (error) {
           console.log(error);
         });
     }
-  
+    closeModal() { this.props.close(true) }  
   callApi = async (path,payload) => {
     const response = await axios({ method: 'post', url: global.serverAddress + '/locations/'+path, headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);

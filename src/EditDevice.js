@@ -73,11 +73,11 @@ class EditDevice extends Component {
       .then(function(response) {
         if (response.status === 200) {
           console.log("update device is OK :D");
-          // this.editModal
+          alert("ذخیره سازی با موفقیت انجام شد.");         
         } else {
           console.log("some error ocurred", response.status);
         }
-      })
+      }).then(this.closeModal())      
       .catch(function(error) {
         console.log(error);
       });
@@ -89,7 +89,7 @@ class EditDevice extends Component {
     // alert("Input field value is missing");
   }
 }
-
+closeModal() { this.props.close(true) }
 
   callApi = async payload => {
     const response = await axios({
@@ -118,7 +118,7 @@ class EditDevice extends Component {
     console.log(input);
     this.setState({ open: input.open });
 
-    var { _id, name, ip, model, deviceType, description, code,specialProperties,department } = input.sw;
+    var { _id, name, ip, model, deviceType, description, code,specialProperties,department } = input.device;
     console.log("_id: ", _id);
 
     this.setState(

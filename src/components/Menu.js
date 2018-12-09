@@ -36,7 +36,6 @@ componentWillMount(){
       disabled
      >انتخاب کنید...</MenuItem>
   this.props.items.map((i,index)=>{
-    console.log("this.props.defaultValue: ",this.props.defaultValue)
     items.push(<MenuItem 
       key={i}
       // disabled={index === 0}
