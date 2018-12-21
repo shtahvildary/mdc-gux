@@ -90,7 +90,7 @@ class EditSwitch extends Component {
     return response;
   };
 
-  00(input) {
+  fillComponent(input) {
     console.log(input);
     this.setState({ open: input.open });
     var { _id, name, ip, model, diagramUrl, description, location,code } = input.sw;
