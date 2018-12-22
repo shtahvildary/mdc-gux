@@ -24,24 +24,29 @@ class EditSwitch extends Component {
     };
   }
   setId(model, selectedId) {
+    console.log("model: ",model)
+    console.log("selectedId: ",selectedId)
     this.setState(selectedId, () => {
       var _id = selectedId[Object.keys(selectedId)[0]];
       var payload = { _id };
       this.callApiSelect(model, payload).then(res =>
         this.setState(res.data, () => {
+    console.log("res.data: ",res.data)
+
           this.fillComponent(this.state.input);
         })
       );
     });
   }
   saveBtnClick(event) {
+    console.log("this.state.location: ",this.state.location)
     var payload = {
       _id: this.state._id,
       name: this.state.name,
       ip: this.state.ip,
       model: this.state.model,
       diagramUrl: this.state.diagramUrl,
-      location: this.state.location,
+      location: this.state.locationInfo._id,
       description: this.state.description
     };
     this.callApi(payload)
@@ -94,12 +99,12 @@ class EditSwitch extends Component {
     console.log(input);
     this.setState({ open: input.open });
     var { _id, name, ip, model, diagramUrl, description, location,code } = input.sw;
-    console.log("_id: ", _id);
 
     this.setState(
       { _id, name, ip, model, diagramUrl, description, location,code },
       () => {
         var localComponent = [];
+        console.log("locationName: ",this.state.input.sw.locationId)
         localComponent.push(
           <MuiThemeProvider>
             <div>
@@ -145,7 +150,7 @@ class EditSwitch extends Component {
                 name="مکان"
                 items={this.state.locations}
                 selectedId={this.setId.bind(this, "locations")}
-                defaultValue={this.state.locationName}
+                defaultValue={this.state.input.sw.locationId}
               />
               {this.state.locationInfo ? (
                 <p>

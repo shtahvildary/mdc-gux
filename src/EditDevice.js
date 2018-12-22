@@ -29,6 +29,8 @@ class EditDevice extends Component {
   }
   tbxSpReadValue(input){
     var specialProperties=this.state.specialProperties;
+    console.log("input: ",input)
+
     var ind=specialProperties.findIndex(i=>i.name===Object.keys(input)[0])
     var key=Object.keys(input)[0];
     if(ind===-1)specialProperties.push({name:key,value:input[key]});
@@ -45,14 +47,22 @@ class EditDevice extends Component {
       var spTbx=[]
       var sp=this.state.deviceTypes[index].specialProperties
       if(sp)
+
+    //   <TextField
+    //   id="ip"
+    //   label="IP"
+    //   change={this.tbxReadValue.bind(this)}
+    //   defaultValue={this.state.ip}
+    // />
       sp.map(i=>{
+        console.log("i: ",i)
       spTbx.push(
         <TextField id={i.en} label={i.fa} 
         change={this.tbxSpReadValue.bind(this)} 
         />
       )})
       this.setState({spTbx},()=>{
-        this.setLocalComponent()
+        this.fillComponent(this.props)
       })
     })
   }
@@ -114,7 +124,7 @@ closeModal() { this.props.close(true) }
   };
  
 
-  setLocalComponent(input) {
+  fillComponent(input) {
     console.log(input);
     this.setState({ open: input.open });
 
@@ -188,7 +198,7 @@ closeModal() { this.props.close(true) }
           this.setState({ deviceTypes,departments }, () => {
             console.log(this.props);
 
-            this.setLocalComponent(this.props);
+            this.fillComponent(this.props);
           });
         
         });
@@ -197,7 +207,7 @@ closeModal() { this.props.close(true) }
   })
   }
   componentWillReceiveProps(newProps) {
-    this.setLocalComponent(newProps);
+    this.fillComponent(newProps);
   }
   tbxReadValue(input) {
     this.setState(input);

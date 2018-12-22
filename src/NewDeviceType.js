@@ -145,7 +145,7 @@ class NewDeviceType extends Component {
           if (response.status === 200) {
             console.log("add new location is OK :D");
             alert("ذخیره سازی با موفقیت انجام شد.");
-            // window.location.reload()
+            window.location.reload()
             
           }
           else {

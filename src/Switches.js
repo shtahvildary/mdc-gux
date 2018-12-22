@@ -41,6 +41,7 @@ class switchesTable extends Component {
     if(close) window.location.reload()
   }
   showEdit(n) {
+    console.log("n: ",n)
     this.setState({ editComponent: <EditSwitch sw={n} open="true" close={this.refreshPage.bind(this)} /> });
   }
   showView(n) {

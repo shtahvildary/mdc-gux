@@ -34,6 +34,7 @@ class NewDevice extends Component {
     var key=Object.keys(input)[0];
     if(ind===-1)specialProperties.push({name:key,value:input[key]});
     else specialProperties[ind]={name:key,value:input[key]};
+    console.log("specialProperties:",specialProperties)
     this.setState({specialProperties},()=>{
 
     })

@@ -50,7 +50,7 @@ class EditNetNode extends Component {
         "vlan": this.state.vlanId,
         "device": this.state.device,
         "description": this.state.description,
-        "location": this.state.locationId,
+        "location": this.state.location,
         //
         // "type": this.state.type,
       }

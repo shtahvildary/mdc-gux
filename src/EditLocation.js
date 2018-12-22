@@ -77,8 +77,8 @@ class EditLocation extends Component {
     .then(res=>{
       var { name,building, fHf, level, room,  description} = res.data.locationInfo;
       var fHfItems=[{_id:0,name:"طبقه"},{_id:1,name:"نیم طبقه"}]
-      
-            this.setState({ _id,name,building, fHf, level, room,  description}, () => {
+      this.setState({ _id,name,building, fHf, level, room,  description}, () => {
+        console.log("fHf: ",this.state.fHf)
 
               var localComponent = []
               localComponent.push(

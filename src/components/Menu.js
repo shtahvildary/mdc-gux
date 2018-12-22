@@ -31,14 +31,17 @@ class SimpleListMenu extends React.Component {
 componentWillMount(){
   if(!this.props.items)return;
   var items=[];
+  // console.log("this.props.defaultValue: ",this.props.defaultValue)
   items[0]=
   <MenuItem 
       disabled
      >انتخاب کنید...</MenuItem>
   this.props.items.map((i,index)=>{
+    if (i._id==this.props.defaultValue) this.setState({selectedIndex:index+1})
     items.push(<MenuItem 
       key={i}
       // disabled={index === 0}
+      // selected={(index+1 === this.state.selectedIndex)||(i.name===this.props.defaultValue)}
       selected={(index+1 === this.state.selectedIndex)||(i._id===this.props.defaultValue)}
       onClick={event => this.handleMenuItemClick(event,index+1, i._id)}
       >{i.name}</MenuItem>)
