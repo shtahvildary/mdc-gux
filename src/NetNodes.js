@@ -67,16 +67,21 @@ class netNodes extends Component {
     this.setState({ editComponent: <EditNetNode netNode={n} open="true" close={this.refreshPage.bind(this)} />},()=>{});
   }
   showView(n) {
+    console.log("n: ",n)
+
     this.setState({ viewComponent: <ViewNetNode netNode={n} open="true" /> });
   }
   searchResult(tblData) {
     this.setState({ response: tblData.response.netNodes }, () => { });
     console.log(tblData.response.netNodes);
   }
-  delete(arrayOfIds){
-     // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
-    this.callApi("delete",{arrayOfIds}) 
-  }
+  // delete(arrayOfIds){
+  //    // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
+  //   this.callApi("delete",{arrayOfIds}) 
+  // }
+  disconnect(n){
+   this.callApi("disconnect",n) 
+ }
   render() {
 
     return (
@@ -94,7 +99,7 @@ class netNodes extends Component {
               data={this.state.response.netNodesData}
               showView={this.showView.bind(this)}
               showEdit={this.showEdit.bind(this)}
-              delete={this.delete.bind(this)}
+              delete={this.disconnect.bind(this)}
             />
           }
         />
