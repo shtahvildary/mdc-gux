@@ -54,7 +54,7 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   ///////////
-  direction:"rtl",
+  direction: "rtl",
   ///////////
 
   root: {
@@ -133,7 +133,7 @@ class MiniDrawer extends React.Component {
     super(props);
     this.state = {
       open: false,
-      managementOpen:false,
+      managementOpen: false,
       elements: []
     };
   }
@@ -157,10 +157,10 @@ class MiniDrawer extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-// console.log('theme: ',theme)
+    // console.log('theme: ',theme)
     return (
       <div className={classes.root}>
-      {/* <div className={classes.root}> */}
+        {/* <div className={classes.root}> */}
         <AppBar
           position="absolute"
           className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -193,207 +193,202 @@ class MiniDrawer extends React.Component {
           </div>
           <Divider />
           <List>
-          <Link to="/">
-          <ListItem>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText>داشبورد</ListItemText>          
-          </ListItem>
-          </Link>
-          <Divider />
+            <Link to="/">
+              <ListItem>
+                <ListItemIcon>
+                  <Dashboard />
+                </ListItemIcon>
+                <ListItemText>داشبورد</ListItemText>
+              </ListItem>
+            </Link>
+            <Divider />
 
-          <Link to="/نودها">
-          <ListItem>
-          <ListItemIcon>
-            <Computer />
-            </ListItemIcon>
-            <ListItemText>نود ها  </ListItemText>
-          </ListItem>
-          </Link>
+            <Link to="/نودها">
+              <ListItem>
+                <ListItemIcon>
+                  <Computer />
+                </ListItemIcon>
+                <ListItemText>نود ها  </ListItemText>
+              </ListItem>
+            </Link>
 
-          <Link to="/سوییچها">
-          <ListItem>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText>سوییچها</ListItemText>
-          </ListItem>
-          </Link>
-          
-          <Link to="/مکانها">
-          <ListItem>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText>مکانها</ListItemText>
-          </ListItem>
-          </Link>
-          
-          <Link to="/شبکه های مجازی">
-          <ListItem>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText>شبکه های مجازی</ListItemText>
-          </ListItem>
-          </Link>
+            <Link to="/سوییچها">
+              <ListItem>
+                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemText>سوییچها</ListItemText>
+              </ListItem>
+            </Link>
 
-          <Link to="/سخت افزارها">
-          <ListItem>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText>سخت افزارها</ListItemText>
-          </ListItem>
-          </Link>
-          <Link to="/استریم ها">
-          <ListItem>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText>استریم ها</ListItemText>
-          </ListItem>
-          </Link>
-          {global.userType<2?(
-          <Link to="/کاربران">
-          <ListItem>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText>کاربران</ListItemText>
-          </ListItem>
-          </Link>
-          ):("")
-          }
-          
-          <Divider />
-          {
-  console.log("userType",global.userType)
+            <Link to="/مکانها">
+              <ListItem>
+                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemText>مکانها</ListItemText>
+              </ListItem>
+            </Link>
 
-          }
-{global.userType<2?
-  (
-  <div>
+            <Link to="/VLAN">
+              <ListItem>
+                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemText>VLAN</ListItemText>
+              </ListItem>
+            </Link>
 
-        <ListItem button onClick={this.handleClickManagement}>
-            <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText inset primary="ابزارهای مدیریتی" />
-            {this.state.managementOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={this.state.managementOpen} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-                    
+            <Link to="/سخت افزارها">
+              <ListItem>
+                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemText>سخت افزارها</ListItemText>
+              </ListItem>
+            </Link>
+            <Link to="/استریم ها">
+              <ListItem>
+                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemText>استریم ها</ListItemText>
+              </ListItem>
+            </Link>
+            {global.userType < 2 ? (
+              <Link to="/کاربران">
+                <ListItem>
+                  <ListItemIcon><Dashboard /></ListItemIcon>
+                  <ListItemText>کاربران</ListItemText>
+                </ListItem>
+              </Link>
+            ) : ("")
+            }
 
+            <Divider />
+            {
+              console.log("userType", global.userType)
 
+            }
+            {global.userType < 2 ?
+              (
+                <div>
 
-          <Link to="/نود جدید">
-          <ListItem button className={classes.nested}>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText inset primary="افزودن نود جدید"/>
-          </ListItem>
-          </Link>
+                  <ListItem button onClick={this.handleClickManagement}>
+                    <ListItemIcon>
+                      <Dashboard />
+                    </ListItemIcon>
+                    <ListItemText inset primary="ابزارهای مدیریتی" />
+                    {this.state.managementOpen ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={this.state.managementOpen} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
 
-          <Link to="/سوییچ جدید">
-          <ListItem button className={classes.nested}>
-          <ListItemIcon><Dashboard /></ListItemIcon>
-            <ListItemText inset primary="افزودن سوییچ جدید"/>
-          </ListItem>
-          </Link>
-          
-          <Link to="/مکان جدید">
-          <ListItem button className={classes.nested}>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText>افزودن مکان جدید</ListItemText>
-          </ListItem>
-          </Link>
-          <Link to="/شبکه مجازی جدید">
-          <ListItem button className={classes.nested}>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText inset primary="افزودن شبکه مجازی جدید"/>
-          </ListItem>
-          </Link>
-          
-          <Link to="/سخت افزار جدید">
-          <ListItem button className={classes.nested}>
-          <ListItemIcon>
-            <DevicesIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="افزودن سخت افزار جدید"/>
-          </ListItem>
-          </Link>
+                      <Link to="/نود جدید">
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon><Dashboard /></ListItemIcon>
+                          <ListItemText inset primary="افزودن نود جدید" />
+                        </ListItem>
+                      </Link>
 
-          <Link to="/نوع جدید" >
-          <ListItem button className={classes.nested}>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText inset primary="افزودن نوع جدید"/>
-          </ListItem>
-          </Link>
+                      <Link to="/سوییچ جدید">
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon><Dashboard /></ListItemIcon>
+                          <ListItemText inset primary="افزودن سوییچ جدید" />
+                        </ListItem>
+                      </Link>
 
-          <Link to="/واحد جدید" >
-          <ListItem button className={classes.nested}>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText inset primary="افزودن واحد جدید"/>
-          </ListItem>
-          </Link>
+                      <Link to="/مکان جدید">
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon>
+                            <Dashboard />
+                          </ListItemIcon>
+                          <ListItemText>افزودن مکان جدید</ListItemText>
+                        </ListItem>
+                      </Link>
+                      <Link to="/VLAN جدید">
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon>
+                            <Dashboard />
+                          </ListItemIcon>
+                          <ListItemText inset primary="افزودن VLAN جدید" />
+                        </ListItem>
+                      </Link>
 
-          <Link to="/استریم جدید" >
-          <ListItem button className={classes.nested}>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText inset primary="افزودن استریم جدید"/>
-          </ListItem>
-          </Link>
-{global.userType===0?(
-          <Link to="/کاربر جدید" >
-          <ListItem button className={classes.nested}>
-          <ListItemIcon>
-            <Dashboard />
-            </ListItemIcon>
-            <ListItemText inset primary="افزودن کاربر جدید"/>
-          </ListItem>
-          </Link>
-          ):("")}
+                      <Link to="/سخت افزار جدید">
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon>
+                            <DevicesIcon />
+                          </ListItemIcon>
+                          <ListItemText inset primary="افزودن سخت افزار جدید" />
+                        </ListItem>
+                      </Link>
 
-           </List>
-          </Collapse>
-          </div>
-          ):("")}
+                      <Link to="/نوع جدید" >
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon>
+                            <Dashboard />
+                          </ListItemIcon>
+                          <ListItemText inset primary="افزودن نوع جدید" />
+                        </ListItem>
+                      </Link>
 
-          <Divider />
-          
-          
+                      <Link to="/واحد جدید" >
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon>
+                            <Dashboard />
+                          </ListItemIcon>
+                          <ListItemText inset primary="افزودن واحد جدید" />
+                        </ListItem>
+                      </Link>
 
-</List>
+                      <Link to="/استریم جدید" >
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon>
+                            <Dashboard />
+                          </ListItemIcon>
+                          <ListItemText inset primary="افزودن استریم جدید" />
+                        </ListItem>
+                      </Link>
+                      {global.userType === 0 ? (
+                        <Link to="/کاربر جدید" >
+                          <ListItem button className={classes.nested}>
+                            <ListItemIcon>
+                              <Dashboard />
+                            </ListItemIcon>
+                            <ListItemText inset primary="افزودن کاربر جدید" />
+                          </ListItem>
+                        </Link>
+                      ) : ("")}
+
+                    </List>
+                  </Collapse>
+                </div>
+              ) : ("")}
+
+            <Divider />
+
+          </List>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-{/*           
+          {/*           
 // {if this.state.elements.length!==0{return(elements.map(e=>{
 //   render(){e}
 // }))}} */}
-<div className="App">
-        
-          <Switch>
-            <Route exact path="/" component={DashboardPage}/>
-            <Route path="/سوییچها" component={Switches} />
-            <Route path="/نودها" component={NetNodes} />
-            <Route path="/مکانها" component={Locations} />
-            <Route path="/شبکه های مجازی" component={Vlans} />
-            <Route path="/سخت افزارها" component={Devices} />
-            <Route path="/استریم ها" component={Streams} />
-            {/* <Route path="/کاربران" component={Users} /> */}
-            <Route path="/نود جدید" component={NewNetNode} />
-            <Route path="/سوییچ جدید" component={NewSwitch} />
-            <Route path="/مکان جدید" component={NewLocation} />
-            <Route path="/شبکه مجازی جدید" component={NewVlan} />
-            <Route path="/سخت افزار جدید" component={NewDevice} />
-            <Route path="/نوع جدید" component={NewDeviceType} />
-            <Route path="/واحد جدید" component={NewDepartment} />
-            <Route path="/کاربر جدید" component={NewUser} />
-            <Route path="/استریم جدید" component={NewStream} />
-            {/* <Route path="/کاربر جدید" component={Register} /> */}
-          </Switch>
-         
+          <div className="App">
+
+            <Switch>
+              <Route exact path="/" component={DashboardPage} />
+              <Route path="/سوییچها" component={Switches} />
+              <Route path="/نودها" component={NetNodes} />
+              <Route path="/مکانها" component={Locations} />
+              <Route path="/VLAN" component={Vlans} />
+              <Route path="/سخت افزارها" component={Devices} />
+              <Route path="/استریم ها" component={Streams} />
+              {/* <Route path="/کاربران" component={Users} /> */}
+              <Route path="/نود جدید" component={NewNetNode} />
+              <Route path="/سوییچ جدید" component={NewSwitch} />
+              <Route path="/مکان جدید" component={NewLocation} />
+              <Route path="/VLAN جدید" component={NewVlan} />
+              <Route path="/سخت افزار جدید" component={NewDevice} />
+              <Route path="/نوع جدید" component={NewDeviceType} />
+              <Route path="/واحد جدید" component={NewDepartment} />
+              <Route path="/کاربر جدید" component={NewUser} />
+              <Route path="/استریم جدید" component={NewStream} />
+              {/* <Route path="/کاربر جدید" component={Register} /> */}
+            </Switch>
+
           </div>
         </main>
       </div>
@@ -406,4 +401,4 @@ MiniDrawer.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles( styles,{ withTheme: true })(MiniDrawer);
+export default withStyles(styles, { withTheme: true })(MiniDrawer);

@@ -46,7 +46,7 @@ function Dashboard() {
               pageName="مکانها"
               content={
                 <div>
-                  <p>نمایش لیست نودها</p>
+                  <p>نمایش لیست مکانها</p>
                   <Link to="/مکانها">بیشتر...</Link>
                 </div>
               }
@@ -54,11 +54,11 @@ function Dashboard() {
           </Grid>
           <Grid item xs>
             <Card
-              pageName="شبکه های مجازی"
+              pageName="VLANها"
               content={
                 <div>
-                  <p>نمایش لیست نودها</p>
-                  <Link to="/شبکه های مجازی">بیشتر...</Link>
+                  <p>نمایش لیست VLANها</p>
+                  <Link to="/VLANها">بیشتر...</Link>
                 </div>
               }
             />
@@ -73,7 +73,7 @@ function Dashboard() {
       <Route path="/سوییچها" component={Switches} />
       <Route path="/نودها" component={NetNodes} />
       <Route path="/مکانها" component={Locations} />
-      <Route path="/شبکه های مجازی" component={Vlans} />
+      <Route path="/VLANها" component={Vlans} />
 
     </Switch>
   </div>,

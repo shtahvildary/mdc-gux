@@ -121,7 +121,7 @@ class NewNetNode extends Component {
                     {/* <br /> */}
                     </Grid>
                     <Grid item xs>
-                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
+                    <Menu id="vlanId" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this)}/>
                     </Grid>
                     </Grid>
         <Grid container spacing={24}>

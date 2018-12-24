@@ -75,10 +75,10 @@ class netNodes extends Component {
     this.setState({ response: tblData.response.netNodes }, () => { });
     console.log(tblData.response.netNodes);
   }
-  // delete(arrayOfIds){
-  //    // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
-  //   this.callApi("delete",{arrayOfIds}) 
-  // }
+  delete(arrayOfIds){
+     // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
+    this.callApi("delete",{arrayOfIds}) 
+  }
   disconnect(n){
    this.callApi("disconnect",n) 
  }
@@ -89,20 +89,37 @@ class netNodes extends Component {
         <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
         {this.state.editComponent}
         {this.state.viewComponent}
-        <Card
-          pageName="نودها"
-          content={
-            <SimpleTable
-              // addNew={this.addNew.bind(this)}
-              addNew={{path:"/نود جدید",link:"/نود جدید",component:NewNetNode}}
-              columns={this.state.response.columns}
-              data={this.state.response.netNodesData}
-              showView={this.showView.bind(this)}
-              showEdit={this.showEdit.bind(this)}
-              delete={this.disconnect.bind(this)}
-            />
-          }
-        />
+        {global.userType<2?(
+
+          <Card
+            pageName="نودها"
+            content={
+              <SimpleTable
+                addNew={{path:"/نود جدید",link:"/نود جدید",component:NewNetNode}}
+                columns={this.state.response.columns}
+                data={this.state.response.netNodesData}
+                showView={this.showView.bind(this)}
+                showEdit={this.showEdit.bind(this)}
+                disconnect={this.disconnect.bind(this)}
+             delete={this.delete.bind(this)}
+              />
+            }
+          />
+          ):(
+          <Card
+            pageName="نودها"
+            content={
+              <SimpleTable
+                addNew={{path:"/نود جدید",link:"/نود جدید",component:NewNetNode}}
+                columns={this.state.response.columns}
+                data={this.state.response.netNodesData}
+                showView={this.showView.bind(this)}
+                showEdit={this.showEdit.bind(this)}
+                disconnect={this.disconnect.bind(this)}
+              />
+            }
+          />
+        )}
       </div>
     );
   }

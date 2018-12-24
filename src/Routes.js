@@ -29,13 +29,13 @@ const routes=(
     <Route path="/سوییچها" component={Switches} />
     <Route path="/نودها" component={netNodes} />
     <Route path="/مکانها" component={locations} />
-    <Route path="/شبکه های مجازی" component={vlans} />
+    <Route path="/VLANها" component={vlans} />
     <Route path="/سخت افزارها" component={Devices} />
     {/* <Route path="/کاربران" component={Users} /> */}
     <Route path="/نود جدید" component={NewNetNode} />
     <Route path="/سوییچ جدید" component={NewSwitch} />
     <Route path="/مکان جدید" component={NewLocation} />
-    <Route path="/شبکه مجازی جدید" component={NewVlan} />
+    <Route path="/VLAN جدید" component={NewVlan} />
     <Route path="/سخت افزار جدید" component={NewDevice} />
     <Route path="/نوع جدید" component={NewDeviceType} />
     <Route path="/واحد جدید" component={NewDepartment} />

@@ -56,7 +56,7 @@ class ViewVlan extends Component {
     return (
       <Paper >
         <div>
-          <Modal title="مشخصات شبکه مجازی"
+          <Modal title="مشخصات VLAN"
             open={this.state.open}
             components={this.state.localComponent}
             close={this.viewModal.bind(this)}

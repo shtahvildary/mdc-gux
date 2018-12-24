@@ -111,7 +111,7 @@ class EditNetNode extends Component {
                     <br />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} defaultValue={this.state.cableNumber} />
                     <br />
-                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this)} defaultValue={this.state.vlanId}/>
+                    <Menu id="vlanId" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this)} defaultValue={this.state.vlanId}/>
 
                     <br />
                      <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this)} defaultValue={this.state.switchId} />

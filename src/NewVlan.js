@@ -73,6 +73,7 @@ class NewVlan extends Component {
             window.location.reload()
           }
           else {
+            alert("خطایی رخ داده. لطفا دوباره امتحان کنید.");
             console.log("some error ocurred", response.status);
           }
         })
@@ -100,7 +101,7 @@ class NewVlan extends Component {
         <MuiThemeProvider>
           <AppBar title="new vlan" />
         </MuiThemeProvider>
-        <Card pageName="افزودن شبکه مجازی جدید" content={this.state.localComponent} />
+        <Card pageName="افزودن VLAN جدید" content={this.state.localComponent} />
       </div>
     )
   }

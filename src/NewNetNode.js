@@ -78,8 +78,10 @@ class NewNetNode extends Component {
           }
         })
         .catch(function (error) {
+          alert("خطایی رخ داده. لطفا دوباره امتحان کنید.");
+
           console.log(error);
-          <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
+          // <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
         });
     }
     else {
@@ -113,9 +115,9 @@ console.log(global.userType)
                     <MyTextField id="patchPanelPort" required label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
                     <br />
-                    <Menu id="vlanId" name="شبکه مجازی" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/>
+                    <Menu id="vlanId" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/>
                     {this.state.vlanInfo?(
-                      <p> شبکه مجازی {this.state.vlanInfo.name} با شماره {this.state.vlanInfo.number} و آی پی {this.state.vlanInfo.ip}</p>
+                      <p> VLAN {this.state.vlanInfo.name} با شماره {this.state.vlanInfo.number} و آی پی {this.state.vlanInfo.ip}</p>
                       // <p>نام: {this.state.vlanInfo.name}</p>
                     ):("")}  
                     <br />

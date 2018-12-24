@@ -6,14 +6,13 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-// import tbl from '@material-ui/core/Table';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-// import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
+import DisconnectIcon from '@material-ui/icons/Close'
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add'
@@ -46,18 +45,12 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, columnData,selectedIds } = this.props;
+    const {  order, orderBy, columnData } = this.props;
 
     return (
       <TableHead>
         <TableRow>
-          {/* <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={numSelected === rowCount}
-              onChange={onSelectAllClick}
-            />
-          </TableCell> */}
+        
           {columnData.map(column => {
             return (
               <TableCell
@@ -89,12 +82,12 @@ class EnhancedTableHead extends React.Component {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
+  // numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
+  // onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
+  // rowCount: PropTypes.number.isRequired,
 };
 
 const toolbarStyles = theme => ({
@@ -123,42 +116,35 @@ const toolbarStyles = theme => ({
 });
 let EnhancedTableToolbar = props => {
 
-  const { numSelected, dataLength, classes, addNew} = props;
-  // const { numSelected, dataLength, classes, addNew,selectedIds ,Delete} = props;
-  if(addNew){
+  const { dataLength, classes, addNew } = props;
+  // const { numSelected, dataLength, classes, addNew } = props;
+  if (addNew) {
     <Switch>
-    <Route path={addNew.path} component={addNew.component} /> 
-    </Switch> 
+      <Route path={addNew.path} component={addNew.component} />
+    </Switch>
   }
   return (
     <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
+      className={classNames(classes.root)}
     >
       <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subheading">
-            {numSelected} مورد انتخاب شده
-          </Typography>
-        ) : (
+        {
             <Typography variant="title" id="tableTitle">
               تعداد کل: {dataLength}
             </Typography>
-          )}
+          }
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
 
-        { addNew?(
-            <Tooltip title="New">
-           
-               <IconButton aria-label="New" component={Link} to={addNew.link}>
+        {addNew ? (
+          <Tooltip title="جدید">
+            <IconButton aria-label="New" component={Link} to={addNew.link}>
               {/* // <IconButton aria-label="New" onClick={event => addNew()}> */}
-                <AddIcon />
-              </IconButton>
-            </Tooltip>
-          ):('')
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        ) : ('')
         }
       </div>
     </Toolbar>
@@ -193,12 +179,11 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: null,
       selected: [],
-      selectedIds:[],
+      selectedIds: [],
       data: [
       ],
       columnData: [],
-      page: 0,
-      rowsPerPage: 5,
+
     };
   }
   componentWillReceiveProps(newProps) {
@@ -216,7 +201,7 @@ class EnhancedTable extends React.Component {
     // var Delete=newProps.delete
     var { orderBy } = this.state;
     if (!orderBy && columns[0]) orderBy = columns[0].id
-    this.setState({ columnData: columns, data, orderBy, addNew }) 
+    this.setState({ columnData: columns, data, orderBy, addNew })
     // this.setState({ columnData: columns, data, orderBy, addNew ,Delete}) 
   }
 
@@ -234,138 +219,115 @@ class EnhancedTable extends React.Component {
   handleSelectAllClick = (event, checked) => {
     if (checked) {
       this.setState(state => ({ selected: state.data.map(n => n.id) }));
-      this.setState(state => ({selectedIds:state.map(n=>n._id)}));
+      this.setState(state => ({ selectedIds: state.map(n => n._id) }));
       return;
     }
     this.setState({ selected: [] });
   };
 
-  handleClick = (event, id,_id) => {
-    // handleClick = (event, id) => {
-    const { selected,selectedIds } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-    let newSelectedIds = [];
+  // handleClick = (event, id, _id) => {
+  //   // handleClick = (event, id) => {
+  //   const { selected, selectedIds } = this.state;
+  //   const selectedIndex = selected.indexOf(id);
+  //   let newSelected = [];
+  //   let newSelectedIds = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-      newSelectedIds=newSelectedIds.concat(selectedIds,_id)
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-      newSelectedIds = newSelectedIds.concat(selectedIds.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-      newSelectedIds = newSelectedIds.concat(selectedIds.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-      newSelectedIds = newSelectedIds.concat(
-        selectedIds.slice(0, selectedIndex),
-        selectedIds.slice(selectedIndex + 1),
-      );
-    }
-    this.setState({ selected: newSelected },()=>{});
-    this.setState({selectedIds:newSelectedIds},()=>{})
-  };
-  
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, id);
+  //     newSelectedIds = newSelectedIds.concat(selectedIds, _id)
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //     newSelectedIds = newSelectedIds.concat(selectedIds.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //     newSelectedIds = newSelectedIds.concat(selectedIds.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1),
+  //     );
+  //     newSelectedIds = newSelectedIds.concat(
+  //       selectedIds.slice(0, selectedIndex),
+  //       selectedIds.slice(selectedIndex + 1),
+  //     );
+  //   }
+  //   this.setState({ selected: newSelected }, () => { });
+  //   this.setState({ selectedIds: newSelectedIds }, () => { })
+  // };
 
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
-
+ 
+  // isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page, columnData, addNew } = this.state;
-    // const { data, order, orderBy, selected, rowsPerPage, page, columnData, addNew,selectedIds,Delete } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const { data, order, orderBy, selected, columnData, addNew } = this.state;
 
     return (
-      <Paper className={classes.root}>
+      <Paper  className={classes.root}>
         <EnhancedTableToolbar addNew={addNew} numSelected={selected.length} dataLength={data.length} />
-        {/* <EnhancedTableToolbar addNew={addNew} numSelected={selected.length} dataLength={data.length} selectedIds={selectedIds} Delete={Delete}/> */}
         <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
+          <Table style={{ width: "auto", tableLayout: "auto" }} className={classes.table} aria-labelledby="tableTitle">
+          {/* <Table style={{ width: "auto", tableLayout: "auto" }} className={classes.table} aria-labelledby="tableTitle"> */}
             <EnhancedTableHead
 
               columnData={columnData}
-              numSelected={selected.length}
+              // numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
+              // onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
+              // rowCount={data.length}
             />
             <TableBody>
               {data
                 .sort(getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
-                  const isSelected = this.isSelected(n.id);
+                  // const isSelected = this.isSelected(n.id);
                   return (
                     <TableRow
                       hover
                       role="checkbox"
-                      aria-checked={isSelected}
+                      // aria-checked={isSelected}
                       tabIndex={-1}
                       key={n.id}
-                      selected={isSelected}
+                      // selected={isSelected}
                     >
-                      {/* <TableCell padding="checkbox"
-                        // onClick={event => this.handleClick(event, n)}
-                        onClick={event => this.handleClick(event, n.id,n._id)}
-                      >
-                        <Checkbox checked={isSelected} />
-                      </TableCell> */}
                       {columnData.map(c => {
                         let txt = n[c.id];
                         if (!txt) txt = "-";
-                        if (typeof txt ==='string' && validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
+                        if (typeof txt === 'string' && validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
                         return <TableCell>{txt}</TableCell>
                       })}
                       <TableCell >
-                        <IconButton aria-label="Edit" onClick={event => this.props.showEdit(n)} >
-                          <EditIcon />
+                        <Tooltip title="جزئیات">
+                          <IconButton aria-label="View" onClick={event => this.props.showView(n)} >
+                            <ViewListIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="ویرایش">
+                          <IconButton aria-label="Edit" onClick={event => this.props.showEdit(n)} >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                        {(this.props.disconnect)?(
+                           <Tooltip title="قطع">
+                        <IconButton aria-label="Disconnect" onClick={event => this.props.disconnect({ _id: n._id })} >
+                          <DisconnectIcon />
                         </IconButton>
-                        <IconButton aria-label="View" onClick={event => this.props.showView(n)} >
-                          <ViewListIcon />
-                        </IconButton>
-                        <IconButton aria-label="Delete" onClick={event => this.props.delete({_id:n._id})} >
+                        </Tooltip>):("")}
+                        <Tooltip title="پاک">
+                        <IconButton aria-label="Delete" onClick={event => this.props.delete({ _id: n._id })} >
                           <DeleteIcon />
                         </IconButton>
+                        </Tooltip>
                       </TableCell>
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </div>
-        <Table
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
+       
       </Paper>
     );
   }

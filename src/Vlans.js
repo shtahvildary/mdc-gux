@@ -77,11 +77,11 @@ refreshPage(close){
         {this.state.editComponent}
         {this.state.viewComponent}
         <Card
-          pageName="شبکه های مجازی"
+          pageName="VLANها"
           content={
             <SimpleTable
               // addNew={this.addNew.bind(this)}
-              addNew={{path:"/شبکه مجازی جدید",link:"/شبکه مجازی جدید",component:NewVlan}}
+              addNew={{path:"/VLAN جدید",link:"/VLAN جدید",component:NewVlan}}
               columns={this.state.response.columns}
               data={this.state.response.vlansData}
               showView={this.showView.bind(this)}

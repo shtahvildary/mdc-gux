@@ -83,6 +83,7 @@ class NewDevice extends Component {
             window.location.reload()
           }
           else {
+            alert("خطایی رخ داده. لطفا دوباره امتحان کنید.");
             console.log("some error ocurred", response.status);
           }
         })

@@ -70,7 +70,8 @@ class SimpleModal extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
         >
-          <div style={getModalStyle()} className={classes.paper}>
+          <div  style={getModalStyle()} className={classes.paper}>
+          {/* <div dir="rtl"  style={getModalStyle()} className={classes.paper}> */}
             <Typography variant="title" id="modal-title">
               {this.state.title}
             </Typography>

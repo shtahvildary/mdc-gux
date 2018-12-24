@@ -134,7 +134,7 @@ class EditVlan extends Component {
     return (
       <Paper>
         <div>
-          <Modal title="ویرایش شبکه مجازی" open={this.state.open} components={this.state.localComponent} close={this.editModal.bind(this)} />
+          <Modal title="ویرایش VLAN" open={this.state.open} components={this.state.localComponent} close={this.editModal.bind(this)} />
         </div>
       </Paper>
     )
