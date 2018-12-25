@@ -72,7 +72,13 @@ class NewNetNode extends Component {
             window.location.reload()
          
           }
-          else {
+          else if(response.status===403){
+            console.log("Forbidden!");
+
+            <AlertDialog title="error" open={true} contentText="شما مجوز دسترسی به این بخش را ندارید. لطفا در صورت نیاز با ادمین برنامه تماس بگیرید." btnLbl="ok"/>
+
+          } 
+          else{
             console.log("some error ocurred", response.status);
             <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
           }
