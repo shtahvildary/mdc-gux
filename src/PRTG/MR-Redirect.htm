@@ -1,0 +1,55 @@
+<!--Custom Map Objects: Sizeable Icon on Status Transparent Background Redirect-->
+
+
+<div  class="map_object map_icon2 map_icon_large <#sensor type="colorclassofstate" prefix="map_iconcolor_" id="<@objectid>">"  id="<@itemid>" objectid="<@objectid>" subid="<@subid>" style="<#mapobject type="coordinates" subid="<@subid>" mode="<@editmode>">">
+  <#mapobject type="objectgrip" mode="<@editmode>">
+  <#mapobject type="htmlbefore" subid="<@subid>">
+
+  <#objectproperty type="nodename" id="<@objectid>" var="nodename">
+  <#objectstatus name="lastvalue" id="<@objectid>" var="lastvalue">
+  <#objectstatus name="message" show="textraw" id="<@objectid>" var="message">
+  <#mapobject type="htmlafter" subid="<@subid>">
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+  
+	  
+	  var status ="<#objectstatus name="status"  id="<@objectid>">";
+	  
+	  
+	  if(status.includes("Down") )
+	  {
+		  document.getElementById("<@itemid>").style.opacity="0.6";
+		}
+		else
+		{
+			document.getElementById("<@itemid>").style.opacity="0.0";
+		}
+									  axios({
+									  url: 'https://localhost:5000/netNodes/all',
+									  method: 'post',
+									  data: {
+										name:"<@itemid>"
+									  }
+									}).then(result=>{
+										
+										alert(result.data);
+									}).catch(err=>{
+										alert(err);
+									
+									})
+	function openpage() {
+	//alert("<@itemid>");
+	if ("<@itemid>" == "mapelement_3004_38") window.open("http://www.google.com");
+	if ("<@itemid>" == "mapelement_3004_39") window.open("http://www.yahoo.com");
+	if ("<@itemid>" == "mapelement_3004_40") window.open("http://www.msn.com");
+	}
+
+	var element = document.getElementById("<@itemid>");
+	element.addEventListener("click", openpage, false);
+	document.getElementById("<@itemid>").style.cursor = "pointer";	
+  </script>
+</div>
+
+ 
+ 

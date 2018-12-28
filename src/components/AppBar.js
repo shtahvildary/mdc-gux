@@ -7,8 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 // import Typography from 'material-ui/styles/typography'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/core/Menu';
+
 
 // const styles = {
 //   root: {
@@ -55,9 +54,7 @@ class ButtonAppBar extends Component {
       <div >
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={this.state.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
+            
             <Typography variant="title" color="inherit" className={this.state.flex}>
               فناوری اطلاعات سیما
           </Typography>

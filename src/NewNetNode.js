@@ -139,7 +139,7 @@ console.log(global.userType)
                      <p> {this.state.deviceInfo.name} با آی پی {this.state.deviceInfo.ip} و شماره اموال {this.state.deviceInfo.code}</p>
                     ):("")}  
                     <br />      
-                   <Menu id="location" name={"*"+"مکان"} items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
+                   <Menu id="location" name={"مکان"} items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
                    {this.state.locationInfo?(
                      <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
                     ):("")}

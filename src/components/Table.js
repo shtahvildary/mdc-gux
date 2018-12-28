@@ -86,7 +86,7 @@ EnhancedTableHead.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
   // onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
+  // orderBy: PropTypes.string.isRequired,
   // rowCount: PropTypes.number.isRequired,
 };
 
@@ -284,14 +284,7 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   // const isSelected = this.isSelected(n.id);
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      // aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={n.id}
-                      // selected={isSelected}
-                    >
+                    <TableRow>
                       {columnData.map(c => {
                         let txt = n[c.id];
                         if (!txt) txt = "-";

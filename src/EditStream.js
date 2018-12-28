@@ -13,50 +13,50 @@ class EditStream extends Component {
     this.state = {
       _id: "",
       nameEn: "",
-      nameFa:"",
+      nameFa: "",
       address: "",
-      streamServer:"",
+      streamServer: "",
       open: true
     };
   }
-  tbxReadValue(input) {
-    this.setState(input);
-  }
+  // tbxReadValue(input) {
+  //   this.setState(input);
+  // }
 
 
   saveBtnClick(event) {
-    if ( this.state.nameEn.length && this.state.address.length&&this.state.streamServer.length> 0 ) {
-      var name={}
-      name.en=this.state.nameEn;
-      name.fa=this.state.nameFa;
+    if (this.state.nameEn.length && this.state.address.length && this.state.streamServer.length > 0) {
+      var name = {}
+      name.en = this.state.nameEn;
+      name.fa = this.state.nameFa;
       var payload = {
-        "_id":this.state._id,
+        "_id": this.state._id,
         "name": name,
         "address": this.state.address,
-        "streamServer":this.state.streamServer,
+        "streamServer": this.state.streamServer,
       }
-    this.callApi(payload)
-      .then(function(response) {
-        if (response.status === 200) {
-          console.log("update stream is OK :D");
-          alert("ذخیره سازی با موفقیت انجام شد.");
-        } else {
-          console.log("some error ocurred", response.status);
-        }
-      }).then(this.closeModal())
-      
-      .catch(function(error) {
-        console.log(error);
-      });
-     
-  }
-  else {
-    alert("تمامی فیلدهای ستاره دار را پر کنید.");
+      this.callApi(payload)
+        .then(function (response) {
+          if (response.status === 200) {
+            console.log("update stream is OK :D");
+            alert("ذخیره سازی با موفقیت انجام شد.");
+          } else {
+            console.log("some error ocurred", response.status);
+          }
+        }).then(this.closeModal())
 
-    // alert("Input field value is missing");
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    }
+    else {
+      alert("تمامی فیلدهای ستاره دار را پر کنید.");
+
+      // alert("Input field value is missing");
+    }
   }
-}
-closeModal() { this.props.close(true) }
+  closeModal() { this.props.close(true) }
 
   callApi = async payload => {
     const response = await axios({
@@ -68,52 +68,52 @@ closeModal() { this.props.close(true) }
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
-  
- 
+
+
 
   setLocalComponent(input) {
     console.log(input);
     this.setState({ open: input.open });
 
-    var { _id, nameEn,nameFa, address ,streamServer} = input.stream;
+    var { _id, nameEn, nameFa, address, streamServer } = input.stream;
     console.log("_id: ", _id);
 
     this.setState(
-      { _id, nameEn,nameFa, address,streamServer },
+      { _id, nameEn, nameFa, address, streamServer },
       () => {
         var localComponent = [];
-        if(input.stream.isMosaic===1){
-          var mosaicInputs=[];
-          input.stream.mosaicInputs.map((i,index)=>{
-          mosaicInputs.push(
-            <TextField id="mosaicInputs" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer}/>
-          
-          )
+        if (input.stream.isMosaic === 1) {
+          var mosaicInputs = [];
+          input.stream.mosaicInputs.map((i, index) => {
+            mosaicInputs.push(
+              <TextField id="mosaicInputs" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer} />
+
+            )
           })
         }
         localComponent.push(
           <MuiThemeProvider>
             <div>
-            <TextField id="nameFa" label="نام فارسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameFa} />
-          <br />
-          <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameEn}/>
-          <br />
-          <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} defaultValue={this.state.address}/>
-          <br/>
-           <TextField id="streamServer" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer}/>
-          <br/>
+              <TextField id="nameFa" label="نام فارسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameFa} />
+              <br />
+              <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameEn} />
+              <br />
+              <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} defaultValue={this.state.address} />
+              <br />
+              <TextField id="streamServer" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer} />
+              <br />
               <MyButton label="ذخیره" click={this.saveBtnClick.bind(this)} />
             </div>
           </MuiThemeProvider>
         );
-        this.setState({ localComponent: localComponent }, () => {});
+        this.setState({ localComponent: localComponent }, () => { });
       }
     );
   }
 
   componentWillMount() {
     console.log("hiiii")
-   
+
     var open = this.props.open;
     var input = this.props;
     this.setState(
@@ -124,7 +124,7 @@ closeModal() { this.props.close(true) }
       () => {
         console.log(this.props);
         this.setLocalComponent(this.props);
-  })
+      })
   }
   componentWillReceiveProps(newProps) {
     this.setLocalComponent(newProps);
@@ -134,7 +134,7 @@ closeModal() { this.props.close(true) }
   }
   editModal(event) {
     var open = !this.state.open;
-    this.setState({ open }, () => {});
+    this.setState({ open }, () => { });
   }
   render() {
     return (

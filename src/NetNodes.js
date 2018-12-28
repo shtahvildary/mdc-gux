@@ -116,6 +116,7 @@ class netNodes extends Component {
                 showView={this.showView.bind(this)}
                 showEdit={this.showEdit.bind(this)}
                 disconnect={this.disconnect.bind(this)}
+                // orderBy={this.state.response.netNodesData.}
               />
             }
           />

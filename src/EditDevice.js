@@ -209,9 +209,7 @@ closeModal() { this.props.close(true) }
   componentWillReceiveProps(newProps) {
     this.fillComponent(newProps);
   }
-  tbxReadValue(input) {
-    this.setState(input);
-  }
+  
   editModal(event) {
     var open = !this.state.open;
     this.setState({ open }, () => {});
