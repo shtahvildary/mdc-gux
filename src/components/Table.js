@@ -29,6 +29,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 
 
 
+
 // import DeleteObjects from "../DeleteObjects"
 
 
@@ -164,7 +165,8 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
   table: {
-    minWidth: 1020,
+    minWidth: 'auto',
+    // minWidth: 1020,
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -266,7 +268,7 @@ class EnhancedTable extends React.Component {
       <Paper  className={classes.root}>
         <EnhancedTableToolbar addNew={addNew} numSelected={selected.length} dataLength={data.length} />
         <div className={classes.tableWrapper}>
-          <Table style={{ width: "auto", tableLayout: "auto" }} className={classes.table} aria-labelledby="tableTitle">
+          <Table className={classes.table} aria-labelledby="tableTitle">
           {/* <Table style={{ width: "auto", tableLayout: "auto" }} className={classes.table} aria-labelledby="tableTitle"> */}
             <EnhancedTableHead
 

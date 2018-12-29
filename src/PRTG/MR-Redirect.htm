@@ -26,10 +26,11 @@
 			document.getElementById("<@itemid>").style.opacity="0.0";
 		}
 									  axios({
-									  url: 'https://localhost:5000/netNodes/all',
+									  url: 'https://localhost:5000/netNodes/prtg',
 									  method: 'post',
 									  data: {
-										name:"<@itemid>"
+										switchName:"<@itemid>",
+										switchPort:42
 									  }
 									}).then(result=>{
 										
