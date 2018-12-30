@@ -43,11 +43,11 @@ class Devices extends Component {
   }
 
   setTblData() {
-    <SimpleTable
+    return(<SimpleTable
       addNew={<NewDevice />}
       columns={this.state.response.columns}
       data={this.state.response.devicesData}
-    />;
+    />);
   }
 
   tbxReadValue(input) {

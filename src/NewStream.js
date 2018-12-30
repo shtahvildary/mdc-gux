@@ -7,6 +7,7 @@ import TextField from './components/TextField';
 import './index.css';
 import AlertDialog from "./components/AlertDialog";
 import Card from './components/Card'
+import { Modal } from "@material-ui/core";
 
 class NewStream extends Component {
   constructor(props) {
@@ -49,12 +50,12 @@ class NewStream extends Component {
           }
           else {
             console.log("some error ocurred", response.status);
-            <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
+            // <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
           }
         })
         .catch(function (error) {
           console.log(error);
-          <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
+          // <AlertDialog title="error" open={true} contentText="خطایی رخ داده، لطفا دوباره اقدام کنید.." btnLbl="ok"/>
         });
     }
     else {
@@ -94,6 +95,7 @@ class NewStream extends Component {
   render() {
     return (
       <div>
+        
         <MuiThemeProvider>
           <AppBar title="new stream" />
         </MuiThemeProvider>

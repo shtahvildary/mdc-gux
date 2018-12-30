@@ -42,11 +42,11 @@ class locations extends Component {
   }
 
   setTblData() {
-    <SimpleTable
+    return(<SimpleTable
       addNew={<NewLocation />}
       columns={this.state.response.columns}
       data={this.state.response.locationsData}
-    />;
+    />);
   }
 
   tbxReadValue(input) {

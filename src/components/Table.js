@@ -119,11 +119,11 @@ let EnhancedTableToolbar = props => {
 
   const { dataLength, classes, addNew } = props;
   // const { numSelected, dataLength, classes, addNew } = props;
-  if (addNew) {
-    <Switch>
-      <Route path={addNew.path} component={addNew.component} />
-    </Switch>
-  }
+  // if (addNew) {
+  //   <Switch>
+  //     <Route path={addNew.path} component={addNew.component} />
+  //   </Switch>
+  // }
   return (
     <Toolbar
       className={classNames(classes.root)}

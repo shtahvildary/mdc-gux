@@ -39,11 +39,11 @@ class vlans extends Component {
   }
 
   setTblData() {
-    <SimpleTable
+    return(<SimpleTable
       addNew={<NewVlan />}
       columns={this.state.response.columns}
       data={this.state.response.vlansData}
-    />;
+    />)
   }
 
   tbxReadValue(input) {

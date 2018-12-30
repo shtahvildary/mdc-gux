@@ -42,11 +42,11 @@ class netNodes extends Component {
   }
 
   setTblData() {
-    <SimpleTable
+    return(<SimpleTable
       addNew={<NewNetNode />}
       columns={this.state.response.columns}
       data={this.state.response.netNodesData}
-    />;
+    />);
   }
 
   tbxReadValue(input) {
