@@ -6,7 +6,6 @@ import EditNetNode from "./EditNetNode";
 import ViewNetNode from "./ViewNetNode";
 import Search from "./components/Search";
 import NewNetNode from "./NewNetNode";
-// import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 class netNodes extends Component {
   constructor(props) {
@@ -14,7 +13,8 @@ class netNodes extends Component {
     this.state = {
       response: [],
       columns: {},
-      search: ""
+      search: "",
+      open:"false",
     };
    
     
@@ -63,6 +63,7 @@ class netNodes extends Component {
   }
   refreshPage(close){
     if(close) 
+    // this.setState({open:!this.state.open},()=>{console.log("open: ",this.state.open)})
     window.location.reload()
     // this.componentWillMount()
   }
@@ -92,7 +93,6 @@ class netNodes extends Component {
         <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
         {this.state.editComponent}
         {this.state.viewComponent}
-        {/* <LazyLoadComponent> */}
         {global.userType<2?(
 
           <Card
@@ -125,7 +125,6 @@ class netNodes extends Component {
             }
           />
         )}
-        {/* </LazyLoadComponent> */}
       </div>
     );
   }

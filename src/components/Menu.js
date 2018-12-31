@@ -45,7 +45,9 @@ componentWillMount(){
       selected={(index+1 === this.state.selectedIndex)||(i._id===this.props.defaultValue)}
       onClick={event => this.handleMenuItemClick(event,index+1, i._id)}
       >{i.name}</MenuItem>)
-  })
+    })
+    items.push(<MenuItem selected={(this.props.items.length+1)}
+    onClick={event => this.handleMenuItemClick(event,this.props.items.length+1, "")}>هیچکدام</MenuItem>)
   
   this.setState({items});
 }

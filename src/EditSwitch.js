@@ -40,13 +40,15 @@ class EditSwitch extends Component {
   }
   saveBtnClick(event) {
     console.log("this.state.location: ",this.state.location)
+    var location=""
+    if (this.state.locationInfo) location=this.state.locationInfo._id
     var payload = {
       _id: this.state._id,
       name: this.state.name,
       ip: this.state.ip,
       model: this.state.model,
       diagramUrl: this.state.diagramUrl,
-      location: this.state.locationInfo._id,
+      location: location,
       description: this.state.description
     };
     this.callApi(payload)

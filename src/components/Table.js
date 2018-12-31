@@ -23,6 +23,8 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
+import { LazyLoadComponent,trackWindowScroll  } from 'react-lazy-load-image-component';
+
 
 import { Link, Route, Switch } from 'react-router-dom';
 
@@ -263,6 +265,7 @@ class EnhancedTable extends React.Component {
   render() {
     const { classes } = this.props;
     const { data, order, orderBy, selected, columnData, addNew } = this.state;
+     
 
     return (
       <Paper  className={classes.root}>
@@ -280,12 +283,15 @@ class EnhancedTable extends React.Component {
               onRequestSort={this.handleRequestSort}
               // rowCount={data.length}
             />
+
             <TableBody>
               {data
                 .sort(getSorting(order, orderBy))
                 .map(n => {
                   // const isSelected = this.isSelected(n.id);
                   return (
+        // <LazyLoadComponent scrollPosition>
+        <LazyLoadComponent >
                     <TableRow>
                       {columnData.map(c => {
                         let txt = n[c.id];
@@ -317,9 +323,12 @@ class EnhancedTable extends React.Component {
                         </Tooltip>
                       </TableCell>
                     </TableRow>
+        </LazyLoadComponent>
+
                   );
                 })}
             </TableBody>
+
           </Table>
         </div>
        
