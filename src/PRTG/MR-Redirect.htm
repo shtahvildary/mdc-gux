@@ -4,53 +4,95 @@
 <div  class="map_object map_icon2 map_icon_large <#sensor type="colorclassofstate" prefix="map_iconcolor_" id="<@objectid>">"  id="<@itemid>" objectid="<@objectid>" subid="<@subid>" style="<#mapobject type="coordinates" subid="<@subid>" mode="<@editmode>">">
   <#mapobject type="objectgrip" mode="<@editmode>">
   <#mapobject type="htmlbefore" subid="<@subid>">
-
   <#objectproperty type="nodename" id="<@objectid>" var="nodename">
   <#objectstatus name="lastvalue" id="<@objectid>" var="lastvalue">
   <#objectstatus name="message" show="textraw" id="<@objectid>" var="message">
-  <#mapobject type="htmlafter" subid="<@subid>">
+	<#mapobject type="htmlafter" subid="<@subid>">
+	
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
+	<!-- Modal HTML embedded directly into document -->
+<div id="ex1" class="modal">
+  <p><%= "#{@variable}" %></p>
+  <!-- <a href="#" rel="modal:close">Close</a> -->
+</div>
+
+<!-- Link to open the modal -->
+<p><a href="#ex1" rel="modal:open">Open Modal</a></p>
+
+
   
-	  
-	  var status ="<#objectstatus name="status"  id="<@objectid>">";
-	  
-	  
-	  if(status.includes("Down") )
-	  {
-		  document.getElementById("<@itemid>").style.opacity="0.6";
+	<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+	
+	</script>
+	 
+	 
+  <script>
+    
+  var 
+	status ="<#objectstatus name="status"  id="<@objectid>">";
+
+	
+	if(status.includes("Down"))
+		{
+			document.getElementById("<@itemid>").style.opacity="0.6";
 		}
-		else
+	else
 		{
 			document.getElementById("<@itemid>").style.opacity="0.0";
 		}
-									  axios({
-									  url: 'https://localhost:5000/netNodes/prtg',
-									  method: 'post',
-									  data: {
-										switchName:"<@itemid>",
-										switchPort:42
-									  }
-									}).then(result=>{
-										
-										alert(JSON.stringify(result.data));
-									}).catch(err=>{
-										alert(err);
-									
-									})
-	function openpage() {
-	//alert("<@itemid>");
-	if ("<@itemid>" == "mapelement_3004_38") window.open("http://www.google.com");
-	if ("<@itemid>" == "mapelement_3004_39") window.open("http://www.yahoo.com");
-	if ("<@itemid>" == "mapelement_3004_40") window.open("http://www.msn.com");
-	}
+		
+	function openpage() 
+		{
+			//alert("<@itemid>");
+	
+			//--SW - General Network MAP--//
+	
+		
+			//--SW - General Network MAP--//
+	
 
-	var element = document.getElementById("<@itemid>");
-	element.addEventListener("click", openpage, false);
-	document.getElementById("<@itemid>").style.cursor = "pointer";	
+
+			if ("<@itemid>" == "mapelement_15349_7") showData("Info_Sima_F01-01",42);	
+
+		}
+		
+	function showData(switchName,switchPort)
+		{
+			axios( 
+					{
+						url: 'http://172.16.17.195:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }
+					}																			
+					
+				).then(	result=>{
+									console.log(result.data)
+									var content="شماره نود: "+result.data.patchPanelPort
+									document.getElementById()
+								
+
+
+
+
+									alert(JSON.stringify(result.data));
+							}
+					).catch( err=>{
+									alert(err);
+								}
+										     
+						)
+		}
+
+  var element = document.getElementById("<@itemid>");
+  element.addEventListener("click", openpage, false);
+  document.getElementById("<@itemid>").style.cursor = "pointer";	
+  
   </script>
 </div>
+
 
  
  
