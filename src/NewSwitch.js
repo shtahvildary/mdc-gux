@@ -103,6 +103,7 @@ class NewSwitch extends Component {
       this.state.name.length > 0 &&
       this.state.model.length > 0 
     ) {
+      
       var payload = {
         name: this.state.name,
         ip: this.state.ip,
@@ -112,11 +113,11 @@ class NewSwitch extends Component {
         diagramUrl: this.state.diagramUrl,
         location: this.state.location
       };
-     
+     if (payload.location=="") payload.location=null
 
       this.callApi(payload)
         .then(function(response) {
-          if (response.status === 200) {
+          if (response.status == 200) {
             console.log("add new switch is OK :D");
             alert("ذخیره سازی با موفقیت انجام شد.");
             window.location.reload()
@@ -127,6 +128,7 @@ class NewSwitch extends Component {
           }
         })
         .catch(function(error) {
+          alert("خطایی رخ داده. لطفا دوباره امتحان کنید.");
           console.log(error);
         });
     } else {

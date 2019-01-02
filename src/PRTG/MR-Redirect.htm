@@ -1,5 +1,46 @@
 <!--Custom Map Objects: Sizeable Icon on Status Transparent Background Redirect-->
-
+<style>
+	body {font-family: Arial, Helvetica, sans-serif;}
+	
+	/* The Modal (background) */
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 100px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	
+	/* Modal Content */
+	.modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+	}
+	
+	/* The Close Button */
+	.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+	
+	.close:hover,
+	.close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	</style>
 
 <div  class="map_object map_icon2 map_icon_large <#sensor type="colorclassofstate" prefix="map_iconcolor_" id="<@objectid>">"  id="<@itemid>" objectid="<@objectid>" subid="<@subid>" style="<#mapobject type="coordinates" subid="<@subid>" mode="<@editmode>">">
   <#mapobject type="objectgrip" mode="<@editmode>">
@@ -12,24 +53,18 @@
 
 
 
-	<div id="myModal" class="modal">
 
-		<!-- Modal content -->
-		<div class="modal-content">
-		  <span class="close">&times;</span>
-		  <p id="modaltxt"></p>
-		</div>
-	  
-	  </div>
 
 
 
   
 	<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	
 	
@@ -71,15 +106,18 @@
 			.then(	result=>{
 									console.log(result.data)
 									var content="شماره نود: "+result.data.patchPanelPort+"</br>"
-									
+									// var modal = document.getElementById('myModal');
 									//fill modal
-									$("modalTxt").append(content)
+									$("modalContent").append(`	
+									<div id="myModal" class="modal rtl">
+										<div id="modalContent" class="modal-content">
+											<p> hiiiii </p>
+											</div>
+											</div>`)
+											$("myModal").modal();
+									// $("modalContent").append(content)
 
-									//open modal
-//https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
-
-
-									alert(JSON.stringify(result.data));
+									// alert(JSON.stringify(result.data));
 			}).catch( err=>{alert(err);})
 		}
 
