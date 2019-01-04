@@ -120,19 +120,16 @@ locationMenuCount++
   }
   
 
- 
-
-
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
     console.log(this.state.phones)
     if (this.state.name.length > 0) {
       var payload = {
         "name": this.state.name,
-        "locations": this.state.locations,
         "phones": this.state.phones,
         "description": this.state.description,
       }
+      if(this.state.location) payload.location=this.state.location
 
       this.callApi(payload)
         .then(function (response) {

@@ -19,11 +19,11 @@ class NewNetNode extends Component {
     this.state = {
       patchPanelPort:'',
       cableNumber: '',
-      switchId: '',
+      // switchId: '',
       switchPort: '',
       // vlanId: '',
       type: '',
-      location: '',
+      // location: '',
 
       //for use in menu:
       vlans: [],
@@ -56,13 +56,18 @@ class NewNetNode extends Component {
       var payload = {
         "patchPanelPort": this.state.patchPanelPort,
         "cableNumber": this.state.cableNumber,
-        "switchId": this.state.switchId,
         "switchPort": this.state.switchPort,
-        "vlan": this.state.vlanId,
+        "location": this.state.location,
+        "switchId": this.state.switchId,
+        "vlan": this.state.vlan,
         "device": this.state.device,
         "description": this.state.description,
-        "location": this.state.location,
       }
+      // if(this.state.location) payload.location=this.state.location
+      // if(this.state.switchId) payload.switchId=this.state.switchId
+      // if(this.state.vlan) payload.location=this.state.vlan
+      // if(this.state.device) payload.location=this.state.device
+
       this.callApi(payload)
         .then(function (response) {
           if (response.status === 200) {
@@ -139,7 +144,7 @@ console.log(global.userType)
                      <p> {this.state.deviceInfo.name} با آی پی {this.state.deviceInfo.ip} و شماره اموال {this.state.deviceInfo.code}</p>
                     ):("")}  
                     <br />      
-                   <Menu id="location" name={"مکان"} items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
+                   <Menu required id="location" name={"* مکان"} items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
                    {this.state.locationInfo?(
                      <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
                     ):("")}

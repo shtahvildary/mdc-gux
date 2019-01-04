@@ -19,11 +19,11 @@ class EditNetNode extends Component {
 
       _id:'',
       cableNumber: '',
-      switchId: '',
+      // switchId: '',
       switchPort: '',
-      vlanId: '',
+      // vlanId: '',
       // type: '',
-      location: '',
+      // location: '',
 
       //for use in menu:
       vlans: [],
@@ -45,16 +45,20 @@ class EditNetNode extends Component {
         "_id":this.state._id,
         "patchPanelPort": this.state.patchPanelPort,
         "cableNumber": this.state.cableNumber,
-        "switchId": this.state.switchId,
         "switchPort": this.state.switchPort,
-        "vlan": this.state.vlanId,
+        "location": this.state.location,
+        "switchId": this.state.switchId,
+        "vlan": this.state.vlan,
         "device": this.state.device,
         "description": this.state.description,
-        "location": this.state.location,
+        
         //
         // "type": this.state.type,
       }
-      console.log("payload: ",payload)
+      // if(this.state.location) payload.location=this.state.location
+      // if(this.state.switchId) payload.switchId=this.state.switchId
+      // if(this.state.vlan) payload.location=this.state.vlan
+      // if(this.state.device) payload.location=this.state.device
       this.callApi(payload)
      
         .then(function (response) {

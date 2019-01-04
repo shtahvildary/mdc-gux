@@ -102,6 +102,9 @@
 		
 	function showData(switchName,switchPort)
 		{
+
+			// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
+			
 			axios({url: 'http://172.16.17.195:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }})
 			.then(	result=>{
 									console.log(result.data)

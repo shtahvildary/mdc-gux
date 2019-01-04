@@ -40,7 +40,7 @@ class EditSwitch extends Component {
   }
   saveBtnClick(event) {
     console.log("this.state.location: ",this.state.location)
-    var location=""
+    var location=null
     if (this.state.locationInfo) location=this.state.locationInfo._id
     var payload = {
       _id: this.state._id,
@@ -190,7 +190,7 @@ class EditSwitch extends Component {
         input
       },
       () => {
-        console.log(this.props);
+        
         this.callApiMenus("locations").then(res => {
           locations = res.data.locations;
           this.setState({ locations }, () => {

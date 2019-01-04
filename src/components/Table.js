@@ -23,10 +23,10 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
-import { LazyLoadComponent,trackWindowScroll  } from 'react-lazy-load-image-component';
+import LazyLoad from 'react-lazyload';
 
 
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
@@ -48,12 +48,12 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const {  order, orderBy, columnData } = this.props;
+    const { order, orderBy, columnData } = this.props;
 
     return (
       <TableHead>
         <TableRow>
-        
+
           {columnData.map(column => {
             return (
               <TableCell
@@ -132,10 +132,10 @@ let EnhancedTableToolbar = props => {
     >
       <div className={classes.title}>
         {
-            <Typography variant="title" id="tableTitle">
-              تعداد کل: {dataLength}
-            </Typography>
-          }
+          <Typography variant="title" id="tableTitle">
+            تعداد کل: {dataLength}
+          </Typography>
+        }
       </div>
       <div className={classes.spacer} />
       <div className={classes.actions}>
@@ -259,79 +259,83 @@ class EnhancedTable extends React.Component {
   //   this.setState({ selectedIds: newSelectedIds }, () => { })
   // };
 
- 
-  // isSelected = id => this.state.selected.indexOf(id) !== -1;
 
+  // isSelected = id => this.state.selected.indexOf(id) !== -1;
+  fill(data, order, orderBy, columnData) {
+    console.log("window.innerHeight: ",window.innerHeight)
+    return data
+      .sort(getSorting(order, orderBy))
+      .map(n => {
+        // const isSelected = this.isSelected(n.id);
+        
+        return (
+          
+          <LazyLoad height={window.innerHeight} key={n.id} once={true}>
+            {/* <LazyLoad height={500} offset={100}>  */}
+            <TableRow>
+              {columnData.map(c => {
+                let txt = n[c.id];
+                if (!txt) txt = "-";
+                if (typeof txt === 'string' && validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
+                return <TableCell key={c.id}>{txt}</TableCell>
+              })}
+              <TableCell >
+                <Tooltip title="جزئیات">
+                  <IconButton aria-label="View" onClick={event => this.props.showView(n)} >
+                    <ViewListIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="ویرایش">
+                  <IconButton aria-label="Edit" onClick={event => this.props.showEdit(n)} >
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
+                {(this.props.disconnect) ? (
+                  <Tooltip title="قطع">
+                    <IconButton aria-label="Disconnect" onClick={event => this.props.disconnect({ _id: n._id })} >
+                      <DisconnectIcon />
+                    </IconButton>
+                  </Tooltip>) : ("")}
+                <Tooltip title="پاک">
+                  <IconButton aria-label="Delete" onClick={event => this.props.delete({ _id: n._id })} >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+            </TableRow>
+            </LazyLoad>
+            
+        );
+      })
+  }
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, columnData, addNew } = this.state;
-     
+    // const { data, order, orderBy, selected, columnData, addNew } = this.state;
 
     return (
-      <Paper  className={classes.root}>
-        <EnhancedTableToolbar addNew={addNew} numSelected={selected.length} dataLength={data.length} />
-        <div className={classes.tableWrapper}>
+      <Paper className={this.props.classes.root}>
+        <EnhancedTableToolbar addNew={this.state.addNew} numSelected={this.state.selected.length} dataLength={this.state.data.length} />
+        <div className={this.props.classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
-          {/* <Table style={{ width: "auto", tableLayout: "auto" }} className={classes.table} aria-labelledby="tableTitle"> */}
+            {/* <Table style={{ width: "auto", tableLayout: "auto" }} className={classes.table} aria-labelledby="tableTitle"> */}
             <EnhancedTableHead
 
-              columnData={columnData}
+              columnData={this.state.columnData}
               // numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
+              order={this.state.order}
+              orderBy={this.state.orderBy}
               // onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
-              // rowCount={data.length}
+            // rowCount={data.length}
             />
 
             <TableBody>
-              {data
-                .sort(getSorting(order, orderBy))
-                .map(n => {
-                  // const isSelected = this.isSelected(n.id);
-                  return (
-        // <LazyLoadComponent scrollPosition>
-        <LazyLoadComponent >
-                    <TableRow>
-                      {columnData.map(c => {
-                        let txt = n[c.id];
-                        if (!txt) txt = "-";
-                        if (typeof txt === 'string' && validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
-                        return <TableCell>{txt}</TableCell>
-                      })}
-                      <TableCell >
-                        <Tooltip title="جزئیات">
-                          <IconButton aria-label="View" onClick={event => this.props.showView(n)} >
-                            <ViewListIcon />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="ویرایش">
-                          <IconButton aria-label="Edit" onClick={event => this.props.showEdit(n)} >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                        {(this.props.disconnect)?(
-                           <Tooltip title="قطع">
-                        <IconButton aria-label="Disconnect" onClick={event => this.props.disconnect({ _id: n._id })} >
-                          <DisconnectIcon />
-                        </IconButton>
-                        </Tooltip>):("")}
-                        <Tooltip title="پاک">
-                        <IconButton aria-label="Delete" onClick={event => this.props.delete({ _id: n._id })} >
-                          <DeleteIcon />
-                        </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-        </LazyLoadComponent>
-
-                  );
-                })}
+              {this.fill(this.state.data, this.state.order, this.state.orderBy, this.state.columnData)}
             </TableBody>
 
           </Table>
         </div>
-       
+
       </Paper>
     );
   }
