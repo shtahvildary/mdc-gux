@@ -33,11 +33,11 @@ class ViewNetNode extends Component {
         <div>
           <p>شماره patch panel: {input.netNode.patchPanelPort} </p>
           <p>شماره کابل: {input.netNode.cableNumber} </p>
-          <p>VLAN: {input.netNode.vlan} </p>
+          <p>VLAN: {input.netNode.vlanName} </p>
           <p>سوییچ: {input.netNode.switchName} </p>
           <p>شماره پورت سوییچ: {input.netNode.switchPort} </p>
-          <p>وسیله: {input.netNode.device} </p>
-          <p>مکان: {input.netNode.location} </p>
+          <p>وسیله: {input.netNode.deviceName} </p>
+          <p>مکان: {input.netNode.locationName} </p>
         </div>
       </MuiThemeProvider>
     );

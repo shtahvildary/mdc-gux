@@ -63,10 +63,6 @@ class NewNetNode extends Component {
         "device": this.state.device,
         "description": this.state.description,
       }
-      // if(this.state.location) payload.location=this.state.location
-      // if(this.state.switchId) payload.switchId=this.state.switchId
-      // if(this.state.vlan) payload.location=this.state.vlan
-      // if(this.state.device) payload.location=this.state.device
 
       this.callApi(payload)
         .then(function (response) {
@@ -79,6 +75,8 @@ class NewNetNode extends Component {
           }
           else if(response.status===403){
             console.log("Forbidden!");
+            alert("شما مجوز دسترسی به این بخش را ندارید. لطفا در صورت نیاز با ادمین برنامه تماس بگیرید.");
+
 
             // <AlertDialog title="error" open={true} contentText="شما مجوز دسترسی به این بخش را ندارید. لطفا در صورت نیاز با ادمین برنامه تماس بگیرید." btnLbl="ok"/>
 

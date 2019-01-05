@@ -19,11 +19,13 @@ class EditNetNode extends Component {
 
       _id:'',
       cableNumber: '',
-      // switchId: '',
+      
+      switchId: null,
       switchPort: '',
-      // vlanId: '',
+      vlanId: null,
       // type: '',
-      // location: '',
+      locationId: null,
+      deviceId:null,
 
       //for use in menu:
       vlans: [],
@@ -41,24 +43,22 @@ class EditNetNode extends Component {
     })
   }
   saveBtnClick(event) {
+    console.log("state: ",this.state)
       var payload = {
         "_id":this.state._id,
         "patchPanelPort": this.state.patchPanelPort,
         "cableNumber": this.state.cableNumber,
         "switchPort": this.state.switchPort,
-        "location": this.state.location,
+        "location": this.state.locationId,
         "switchId": this.state.switchId,
-        "vlan": this.state.vlan,
-        "device": this.state.device,
+        "vlan": this.state.vlanId,
+        "device": this.state.deviceId,
         "description": this.state.description,
         
         //
         // "type": this.state.type,
       }
-      // if(this.state.location) payload.location=this.state.location
-      // if(this.state.switchId) payload.switchId=this.state.switchId
-      // if(this.state.vlan) payload.location=this.state.vlan
-      // if(this.state.device) payload.location=this.state.device
+
       this.callApi(payload)
      
         .then(function (response) {
@@ -69,13 +69,15 @@ class EditNetNode extends Component {
           else {
             console.log("some error ocurred", response.status);
           }
-        }).then(this.closeModal())   
+        })
+        .then(this.closeModal())   
         .catch(function (error) {
           console.log(error);
         });
     }
     closeModal() { this.props.close(true) }  
   callApi = async (payload) => {
+    console.log("payload: ",payload)
     const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/update', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);
     return response;
@@ -89,12 +91,12 @@ class EditNetNode extends Component {
     return response;
   };
   fillComponent(input){
+    console.log("input: ",input.netNode)
     this.setState({ open: input.open })
 
     var vlans, switches,devices, locations;
-    var { _id,patchPanelPort, cableNumber, switchId, switchPort, vlan, device, description, location,deviceId,locationId,vlanId} = input.netNode;
-
-
+    var { _id,patchPanelPort, cableNumber, switchId, switchPort,  description,deviceId,locationId,vlanId} = input.netNode;
+  
     this.callApiMenus('vlans')
       .then(res => {
         vlans = res.data.vlans
@@ -104,14 +106,14 @@ class EditNetNode extends Component {
             devices = res.data.devices
           this.callApiMenus('locations').then(res => {
             locations = res.data.locations
-            this.setState({ vlans, switches,devices, locations,_id,patchPanelPort, cableNumber, switchId, switchPort, vlan, device, description, location,deviceId,locationId ,vlanId}, () => {
+            this.setState({ vlans, switches,devices, locations,_id,patchPanelPort, cableNumber, switchId, switchPort, description,deviceId,locationId ,vlanId}, () => {
 
               var localComponent = []
               localComponent.push(
                 
                 <MuiThemeProvider>
                   <div>
-                    <MyTextField id="patchPanelNumber" label="شماره patch panel" change={this.tbxReadValue.bind(this)} defaultValue={this.state.patchPanelPort} />
+                    <MyTextField id="patchPanelPort" label="شماره patch panel" change={this.tbxReadValue.bind(this)} defaultValue={this.state.patchPanelPort} />
                     <br />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} defaultValue={this.state.cableNumber} />
                     <br />
@@ -126,7 +128,7 @@ class EditNetNode extends Component {
                      <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} defaultValue={this.state.deviceId} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
-                   <Menu id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={this.state.locationId} />
+                   <Menu id="locationId" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={this.state.locationId} />
                     <br />
                     <MyTextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} defaultValue={this.state.description} />
                     <br />
@@ -162,7 +164,7 @@ class EditNetNode extends Component {
     this.fillComponent(newProps)
 
   }
-tbxReadValue(input){this.setState(input) }
+tbxReadValue(input){this.setState(input,()=>{console.log("input: ",input)}) }
 editModal(event){
   
     var open = !this.state.open;

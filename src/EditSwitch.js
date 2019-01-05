@@ -18,7 +18,7 @@ class EditSwitch extends Component {
       description: "",
       model: "",
       diagramUrl: "",
-      location: "",
+      location: null,
 
       open: true
     };

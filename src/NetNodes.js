@@ -68,6 +68,7 @@ class netNodes extends Component {
     // this.componentWillMount()
   }
   showEdit(n) {
+    console.log("n: ",n)
     this.setState({ editComponent: <EditNetNode netNode={n} open="true" close={this.refreshPage.bind(this)} />},()=>{});
   }
   showView(n) {
