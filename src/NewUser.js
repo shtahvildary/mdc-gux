@@ -4,7 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from './components/Button';
 import axios from 'axios';
 import TextField from './components/TextField';
-import Card from './components/Card'
+import Card from './components/Card';
+import Checkbox from './components/Checkbox';
 
 class NewUser extends Component {
   constructor(props) {
@@ -32,6 +33,9 @@ class NewUser extends Component {
           <br />
           <TextField id="password" label="کلمه عبور" type="password" change={this.tbxReadValue.bind(this)} />
           <br />
+          <p> مجوزها:</p>
+          <Checkbox id="permissions" items={this.state.permissionsList}/>
+
           <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
         </div>
       </MuiThemeProvider>
@@ -41,6 +45,21 @@ class NewUser extends Component {
 
   tbxReadValue(input) {
     this.setState(input);
+  }
+  readPermissions(){
+    var permissionsList;
+    this.callApi('/permissions/all',"")
+    .then(res=>{
+      permissionsList=res.data
+      
+        this.setState({permissionsList},()=>{console.log(this.state)})
+      
+      
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
   }
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
@@ -53,7 +72,7 @@ class NewUser extends Component {
         // "role":role
       }
 
-      this.callApi(payload)
+      this.callApi('/users/register',payload)
         // axios.post(global.serverAddress+'/switches/new', payload)
         .then(function (response) {
           if (response.status === 200) {
@@ -74,13 +93,14 @@ class NewUser extends Component {
       alert("تمامی فیلدهای ستاره دار را پر کنید.");
     }
   }
-  callApi = async (payload) => {
-    const response = await axios({ method: 'post', url: global.serverAddress + '/users/register', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
+  callApi = async (path,payload) => {
+    const response = await axios({ method: 'post', url: global.serverAddress + path, headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
 
   componentWillMount() {
+    this.readPermissions()
     this.fillComponent()
   }
   render() {
