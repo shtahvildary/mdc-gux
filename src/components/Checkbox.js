@@ -17,19 +17,20 @@ const styles = {
 };
 
 class CheckboxLabels extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-          checkedB: true,  
-          items:[],
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkedB: true,
+      items: [],
+    };
+  }
 
-  componentWillMount(){
-if(!this.props.items)return
-var items=[];
-this.props.items.map((i,index)=>{
-    items.push(<FormControlLabel  control={
+  componentWillMount() {
+    console.log("checkbox props: ", this.props)
+    if (!this.props.items) return
+    var items = [];
+    this.props.items.map((i, index) => {
+      items.push(<FormControlLabel control={
         <Checkbox
           checked={this.props.checked}
           onChange={this.handleChange(i.code)}
@@ -37,13 +38,12 @@ this.props.items.map((i,index)=>{
           color="primary"
         />
       }
-      label={i.description}/>)
-})
-this.setState({items});
-
+        label={i.description} />)
+    })
+    this.setState({ items });
   }
   handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+    this.setState({ [name]: event.target.checked },()=>{console.log(this.state)});
   };
 
   render() {
@@ -51,15 +51,11 @@ this.setState({items});
 
     return (
       <FormGroup row>
-      
         {this.state.items}
-        {/* <FormControlLabel disabled control={<Checkbox value="checkedD" />} label="Disabled" /> */}
-
       </FormGroup>
     );
   }
 }
-
 CheckboxLabels.propTypes = {
   classes: PropTypes.object.isRequired,
 };

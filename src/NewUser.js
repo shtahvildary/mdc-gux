@@ -21,6 +21,8 @@ class NewUser extends Component {
   }
 
   fillComponent() {
+
+    console.log("this.state.permissionsList: ",this.state.permissionsList)
     var localComponent = []
     localComponent.push(
       <MuiThemeProvider>
@@ -46,21 +48,7 @@ class NewUser extends Component {
   tbxReadValue(input) {
     this.setState(input);
   }
-  readPermissions(){
-    var permissionsList;
-    this.callApi('/permissions/all',"")
-    .then(res=>{
-      permissionsList=res.data
-      
-        this.setState({permissionsList},()=>{console.log(this.state)})
-      
-      
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-
-  }
+ 
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
     if (this.state.first_name.length > 0 && this.state.last_name.length > 0 && this.state.username.length > 0 && this.state.password.length > 0) {
@@ -99,9 +87,19 @@ class NewUser extends Component {
     return response;
   };
 
+ 
+
   componentWillMount() {
-    this.readPermissions()
+    
+    var permissionsList;
+    this.callApi('/permissions/all',"")
+    .then(res=>{
+      permissionsList=res.data
+    
+    this.setState({permissionsList},()=>{console.log("this.state",this.state)
     this.fillComponent()
+  })   
+    })
   }
   render() {
     return (
