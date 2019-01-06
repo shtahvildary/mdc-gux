@@ -46,6 +46,7 @@ componentWillMount(){
       onClick={event => this.handleMenuItemClick(event,index+1, i._id)}
       >{i.name}</MenuItem>)
     })
+    if(!this.props.noNullItem)
     items.push(<MenuItem selected={(this.props.items.length+1)}
     onClick={event => this.handleMenuItemClick(event,this.props.items.length+1, null)}>هیچکدام</MenuItem>)
   

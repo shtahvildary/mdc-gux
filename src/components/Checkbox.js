@@ -22,6 +22,7 @@ class CheckboxLabels extends React.Component {
     this.state = {
       checkedB: true,
       items: [],
+      selectedItems:[],
     };
   }
 
@@ -43,7 +44,11 @@ class CheckboxLabels extends React.Component {
     this.setState({ items });
   }
   handleChange = name => event => {
-    this.setState({ [name]: event.target.checked },()=>{console.log(this.state)});
+    this.state.selectedItems.push(name)
+    this.setState(({ [name]: event.target.checked} ,this.state.selectedItems),()=>{
+
+      this.props.selectedItems(this.state.selectedItems)
+    });
   };
 
   render() {

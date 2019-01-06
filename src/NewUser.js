@@ -6,6 +6,7 @@ import axios from 'axios';
 import TextField from './components/TextField';
 import Card from './components/Card';
 import Checkbox from './components/Checkbox';
+import Menu from './components/Menu';
 
 class NewUser extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class NewUser extends Component {
   }
 
   fillComponent() {
-
+var userTypes=[{_id:1,name:"مدیر سیستم"},{_id:2,name:"کاربر"}]
     console.log("this.state.permissionsList: ",this.state.permissionsList)
     var localComponent = []
     localComponent.push(
@@ -35,9 +36,14 @@ class NewUser extends Component {
           <br />
           <TextField id="password" label="کلمه عبور" type="password" change={this.tbxReadValue.bind(this)} />
           <br />
-          <p> مجوزها:</p>
-          <Checkbox id="permissions" items={this.state.permissionsList}/>
-
+          <Menu id="userType" name="نوع کاربر" items={userTypes} selectedId={this.setId.bind(this)} noNullItem={true} />
+          <br/>
+          <p> مجوزها:</p> 
+          {/* {this.state.userType>1?
+          ( */}
+          <Checkbox id="permissions" items={this.state.permissionsList} selectedItems={this.setPermissions.bind(this)} />
+          {/* ):("همه")} */}
+          <br/>
           <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
         </div>
       </MuiThemeProvider>
@@ -48,7 +54,11 @@ class NewUser extends Component {
   tbxReadValue(input) {
     this.setState(input);
   }
- 
+ setPermissions(selectedPermissions){
+   console.log("selectedPermissions: ",selectedPermissions)
+   this.setState({selectedPermissions},()=>{})}
+  setId(selectedId){this.setState((selectedId), () => {console.log("state: ",this.state)})}
+
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
     if (this.state.first_name.length > 0 && this.state.last_name.length > 0 && this.state.username.length > 0 && this.state.password.length > 0) {
@@ -57,7 +67,8 @@ class NewUser extends Component {
         "lName": this.state.last_name,
         "username": this.state.username,
         "password": this.state.password,
-        // "role":role
+        "permissions":this.state.selectedPermissions,
+        "userType":this.state.userType,
       }
 
       this.callApi('/users/register',payload)
@@ -82,6 +93,7 @@ class NewUser extends Component {
     }
   }
   callApi = async (path,payload) => {
+    console.log('payload: ',payload)
     const response = await axios({ method: 'post', url: global.serverAddress + path, headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);
     return response;
