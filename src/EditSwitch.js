@@ -24,22 +24,25 @@ class EditSwitch extends Component {
     };
   }
   setId(model, selectedId) {
-    console.log("model: ",model)
-    console.log("selectedId: ",selectedId)
+    
+    if(selectedId.location==null){
+      
+      this.setState({locationInfo:null})
+      this.fillComponent(this.state.input);
+    }
+    else
     this.setState(selectedId, () => {
       var _id = selectedId[Object.keys(selectedId)[0]];
       var payload = { _id };
       this.callApiSelect(model, payload).then(res =>
         this.setState(res.data, () => {
-    console.log("res.data: ",res.data)
-
           this.fillComponent(this.state.input);
         })
       );
     });
   }
   saveBtnClick(event) {
-    console.log("this.state.location: ",this.state.location)
+    console.log("this.state.location: ",this.state)
     var location=null
     if (this.state.locationInfo) location=this.state.locationInfo._id
     var payload = {
