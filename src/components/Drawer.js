@@ -25,6 +25,7 @@ import Locations from '../Locations';
 import Vlans from '../Vlans';
 import Devices from '../Devices';
 import Streams from '../Streams';
+import Users from '../Users';
 import NewNetNode from '../NewNetNode';
 import NewSwitch from '../NewSwitch';
 import NewLocation from '../NewLocation';
@@ -43,7 +44,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import NewDepartment from '../NewDepartment';
-import newUser from '../NewUser';
 import NewUser from '../NewUser';
 import NewStream from '../NewStream';
 // import Register from '../Register';
@@ -376,7 +376,7 @@ class MiniDrawer extends React.Component {
               <Route path="/VLAN" component={Vlans} />
               <Route path="/سخت افزارها" component={Devices} />
               <Route path="/استریم ها" component={Streams} />
-              {/* <Route path="/کاربران" component={Users} /> */}
+              <Route path="/کاربران" component={Users} />
               <Route path="/نود جدید" component={NewNetNode} />
               <Route path="/سوییچ جدید" component={NewSwitch} />
               <Route path="/مکان جدید" component={NewLocation} />
