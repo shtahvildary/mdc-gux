@@ -37,6 +37,7 @@ class ViewVlan extends Component {
           <p>اولین آی پی {input.vlan.firstIp}</p>
           <p>آخرین آی پی {input.vlan.lastIp}</p>
           <p>subnet mask {input.vlan.subnetMask}</p>
+          <p>گراف{input.vlan.diagramUrl}</p>
           <p>توضیحات: {input.vlan.description} </p>
         </div>
       </MuiThemeProvider>

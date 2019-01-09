@@ -14,7 +14,8 @@ class NewLocation extends Component {
     super(props);
     this.state = {
       name: "",
-      description: ""
+      description: "",
+      building:"",
     };
     var localComponent = [];
     var fHfItems=[{_id:0,name:"طبقه"},{_id:1,name:"نیم طبقه"}]

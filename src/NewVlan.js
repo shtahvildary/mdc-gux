@@ -19,6 +19,7 @@ class NewVlan extends Component {
       description: '',
       firstIp: '',
       lastIp: '',
+      diagramUrl:'',
       subnetMask: '',
     }
 
@@ -39,7 +40,10 @@ class NewVlan extends Component {
           <br /><TextField id="firstIp" label="اولین IP" change={this.tbxReadValue.bind(this)} />
           <br /><TextField id="lastIp" label="آخرین IP" change={this.tbxReadValue.bind(this)} />
           <br />
+          
           <TextField id="subnetMask" label="subnetMask" change={this.tbxReadValue.bind(this)} />
+          <br />
+          <TextField id="diagramUrl" label="گراف" change={this.tbxReadValue.bind(this)} />
           <br />
           <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
         </div>
@@ -61,6 +65,7 @@ class NewVlan extends Component {
         "description": this.state.description,
         "firstIp": this.state.firstIp,
         "lastIp": this.state.lastIp,
+        "diagramUrl":this.state.diagramUrl,
         "subnetMask": this.state.subnetMask,
       }
 

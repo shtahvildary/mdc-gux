@@ -25,6 +25,7 @@ class EditVlan extends Component {
       firstIp: '',
       lastIp: '',
       subnetMask: '',
+      diagramUrl:'',
 
 
       open: true,
@@ -44,6 +45,7 @@ class EditVlan extends Component {
       "firstIp": this.state.firstIp,
       "lastIp": this.state.lastIp,
       "subnetMask": this.state.subnetMask,
+      "diagramUrl":this.state.diagramUrl,
 
     }
     this.callApi(payload)
@@ -70,9 +72,9 @@ class EditVlan extends Component {
 
   fillComponent(input) {
     this.setState({ open: input.open })
-    var { _id, number, name, ip, firstIp, lastIp, subnetMask, description } = input.vlan;
+    var { _id, number, name, ip, firstIp, lastIp, subnetMask,diagramUrl, description } = input.vlan;
 
-    this.setState({ _id, number, name, ip, firstIp, lastIp, subnetMask, description }, () => {
+    this.setState({ _id, number, name, ip, firstIp, lastIp, subnetMask,diagramUrl, description }, () => {
 
       var localComponent = []
       localComponent.push(
@@ -89,6 +91,9 @@ class EditVlan extends Component {
             <br /><TextField id="lastIp" label="آخرین IP" change={this.tbxReadValue.bind(this)} defaultValue={this.state.lastIp} />
             <br />
             <TextField id="subnetMask" label="subnetMask" change={this.tbxReadValue.bind(this)} defaultValue={this.state.subnetMask} />
+            <br />
+            
+            <TextField id="diagramUrl" label="گراف" change={this.tbxReadValue.bind(this)} defaultValue={this.state.diagramUrl} />
             <br />
             <Button label="ذخیره" click={this.saveBtnClick.bind(this)} />
           </div>
