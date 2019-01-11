@@ -28,6 +28,8 @@ import LazyLoad from 'react-lazyload';
 
 import { Link } from 'react-router-dom';
 
+import ExpantionPanel from './ExpantionPanel';
+
 
 
 function getSorting(order, orderBy) {
@@ -217,7 +219,7 @@ class EnhancedTable extends React.Component {
   };
 
   
-  fill(data, order, orderBy, columnData) {
+  fillTable(data, order, orderBy, columnData) {
     console.log("window.innerHeight: ",window.innerHeight)
     return data
       .sort(getSorting(order, orderBy))
@@ -262,9 +264,37 @@ class EnhancedTable extends React.Component {
         );
       })
   }
+
+  fillCard(data, order, orderBy, columnData) {
+    var items=[];
+
+    return data
+      .sort(getSorting(order, orderBy))
+      .map(n => {
+        console.log("n: ",n)
+        return (
+          
+          <LazyLoad height={window.innerHeight} key={n.id} once={true}>
+             
+              {
+                columnData.map(c=>{
+                let txt = n[c.id];
+                console.log("c: ",c)
+                if (!txt) txt = "-";
+                if (typeof txt === 'string' && validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
+                items.push({label:c.label,value:txt})
+              })}
+                <ExpantionPanel items={items} />
+               {/* <Card content={JSON.stringify(n)}/>  */}
+            </LazyLoad>
+            
+        );
+      })
+  }
   render() {
     const { classes } = this.props;
-
+    if(window.innerWidth>768) return this.fillCard(this.state.data, this.state.order, this.state.orderBy, this.state.columnData)
+else
     return (
       <Paper className={this.props.classes.root}>
         <EnhancedTableToolbar addNew={this.state.addNew} dataLength={this.state.data.length} />
@@ -279,7 +309,7 @@ class EnhancedTable extends React.Component {
             />
 
             <TableBody>
-              {this.fill(this.state.data, this.state.order, this.state.orderBy, this.state.columnData)}
+              {this.fillTable(this.state.data, this.state.order, this.state.orderBy, this.state.columnData)}
             </TableBody>
 
           </Table>

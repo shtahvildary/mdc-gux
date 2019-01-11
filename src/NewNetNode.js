@@ -52,7 +52,7 @@ class NewNetNode extends Component {
     //To be done:check for empty values before hitting submit
     console.log(this.state)
     if (this.state.patchPanelPort.length > 0 &&
-      this.state.location.length > 0 ){
+      this.state.location  ){
       var payload = {
         "patchPanelPort": this.state.patchPanelPort,
         "cableNumber": this.state.cableNumber,
@@ -124,7 +124,7 @@ console.log(global.userType)
                     <MyTextField id="patchPanelPort" required label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
                     <br />
-                    <Menu id="vlanId" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/>
+                    <Menu id="vlan" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/>
                     {this.state.vlanInfo?(
                       <p> VLAN {this.state.vlanInfo.name} با شماره {this.state.vlanInfo.number} و آی پی {this.state.vlanInfo.ip}</p>
                       // <p>نام: {this.state.vlanInfo.name}</p>

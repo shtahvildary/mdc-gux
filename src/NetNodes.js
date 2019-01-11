@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import SimpleTable from "./components/Table";
+import SimpleTable from "./components/Table-Card";
 import Card from "./components/Card";
 import EditNetNode from "./EditNetNode";
 import ViewNetNode from "./ViewNetNode";
@@ -43,11 +43,15 @@ class netNodes extends Component {
   }
 
   setTblData() {
+   
+       
     return(<SimpleTable
       addNew={<NewNetNode />}
       columns={this.state.response.columns}
       data={this.state.response.netNodesData}
     />);
+    
+    
   }
 
   tbxReadValue(input) {
@@ -94,8 +98,7 @@ class netNodes extends Component {
         <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
         {this.state.editComponent}
         {this.state.viewComponent}
-        {global.userType<2?(
-
+        {(global.userType<2)?(
           <Card
             pageName="نودها"
             content={

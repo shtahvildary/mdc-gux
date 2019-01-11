@@ -70,7 +70,7 @@ class EditNetNode extends Component {
             console.log("some error ocurred", response.status);
           }
         })
-        .then(this.closeModal())   
+        // .then(this.closeModal())   
         .catch(function (error) {
           console.log(error);
         });
