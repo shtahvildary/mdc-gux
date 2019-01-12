@@ -14,18 +14,12 @@ class EditNetNode extends Component {
   constructor(props) {
 
     super(props);
-    // const { classes } = this.props;
     this.state = {
 
       _id:'',
       cableNumber: '',
-      
-      switchId: null,
       switchPort: '',
-      vlanId: null,
-      // type: '',
-      locationId: null,
-      deviceId:null,
+      
 
       //for use in menu:
       vlans: [],
@@ -39,20 +33,21 @@ class EditNetNode extends Component {
   }
   setId(selectedId) {
     this.setState(selectedId, () => {
-      console.log("state: ",this.state)
     })
   }
   saveBtnClick(event) {
-    console.log("state: ",this.state)
+    if (this.state.patchPanelPort.length > 0 &&
+      this.state.locationId  ){
+      
       var payload = {
         "_id":this.state._id,
         "patchPanelPort": this.state.patchPanelPort,
         "cableNumber": this.state.cableNumber,
         "switchPort": this.state.switchPort,
         "location": this.state.locationId,
-        "switchId": this.state.switchId,
-        "vlan": this.state.vlanId,
-        "device": this.state.deviceId,
+        "switchId": (this.state.switchId)?(this.state.switchId):(null),
+        "vlan": (this.state.vlanId)?(this.state.vlanId):(null),
+        "device": (this.state.deviceId)?(this.state.deviceId):(null),
         "description": this.state.description,
         
         //
@@ -70,14 +65,18 @@ class EditNetNode extends Component {
             console.log("some error ocurred", response.status);
           }
         })
-        // .then(this.closeModal())   
+        .then(this.closeModal())   
         .catch(function (error) {
           console.log(error);
         });
+      }
+      else {
+        alert("تمامی فیلدهای ستاره دار را پر کنید.");
+        // alert("Input field value is missing");
+      }
     }
     closeModal() { this.props.close(true) }  
   callApi = async (payload) => {
-    console.log("payload: ",payload)
     const response = await axios({ method: 'post', url: global.serverAddress + '/netNodes/update', headers: { "x-access-token": localStorage.getItem('token') }, data: payload });
     if (response.status !== 200) throw Error(response.message);
     return response;
@@ -91,7 +90,6 @@ class EditNetNode extends Component {
     return response;
   };
   fillComponent(input){
-    console.log("input: ",input.netNode)
     this.setState({ open: input.open })
 
     var vlans, switches,devices, locations;
@@ -128,7 +126,7 @@ class EditNetNode extends Component {
                      <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this)} defaultValue={this.state.deviceId} />
                     {/* نوع: <Menu id="type" floatingLabelText="نوع" onChange={this.handleChange('type')} /> */}
                     <br />
-                   <Menu id="locationId" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={this.state.locationId} />
+                   <Menu id="locationId" name="* مکان" items={this.state.locations} selectedId={this.setId.bind(this)} defaultValue={this.state.locationId} />
                     <br />
                     <MyTextField id="description" label="توضیحات" change={this.tbxReadValue.bind(this)} defaultValue={this.state.description} />
                     <br />
@@ -164,7 +162,7 @@ class EditNetNode extends Component {
     this.fillComponent(newProps)
 
   }
-tbxReadValue(input){this.setState(input,()=>{console.log("input: ",input)}) }
+tbxReadValue(input){this.setState(input,()=>{}) }
 editModal(event){
   
     var open = !this.state.open;

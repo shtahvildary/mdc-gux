@@ -218,11 +218,9 @@ class EnhancedTable extends React.Component {
 
   
   fill(data, order, orderBy, columnData) {
-    console.log("window.innerHeight: ",window.innerHeight)
     return data
       .sort(getSorting(order, orderBy))
       .map(n => {
-        
         return (
           
           <LazyLoad height={window.innerHeight} key={n.id} once={true}>

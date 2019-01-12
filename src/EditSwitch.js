@@ -42,7 +42,6 @@ class EditSwitch extends Component {
     });
   }
   saveBtnClick(event) {
-    console.log("this.state.location: ",this.state)
     var location=null
     if (this.state.locationInfo) location=this.state.locationInfo._id
     var payload = {
@@ -101,7 +100,6 @@ class EditSwitch extends Component {
   };
 
   fillComponent(input) {
-    console.log(input);
     this.setState({ open: input.open });
     var { _id, name, ip, model, diagramUrl, description, location,code } = input.sw;
 
@@ -109,7 +107,6 @@ class EditSwitch extends Component {
       { _id, name, ip, model, diagramUrl, description, location,code },
       () => {
         var localComponent = [];
-        console.log("locationName: ",this.state.input.sw.locationId)
         localComponent.push(
           <MuiThemeProvider>
             <div>
@@ -197,8 +194,6 @@ class EditSwitch extends Component {
         this.callApiMenus("locations").then(res => {
           locations = res.data.locations;
           this.setState({ locations }, () => {
-            console.log(this.props);
-
             this.fillComponent(this.props);
           });
         });

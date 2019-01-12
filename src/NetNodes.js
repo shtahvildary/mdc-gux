@@ -37,8 +37,8 @@ class netNodes extends Component {
   componentWillMount() {
     var path;
     var Table;
-    if (window.innerWidth < 768)
-    // if(window.innerWidth>768) 
+    // if (window.innerWidth < 768)
+    if(window.innerWidth>768) 
     {
       Table = true
       path = "all"
@@ -101,8 +101,8 @@ class netNodes extends Component {
     this.setState({ viewComponent: <ViewNetNode netNode={n} open="true" /> });
   }
   searchResult(tblData) {
+    console.log("tblData: ", tblData)
     this.setState({ response: tblData.response.netNodes }, () => { });
-    console.log(tblData.response.netNodes);
   }
   delete(arrayOfIds) {
     // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
@@ -144,7 +144,6 @@ class netNodes extends Component {
                     showView={this.showView.bind(this)}
                     showEdit={this.showEdit.bind(this)}
                     disconnect={this.disconnect.bind(this)}
-                  // orderBy={this.state.response.netNodesData.}
                   />
                 }
               />
@@ -152,7 +151,7 @@ class netNodes extends Component {
         </div>
       );
     else {
-      console.log(this.state.response)
+      
       return (
         <div>
         <Search model="netnodes" searchResult={this.searchResult.bind(this)} />

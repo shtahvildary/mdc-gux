@@ -29,12 +29,12 @@ class SimpleExpansionPanel extends React.Component {
     const { classes } = this.props;
     console.log(this.props)
     if (!this.props.items) return;
-    var items = this.state.items
-    var items = this.props.items
+    // var items = this.state.items
+    var items =[];
     this.props.items.map(i => {
       console.log(i.details)
       items.push(
-        <ExpansionPanel>
+        <ExpansionPanel key={i.summary}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className={classes.heading}>{i.summary}</Typography>
           </ExpansionPanelSummary>
@@ -50,10 +50,10 @@ class SimpleExpansionPanel extends React.Component {
 
   componentWillReceiveProps(newProps) {
     const { classes } = newProps;
-    console.log(this.newProps)
-    if (!newProps.items) return;
-    var items = this.state.items
-    // var items = this.newProps.items
+    console.log(newProps)
+    if (newProps.items===this.state.items) return;
+    // var items = this.state.items
+    var items = []
     newProps.items.map(i => {
       console.log(i.details)
       items.push(

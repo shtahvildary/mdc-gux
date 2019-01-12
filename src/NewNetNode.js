@@ -48,11 +48,7 @@ class NewNetNode extends Component {
     })
   }
   saveBtnClick(event) {
-    // var self = this;
-    //To be done:check for empty values before hitting submit
-    console.log(this.state)
-    if (this.state.patchPanelPort.length > 0 &&
-      this.state.location  ){
+    if (this.state.patchPanelPort.length > 0 &&this.state.location  ){
       var payload = {
         "patchPanelPort": this.state.patchPanelPort,
         "cableNumber": this.state.cableNumber,
@@ -115,7 +111,7 @@ class NewNetNode extends Component {
     return response;
   };
 setLocalComponent(){
-console.log(global.userType)
+// console.log(global.userType)
 
   var localComponent = []
               localComponent.push(
