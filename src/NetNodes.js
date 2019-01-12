@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
-import SimpleTable from "./components/Table-Card";
+import SimpleTable from "./components/Table";
 import Card from "./components/Card";
 import EditNetNode from "./EditNetNode";
 import ViewNetNode from "./ViewNetNode";
 import Search from "./components/Search";
 import NewNetNode from "./NewNetNode";
+import ExpantionPanel from "./components/ExpantionPanel";
 
 class netNodes extends Component {
   constructor(props) {
@@ -14,11 +15,12 @@ class netNodes extends Component {
       response: [],
       columns: {},
       search: "",
-      open:"false",
+      open: "false",
+      Table: true,
     };
-   
-    
-    
+
+
+
   }
   callApi = async (path, payload) => {
     const response = await axios({
@@ -27,31 +29,49 @@ class netNodes extends Component {
       headers: { "x-access-token": localStorage.getItem("token") },
       data: payload
     });
+
     // const body = await response;
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
   componentWillMount() {
-    this.callApi("all","")
+    var path;
+    var Table;
+    if (window.innerWidth < 768)
+    // if(window.innerWidth>768) 
+    {
+      Table = true
+      path = "all"
+    }
+
+    else {
+      Table = false;
+      path = "all/details"
+    }
+
+
+    this.callApi(path, "")
       .then(res => {
-        console.log("netNodes: ",res.data.netNodes)
-        this.setState({ response: res.data.netNodes }, () => {
-          this.setTblData();
+        this.setState(({ response: res.data.netNodes,Table }), () => {
+          console.log("response: ", this.state.response)
+
+          this.setData(Table);
         });
       })
       .catch(err => console.log(err));
+
   }
 
-  setTblData() {
-   
-       
-    return(<SimpleTable
-      addNew={<NewNetNode />}
-      columns={this.state.response.columns}
-      data={this.state.response.netNodesData}
-    />);
-    
-    
+  setData(Table) {
+
+    if (Table)
+      return (<SimpleTable
+        addNew={<NewNetNode />}
+        columns={this.state.response.columns}
+        data={this.state.response.netNodesData}
+      />);
+    else
+      return (<ExpantionPanel items={this.state.response} />)
   }
 
   tbxReadValue(input) {
@@ -65,18 +85,18 @@ class netNodes extends Component {
         .catch(err => console.log(err));
     });
   }
-  refreshPage(close){
-    if(close) 
-    // this.setState({open:!this.state.open},()=>{console.log("open: ",this.state.open)})
-    window.location.reload()
+  refreshPage(close) {
+    if (close)
+      // this.setState({open:!this.state.open},()=>{console.log("open: ",this.state.open)})
+      window.location.reload()
     // this.componentWillMount()
   }
   showEdit(n) {
-    console.log("n: ",n)
-    this.setState({ editComponent: <EditNetNode netNode={n} open="true" close={this.refreshPage.bind(this)} />},()=>{});
+    console.log("n: ", n)
+    this.setState({ editComponent: <EditNetNode netNode={n} open="true" close={this.refreshPage.bind(this)} /> }, () => { });
   }
   showView(n) {
-    console.log("n: ",n)
+    console.log("n: ", n)
 
     this.setState({ viewComponent: <ViewNetNode netNode={n} open="true" /> });
   }
@@ -84,53 +104,67 @@ class netNodes extends Component {
     this.setState({ response: tblData.response.netNodes }, () => { });
     console.log(tblData.response.netNodes);
   }
-  delete(arrayOfIds){
-     // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
-    this.callApi("delete",{arrayOfIds}) 
+  delete(arrayOfIds) {
+    // <DeleteObjects modal='NetNodes' arrayOfIds={arrayOfIds}/>
+    this.callApi("delete", { arrayOfIds })
   }
-  disconnect(n){
-   this.callApi("disconnect",n) 
- }
+  disconnect(n) {
+    this.callApi("disconnect", n)
+  }
   render() {
-
-    return (
-      <div>
+    if (this.state.Table)
+      return (
+        <div>
+          <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
+          {this.state.editComponent}
+          {this.state.viewComponent}
+          {(global.userType < 2) ? (
+            <Card
+              pageName="نودها"
+              content={
+                <SimpleTable
+                  addNew={{ path: "/نود جدید", link: "/نود جدید", component: NewNetNode }}
+                  columns={this.state.response.columns}
+                  data={this.state.response.netNodesData}
+                  showView={this.showView.bind(this)}
+                  showEdit={this.showEdit.bind(this)}
+                  disconnect={this.disconnect.bind(this)}
+                  delete={this.delete.bind(this)}
+                />
+              }
+            />
+          ) : (
+              <Card
+                pageName="نودها"
+                content={
+                  <SimpleTable
+                    addNew={{ path: "/نود جدید", link: "/نود جدید", component: NewNetNode }}
+                    columns={this.state.response.columns}
+                    data={this.state.response.netNodesData}
+                    showView={this.showView.bind(this)}
+                    showEdit={this.showEdit.bind(this)}
+                    disconnect={this.disconnect.bind(this)}
+                  // orderBy={this.state.response.netNodesData.}
+                  />
+                }
+              />
+            )}
+        </div>
+      );
+    else {
+      console.log(this.state.response)
+      return (
+        <div>
         <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
-        {this.state.editComponent}
-        {this.state.viewComponent}
-        {(global.userType<2)?(
-          <Card
-            pageName="نودها"
-            content={
-              <SimpleTable
-                addNew={{path:"/نود جدید",link:"/نود جدید",component:NewNetNode}}
-                columns={this.state.response.columns}
-                data={this.state.response.netNodesData}
-                showView={this.showView.bind(this)}
-                showEdit={this.showEdit.bind(this)}
-                disconnect={this.disconnect.bind(this)}
-             delete={this.delete.bind(this)}
-              />
-            }
-          />
-          ):(
-          <Card
-            pageName="نودها"
-            content={
-              <SimpleTable
-                addNew={{path:"/نود جدید",link:"/نود جدید",component:NewNetNode}}
-                columns={this.state.response.columns}
-                data={this.state.response.netNodesData}
-                showView={this.showView.bind(this)}
-                showEdit={this.showEdit.bind(this)}
-                disconnect={this.disconnect.bind(this)}
-                // orderBy={this.state.response.netNodesData.}
-              />
-            }
-          />
-        )}
-      </div>
-    );
+        <Card
+          pageName="نودها"
+          content={
+            <ExpantionPanel items={this.state.response} />
+          }
+        />
+        </div>
+      )
+    }
   }
 }
 

@@ -25,14 +25,14 @@ class SimpleExpansionPanel extends React.Component {
       items: [],
     }
   }
-
-  componentWillMount() {
+  componentWillMount(){
     const { classes } = this.props;
+    console.log(this.props)
     if (!this.props.items) return;
-    // console.log(this.props)
     var items = this.state.items
+    var items = this.props.items
     this.props.items.map(i => {
-      console.log(i)
+      console.log(i.details)
       items.push(
         <ExpansionPanel>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -40,23 +40,44 @@ class SimpleExpansionPanel extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
-              {i.details}
+              {JSON.stringify(i.details)}
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>)
-      // d.label+": "+d.value+"\n"
+    })
+    this.setState({ items }, () => { console.log(items) })
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { classes } = newProps;
+    console.log(this.newProps)
+    if (!newProps.items) return;
+    var items = this.state.items
+    // var items = this.newProps.items
+    newProps.items.map(i => {
+      console.log(i.details)
+      items.push(
+        <ExpansionPanel>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={classes.heading}>{i.summary}</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Typography>
+              {JSON.stringify(i.details)}
+            </Typography>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>)
     })
     this.setState({ items }, () => { console.log(items) })
   }
   render() {
     const { classes } = this.props;
-    console.log("props: ", this.props)
+    console.log("props: ", this.state.items)
 
     return (
 
       <div className="container">
        {this.state.items}
-
       </div>
     );
   }
