@@ -11,6 +11,9 @@ import axios from 'axios';
 // global.serverAddress = "http://172.16.17.195:5000/api";
 // global.serverAddress = "http://192.168.1.10:5000/api";
 global.serverAddress = "http://localhost:5000/api";
+// global.serverAddress = "http://172.16.17.195:5000/api";
+// global.serverAddress = "http://192.168.1.10:5000/api";
+// global.serverAddress = "http://localhost:5000/api";
 // global.streamServerAddress = "http://localhost:8001/api";
 
 
