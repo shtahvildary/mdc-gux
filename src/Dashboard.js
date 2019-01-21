@@ -8,6 +8,7 @@ import NetNodes from "./NetNodes";
 import Locations from "./Locations";
 import Vlans from "./Vlans";
 import "./App.css";
+import Streams from "./Streams";
 
 function Dashboard() {
   var localComponents = [];
@@ -63,6 +64,20 @@ function Dashboard() {
               }
             />
           </Grid>
+          </Grid>
+          <Grid container spacing={24}>
+
+          <Grid item xs>
+            <Card
+              pageName="استریم ها"
+              content={
+                <div>
+                  <p>نمایش لیست استریم ها</p>
+                  <Link to="/استریم ها">بیشتر...</Link>
+                </div>
+              }
+            />
+          </Grid>
         </Grid>
       </div>
     </Paper>
@@ -74,6 +89,7 @@ function Dashboard() {
       <Route path="/نودها" component={NetNodes} />
       <Route path="/مکانها" component={Locations} />
       <Route path="/VLANها" component={Vlans} />
+      <Route path="/استریم ها" component={Streams} />
 
     </Switch>
   </div>,
