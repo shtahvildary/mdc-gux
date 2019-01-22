@@ -2,62 +2,82 @@ import React, { Component } from 'react'
 import Downshift from 'downshift';
 
 class DownshiftThree extends Component {
+  // class DownshiftThree extends Component {
       constructor(props) {
         super(props)
-        this.books = [
-          { name: 'Harry Potter' },
-          { name: 'Net Moves' },
-          { name: 'Half of a yellow sun' },
-          { name: 'The Da Vinci Code' },
-          { name: 'Born a crime' },
-        ];
+        // this.books = [
+        //   { name: 'Harry Potter' },
+        //   { name: 'Net Moves' },
+        //   { name: 'Half of a yellow sun' },
+        //   { name: 'The Da Vinci Code' },
+        //   { name: 'Born a crime' },
+        // ];
 
         this.state = {
           // currently selected dropdown item
-          selectedBook: ''
+          // selectedBook: ''
+          selectedIndex:0,
+          items:[],
         }
 
         this.onChange = this.onChange.bind(this)
       }
 
-      onChange(selectedBook) {
-        this.setState({ selectedBook: selectedBook.name })
+      onChange(selectedIndex) {
+        this.setState({ selectedIndex: selectedIndex })
+        // this.setState({ selectedBook: selectedBook.name })
       }
+componentWillMount(){
+  if(!this.props.items) return;
+  this.setState({items:this.props.items},()=>{
+    console.log("items: ",this.state.items)
 
+  });
+  
+}
       render() {
+  var items=this.state.items;
         return (
-          <Downshift onChange={this.onChange} selectedItem={this.state.selectedBook} itemToString={books => (books ? books.name : '')}>
+          // <Downshift onChange={this.onChange} selectedItem={this.state.selectedIndex} itemToString={(items=this.state.items) => (items ? items.name : '') }>
+          <Downshift onChange={selection => alert(`You selected ${selection.name}`)} selectedItem={this.state.selectedIndex} itemToString={item => (item ? item.name : '')}>
           // pass the downshift props into a callback
-            {({ isOpen, getToggleButtonProps, getItemProps, highlightedIndex, selectedItem: dsSelectedItem, getLabelProps }) => (
+         
+            // {({ getInputProps,
+      getItemProps,
+      getLabelProps,
+      getMenuProps,
+      isOpen,
+      inputValue,
+      highlightedIndex,
+      selectedItem, }) => (
+              // console.log("hi: ",this.state.items)
               <div>
-                // add a label tag and pass our label text to the getLabelProps function
-                <label style={{ marginTop: '1rem', display: 'block' }} {...getLabelProps()}>Select your favourite book</label> <br />
-                // add a button for our dropdown and pass the selected book as its content if there's a selected item
-                <button className="dropdown-button" {...getToggleButtonProps()}>
-                  {this.state.selectedBook !== '' ? this.state.selectedBook : 'Select a book ...'}
-                </button>
-                <div style={{ position: 'relative' }}>
-                  // if the input element is open, render the div else render nothing
-                  {isOpen ? (
-                    <div className="downshift-dropdown">
-                      {
-                        // map through all the books and render them
-                        this.books.map((item, index) => (
-                          <div
-                            className="dropdown-item"
-                            {...getItemProps({ key: index, index, item })}
-                            style={{
-                              backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
-                              fontWeight: dsSelectedItem === item ? 'bold' : 'normal',
-                            }}>
-                            {item.name}
-                          </div>
-                        ))
-                      }
-                    </div>
-                  ) : null}
-                </div>
-              </div>
+              <label {...getLabelProps()}>Enter a fruit</label>
+              <input {...getInputProps()} />
+              <ul {...getMenuProps()}>
+                {isOpen
+                  ? items
+                      .filter(item => !inputValue || item.value.includes(inputValue))
+                      .map((item, index) => (
+                        <li
+                          {...getItemProps({
+                            key: item.value,
+                            index,
+                            item,
+                            style: {
+                              backgroundColor:
+                                highlightedIndex === index ? 'lightgray' : 'white',
+                              fontWeight: selectedItem === item ? 'bold' : 'normal',
+                            },
+                          })}
+                        >
+                          {item.value}
+                        </li>
+                      ))
+                  : null}
+              </ul>
+            </div>
+              
             )}
           </Downshift>
         )
