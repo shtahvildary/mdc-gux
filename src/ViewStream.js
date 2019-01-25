@@ -4,6 +4,7 @@ import "./App.css"
 import "./index.css";
 import Modal from "./components/Modal";
 import Paper from "@material-ui/core/Paper";
+import moment from "moment-jalaali";
 
 class ViewStream extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class ViewStream extends Component {
           <p>نام انگلیسی: {input.stream.nameEn} </p>
           <p>آی پی سرور استریم: {input.stream.streamServer}</p>
           <p>وضعیت: {input.stream.playStateText}</p>
+          <p>زمان تغییر وضعیت: {moment(input.stream.changeStateTime).format('jYY/jMM/jD,h:mm:ss,a')}</p>
           {input.stream.isMosaic? (<p>لیست شبکه ها: {mosaicInputs.toString()}</p>):(<p>آدرس: {input.stream.address}</p>)}
           
         </div>

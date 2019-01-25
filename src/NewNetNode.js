@@ -4,13 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import MyButton from './components/Button';
 import axios from 'axios';
 import MyTextField from './components/TextField';
-import Menu from './components/Menu'
+// import Menu from './components/Menu'
 import Card from './components/Card'
 import './index.css';
 import AlertDialog from "./components/AlertDialog";
-import Downshift from "./components/Downshift";
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
+import ReactSelect from "./components/ReactSelect";
 
 class NewNetNode extends Component {
   constructor(props) {
@@ -36,7 +34,6 @@ class NewNetNode extends Component {
 
   }
   setId(model,selectedId) {
-    
     this.setState(selectedId, () => {
     var _id=selectedId[Object.keys(selectedId)[0]]
       var payload={_id}
@@ -113,34 +110,32 @@ class NewNetNode extends Component {
   };
 setLocalComponent(){
 // console.log(global.userType)
-
   var localComponent = []
               localComponent.push(
-                <MuiThemeProvider>
+                <MuiThemeProvider key="localComponent">
                   <div>
                     <MyTextField id="patchPanelPort" required label="شماره patch panel" change={this.tbxReadValue.bind(this)} />
                     <MyTextField id="cableNumber" label="شماره کابل" change={this.tbxReadValue.bind(this)} />
                     <br />
-                    <Downshift id="vlan" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/>
-                    {/* <Menu id="vlan" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")}/> */}
+                    <ReactSelect id="vlan" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")} isMulti={false} isClearable={true}/>
                     {this.state.vlanInfo?(
                       <p> VLAN {this.state.vlanInfo.name} با شماره {this.state.vlanInfo.number} و آی پی {this.state.vlanInfo.ip}</p>
                       // <p>نام: {this.state.vlanInfo.name}</p>
                     ):("")}  
                     <br />
-                     <Menu id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this,"switches")} />
+                    <ReactSelect id="switchId" name="سوییچ" items={this.state.switches} selectedId={this.setId.bind(this,"switches")} isMulti={false} isClearable={true}/>
                     {this.state.switchInfo?(
-                     <p>سوییچ {this.state.switchInfo.name} با آی پی {this.state.switchInfo.ip} واقع در {this.state.switchInfo.location.name}</p>
+                     <p>سوییچ {this.state.switchInfo.name} با آی پی {this.state.switchInfo.ip} {this.state.switchInfo.location?( +"واقع در "+this.state.switchInfo.location.name):""} </p>
                     ):("")}  
                     <br />                                        
                     <MyTextField id="switchPort" label="شماره پورت سوییچ" change={this.tbxReadValue.bind(this)} />
-                    <br />                                   
-                     <Menu id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this,"devices")} />
+                    <br /> 
+                    <ReactSelect id="device" name="وسیله" items={this.state.devices} selectedId={this.setId.bind(this,"devices")} isMulti={false} isClearable={true}/>
                      {this.state.deviceInfo?(
                      <p> {this.state.deviceInfo.name} با آی پی {this.state.deviceInfo.ip} و شماره اموال {this.state.deviceInfo.code}</p>
                     ):("")}  
-                    <br />      
-                   <Menu required id="location" name={"* مکان"} items={this.state.locations} selectedId={this.setId.bind(this,"locations")} />
+                    <br /> 
+                    <ReactSelect id="location" name="* مکان" items={this.state.locations} selectedId={this.setId.bind(this,"locations")} isMulti={false} isClearable={true}/>
                    {this.state.locationInfo?(
                      <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
                     ):("")}
@@ -177,7 +172,7 @@ tbxReadValue(input){this.setState(input) }
   render() {
     return (
       <div>
-        <MuiThemeProvider>
+        <MuiThemeProvider >
           <AppBar title="info sima" />
         </MuiThemeProvider>
         <Card pageName="افزودن نود جدید" content={this.state.localComponent}/>

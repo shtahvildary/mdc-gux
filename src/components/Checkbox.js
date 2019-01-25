@@ -5,6 +5,7 @@ import green from '@material-ui/core/colors/green';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
   root: {
@@ -32,12 +33,15 @@ class CheckboxLabels extends React.Component {
     var items = [];
     this.props.items.map((i, index) => {
       items.push(<FormControlLabel control={
+       
+
         <Checkbox
           checked={this.props.checked}
           onChange={this.handleChange(i.code)}
           value={i.code}
           color="primary"
         />
+        
       }
         label={i.description} />)
     })
@@ -52,12 +56,15 @@ class CheckboxLabels extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
 
     return (
-      <FormGroup row>
+      // <Grid container xs={6}   >
+      <Grid item xs={6} >
+      <FormGroup row >
         {this.state.items}
       </FormGroup>
+      </Grid>
     );
   }
 }

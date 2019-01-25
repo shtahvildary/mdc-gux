@@ -17,7 +17,6 @@ class Search extends Component {
     this.setState({model:this.props.model})
     }
     callApi = async (model,payload) => {
-        // console.log(path,payload)
         const response = await axios({
           method: "post",
           url: global.serverAddress + "/"+model+"/search",

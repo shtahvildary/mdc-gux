@@ -3,9 +3,11 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "./components/Button";
 import axios from "axios";
-import Menu from "./components/Menu";
+// import Menu from "./components/Menu";
 import TextField from "./components/TextField";
 import Card from "./components/Card"
+import ReactSelect from "./components/ReactSelect";
+
 class NewSwitch extends Component {
   constructor(props) {
     super(props);
@@ -62,12 +64,14 @@ class NewSwitch extends Component {
             change={this.tbxReadValue.bind(this)}
           />
           <br />
-          <Menu
+          {/* <Menu
             id="location"
             name="مکان"
             items={this.state.locations}
             selectedId={this.setId.bind(this,"locations")}
-          />
+          /> */}
+                    <ReactSelect id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this,"locations")} isMulti={false} isClearable={true}/>
+          
           {this.state.locationInfo?(
                  <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
                 ):("")}

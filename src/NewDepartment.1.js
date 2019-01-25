@@ -21,6 +21,8 @@ class NewDepartment extends Component {
       phones: [],
       description: '',
       phoneTbxCount:1,
+      locationMenuCount:1,
+      locationMenus:[],
       selectedLocations:[],
     }
 
@@ -42,10 +44,34 @@ class NewDepartment extends Component {
     else phones[ind]={name:key,value:input[key]};
     this.setState({phones},()=>{})
   }
+  addMenuLocation(event){
+var {locationMenus,locations,selectedLocations,locationMenuCount}=this.state
+if(selectedLocations.length>0){
+  // locations=locations.map(l=>l._id)
+selectedLocations.map(l=>{
+  console.log(locations)
+  // var index=locations.findIndex(l)
+  var index=locations.indexOf(l)
+  (index!=-1?(
+    locations.splice(index,1)
+  ):(""))
+  console.log(locations)
+})
+}
+locationMenuCount++
+    console.log(locationMenus)
+    locationMenus.push(
+                    // <ReactSelect id="vlan" name="VLAN" items={this.state.vlans} selectedId={this.setId.bind(this,"vlans")} isMulti={false} isClearable={true}/>
 
+      <Menu id={"locations"+locationMenuCount} name="مکان" items={locations} selectedId={this.setId.bind(this,"locations")}/>
+    )
+   
+    this.setState({locationMenus,locationMenuCount})
+    this.fillComponent()
+  }
 
   fillComponent(){
-    var {phoneTbxCount}=this.state;
+    var {phoneTbxCount,locationMenus}=this.state;
   var phoneTbx=[];
   for(var i=0;i<phoneTbxCount;i++)
   phoneTbx.push(<div>
@@ -61,12 +87,14 @@ class NewDepartment extends Component {
           <TextField id="name" label="نام" change={this.tbxReadValue.bind(this)}  defaultValue={this.state.name}/>
           <br/>
           {/*  locations should be  array */}
-           <ReactSelect id="locations" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this,"locations")} isMulti={true} isClearable={true}/>
-
+          {locationMenus}
+          <Menu id="locations" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this,"locations")}/>
           {this.state.locationInfo?(
                  <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
                 ):("")}
+          <Button label="افزودن مکان" click={this.addMenuLocation.bind(this)} />
 
+          {/* <TextField id="location" label="مکان" change={this.tbxReadValue.bind(this)}/> */}
           <br/>
           {phoneTbx}
           <Button label="افزودن تلفن" click={this.addTbxPhone.bind(this,phoneTbxCount)} />
@@ -81,19 +109,17 @@ class NewDepartment extends Component {
     this.setState({localComponent})
   }
   setId(model,selectedId) {
-    console.log("selectedId: ",selectedId)
     var selectedLocations=this.state.selectedLocations
     selectedLocations.push(selectedId)
-    this.setState({selectedLocations:selectedId.locations}, () => {
-      console.log("locations:",this.state.locations)
-    // var _id=selectedId[Object.keys(selectedId)[0]]
-    //   var payload={_id}
+    this.setState(selectedLocations, () => {
+    var _id=selectedId[Object.keys(selectedId)[0]]
+      var payload={_id}
 
-    //   this.callApiSelect(model,payload).then(res=>
-    //     this.setState(res.data,()=>{
-    //       this.fillComponent()
-    //     })
-    //   )
+      this.callApiSelect(model,payload).then(res=>
+        this.setState(res.data,()=>{
+          this.fillComponent()
+        })
+      )
     })
   }
   
@@ -101,16 +127,13 @@ class NewDepartment extends Component {
   saveBtnClick(event) {
     //To be done:check for empty values before hitting submit
     console.log(this.state.phones)
-    console.log(this.state)
     if (this.state.name.length > 0) {
       var payload = {
         "name": this.state.name,
         "phones": this.state.phones,
         "description": this.state.description,
       }
-      if(this.state.selectedLocations) payload.locations=this.state.selectedLocations
-    console.log("payload: ",payload)
-
+      if(this.state.location) payload.location=this.state.location
 
       this.callApi(payload)
         .then(function (response) {
@@ -167,6 +190,7 @@ class NewDepartment extends Component {
   }
 
   render() {
+    console.log(this.state.localComponent)
     return (
       <div>
         <MuiThemeProvider>

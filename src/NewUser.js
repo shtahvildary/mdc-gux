@@ -8,6 +8,8 @@ import Card from './components/Card';
 import Checkbox from './components/Checkbox';
 import Menu from './components/Menu';
 
+
+
 class NewUser extends Component {
   constructor(props) {
 
