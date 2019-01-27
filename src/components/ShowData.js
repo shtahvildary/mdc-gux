@@ -21,7 +21,7 @@ class showData extends React.Component{
 
 //////////
 componentWillMount(){
-    console.log("this.props: ",this.props)
+    console.log("this.props.data: ",this.props.data)
     // this.setState({page:this.state.page++},()=>{
     //     console.log("this.page: ",this.page)
     
@@ -35,27 +35,36 @@ componentWillMount(){
   if( global.userType < 2)  del=this.props.delete
 
     if(window.innerWidth>768) this.setState({isTable:true},()=>{
-        data.push(this.props.data)
+        if(this.props.data) data=this.props.data
+        
         info.path="all"
         this.props.nextPage(info)
-        // this.props.path("all",limit,skip)
-         component=
-        <SimpleTable
-            addNew={this.props.addNew}
-            columns={this.props.columns}
-            data={this.props.data}
-            showView={this.props.showView}
-            showEdit={this.props.showEdit}
-            disconnect={this.props.disconnect}
-            delete={del}
-          />
+        console.log("info: ",info)
+        var {addNew,columns,data,showView,showEdit,disconnect}=this.props
+        this.setState({addNew,columns,showView,showEdit,disconnect,del},()=>{
+            this.fillComponent()
+
+        })
+        // this.props.nextPage("all",limit,skip)
+        //  component=
+        // <SimpleTable
+        //     addNew={this.props.addNew}
+        //     columns={this.props.columns}
+        //     data={data}
+        //     showView={this.props.showView}
+        //     showEdit={this.props.showEdit}
+        //     disconnect={this.props.disconnect}
+        //     delete={del}
+        //   />
 
     })
     else this.setState({isTable:false},()=>{
         info.path="all/details"
         this.props.nextPage(info)
-        // this.props.path("all/details",limit,skip)
-     component= <ExpantionPanel items={this.props.ExpantionPanelItems} />
+        // this.props.nextPage("all/details",limit,skip)
+        var {ExpantionPanelItems}=this.props
+    //  component= <ExpantionPanel items={this.props.ExpantionPanelItems} />
+    this.setState({ExpantionPanelItems},()=>{this.fillComponent()})
 
 
     // })
@@ -63,22 +72,43 @@ componentWillMount(){
 this.setState({component},()=>{})
 
 }
-// componentWillReceiveProps(newProps){
-//     if (newProps.data === this.state.data) return;
+fillComponent(){
+    var  component
+    if(this.state.isTable)
+   component=
+   <SimpleTable
+       addNew={this.state.addNew}
+       columns={this.state.columns}
+       data={this.state.data}
+       showView={this.state.showView}
+       showEdit={this.state.showEdit}
+       disconnect={this.state.disconnect}
+       delete={this.state.del}
+     />
+    
+    else 
+     component= <ExpantionPanel items={this.props.ExpantionPanelItems} />
+     this.setState({component},()=>{})
 
-//     console.log("props.data: ",this.newProps)
+}
 
-//   var data=this.state.data
-//   if(this.newProps.data)
-//   {
-//   data.push(this.newProps.data)
-//   this.setState({data},()=>{
-//       console.log("new data: ",this.state.data)
+componentWillReceiveProps(newProps){
+    if (newProps.data === this.state.data) return;
 
-//   })
-// }
+    console.log("props.data: ",this.newProps)
 
-// }
+  var temp=this.state.data
+  if(newProps.data)
+  {
+  var data=temp.concat(newProps.data)
+  this.setState({data},()=>{
+      console.log("new data: ",this.state.data)
+      this.fillComponent()
+
+  })
+}
+
+}
 
 
 

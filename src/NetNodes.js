@@ -34,6 +34,7 @@ class netNodes extends Component {
     console.log("path: ",info.path)
     this.callApi(info.path, "")
       .then(res => {
+        console.log("res: ",res)
         this.setState(({ response: res.data.netNodes }), () => {
         });
       })
@@ -73,6 +74,7 @@ class netNodes extends Component {
     this.callApi("disconnect", n)
   }
   render() {
+    console.log("this.state.response: ",this.state.response)
       return (
         <div>
           <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
