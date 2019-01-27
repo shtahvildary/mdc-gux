@@ -30,9 +30,8 @@ class netNodes extends Component {
     if (response.status !== 200) throw Error(response.message);
     return response;
   };
-  nextPage(info) {
-    console.log("path: ",info.path)
-    this.callApi(info.path, "")
+  nextPage(payload) {
+    this.callApi("all", payload)
       .then(res => {
         console.log("res: ",res)
         this.setState(({ response: res.data.netNodes }), () => {
@@ -91,7 +90,6 @@ class netNodes extends Component {
                   showEdit={this.showEdit.bind(this)}
                   disconnect={this.disconnect.bind(this)}
                   delete={this.delete.bind(this)}
-                  ExpantionPanelItems={this.state.response}
                   nextPage={this.nextPage.bind(this)}
                 />
               }
