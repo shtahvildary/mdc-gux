@@ -2,6 +2,7 @@ import React from 'react';
 import ExpantionPanel from "./ExpantionPanel";
 import SimpleTable from "./Table";
 import Grid from '@material-ui/core/Grid';
+import _ from "lodash";
 
 
 class showData extends React.Component {
@@ -44,20 +45,33 @@ class showData extends React.Component {
         var page=this.state.page++
         var skip = this.state.size * page
         var info = { limit, skip }
+        info.isTable=this.state.isTable
 
         var { addNew, columns, showView, showEdit, disconnect,page,finished } = newProps
         this.setState({ addNew, columns, showView, showEdit, disconnect ,finished}, () => {
 
-            // var temp = this.state.data
+            var temp = this.state.data
             if (!newProps.data) return
             //todo: if newProps.data is not in this.state.data we shoud push data
             //CONCAT IS NOT CORRECT
             var data
             // data = temp.concat(newProps.data)
-            data = newProps.data
-            this.setState({ data }, () => {
-                this.fillComponent(info,newProps.nextPage)
+            
+            newProps.data.map((d,i)=>{
+        if (this.state.isTable)
+
+    var ind=temp.findIndex(i=>i._id===d._id)
+    else 
+    var ind=temp.findIndex(i=>i.details._id===d._id)
+
+    if(ind===-1)
                 
+                temp.push(d)
+                console.log("temp: ",temp)
+   
+            })
+            this.setState({ data :temp}, () => {
+                this.fillComponent(info,newProps.nextPage)
             })
         })
     }

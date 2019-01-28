@@ -31,11 +31,11 @@ class netNodes extends Component {
     return response;
   };
   nextPage(payload) {
-    console.log("payload: ",payload)
     this.callApi("all", payload)
       .then(res => {
-        console.log("res: ",res)
         this.setState(({ response: res.data.netNodes }), () => {
+          // this.setState(({ response: res.data.netNodes },{search:false}), () => {
+            console.log(this.state)
         });
       })
       .catch(err => console.log(err));
@@ -44,7 +44,8 @@ class netNodes extends Component {
     this.setState(input, () => {
       this.callApi("search", input)
         .then(res => {
-          this.setState({ response: res.data.netNodes }, () => {
+          this.setState(({ response: res.data.netNodes }), () => {
+            // this.setState(({ response: res.data.netNodes },{search:true}), () => {
             this.searchResult();
           });
         })
@@ -64,7 +65,6 @@ class netNodes extends Component {
     this.setState({ viewComponent: <ViewNetNode netNode={n} open="true" /> });
   }
   searchResult(tblData) {
-    console.log("tblData: ", tblData)
     this.setState({ response: tblData.response.netNodes }, () => { });
   }
   delete(arrayOfIds) {
@@ -74,7 +74,6 @@ class netNodes extends Component {
     this.callApi("disconnect", n)
   }
   render() {
-    console.log("this.state.response: ",this.state.response)
       return (
         <div>
           <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
@@ -93,6 +92,7 @@ class netNodes extends Component {
                   disconnect={this.disconnect.bind(this)}
                   delete={this.delete.bind(this)}
                   nextPage={this.nextPage.bind(this)}
+                  // search={this.state.search}
                 />
               }
             />
