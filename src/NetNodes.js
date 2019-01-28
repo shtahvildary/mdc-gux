@@ -31,6 +31,7 @@ class netNodes extends Component {
     return response;
   };
   nextPage(payload) {
+    console.log("payload: ",payload)
     this.callApi("all", payload)
       .then(res => {
         console.log("res: ",res)
@@ -86,6 +87,7 @@ class netNodes extends Component {
                   addNew={{ path: "/نود جدید", link: "/نود جدید", component: NewNetNode }}
                   columns={this.state.response.columns}
                   data={this.state.response.netNodesData}
+                  finished={this.state.response.finished}
                   showView={this.showView.bind(this)}
                   showEdit={this.showEdit.bind(this)}
                   disconnect={this.disconnect.bind(this)}

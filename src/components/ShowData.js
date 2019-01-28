@@ -11,13 +11,15 @@ class showData extends React.Component {
             isTable: true,
             page: 0,
             size: 10,
+            skip:0,
             data: [],
         }
     }
     componentWillMount() {
 
         var limit = this.state.size;
-        var skip = this.state.size * this.state.page
+        // var page=this.state.page++
+        var skip = this.state.skip 
         var info = { limit, skip }
         var del;
         if (global.userType < 2) del = this.props.delete
@@ -28,19 +30,25 @@ class showData extends React.Component {
             info.isTable = false
         })
 
-        this.props.nextPage(info)
-        var { addNew, columns, showView, showEdit, disconnect } = this.props
-        this.setState({ addNew, columns, showView, showEdit, disconnect, del }, () => {
-            this.fillComponent()
+        var { addNew, columns, showView, showEdit, disconnect,finished } = this.props
+        this.setState({ addNew, columns, showView, showEdit, disconnect, del ,finished}, () => {
+            this.fillComponent(info,this.props.nextPage)
+            // this.props.nextPage(info)
+
         })
     }
 
     componentWillReceiveProps(newProps) {
         if (newProps.data === this.state.data) return;
-        var { addNew, columns, showView, showEdit, disconnect } = newProps
-        this.setState({ addNew, columns, showView, showEdit, disconnect }, () => {
+        var limit = this.state.size;
+        var page=this.state.page++
+        var skip = this.state.size * page
+        var info = { limit, skip }
 
-            var temp = this.state.data
+        var { addNew, columns, showView, showEdit, disconnect,page,finished } = newProps
+        this.setState({ addNew, columns, showView, showEdit, disconnect ,finished}, () => {
+
+            // var temp = this.state.data
             if (!newProps.data) return
             //todo: if newProps.data is not in this.state.data we shoud push data
             //CONCAT IS NOT CORRECT
@@ -48,11 +56,12 @@ class showData extends React.Component {
             // data = temp.concat(newProps.data)
             data = newProps.data
             this.setState({ data }, () => {
-                this.fillComponent()
+                this.fillComponent(info,newProps.nextPage)
+                
             })
         })
     }
-    fillComponent() {
+    fillComponent(info,nextPage) {
         var component;
         if (this.state.isTable)
             component =
@@ -67,7 +76,9 @@ class showData extends React.Component {
                 />
         else
             component = <ExpantionPanel items={this.state.data} />
-        this.setState({ component }, () => { })
+        this.setState({ component }, () => {
+            if(!this.state.finished)
+            nextPage(info) })
     }
     nextPage(page) { console.log("page: ", page) }
 
