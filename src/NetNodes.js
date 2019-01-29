@@ -33,25 +33,32 @@ class netNodes extends Component {
   nextPage(payload) {
     this.callApi("all", payload)
       .then(res => {
-        this.setState(({ response: res.data.netNodes }), () => {
-          // this.setState(({ response: res.data.netNodes },{search:false}), () => {
+        // this.setState(({ response: res.data.netNodes }), () => {
+          this.setState(({ response: res.data.netNodes ,search:false,payload}), () => {
             console.log(this.state)
         });
       })
       .catch(err => console.log(err));
   }
-  tbxReadValue(input) {
-    this.setState(input, () => {
-      this.callApi("search", input)
-        .then(res => {
-          this.setState(({ response: res.data.netNodes }), () => {
-            // this.setState(({ response: res.data.netNodes },{search:true}), () => {
-            this.searchResult();
-          });
-        })
-        .catch(err => console.log(err));
-    });
-  }
+  // tbxReadValue(input) {
+  //   this.setState(input, () => {
+  //     var payload=this.state.payload
+  //     payload.input=input
+  //     console.log ("payload: ",payload)
+
+  //     this.callApi("search", payload)
+  //       .then(res => {
+  //         // this.setState(({ response: res.data.netNodes }), () => {
+  //           this.setState(({ response: res.data.netNodes }), () => {
+  //           console.log(this.state)
+  //           console.log ("hiiiii")
+
+  //           this.searchResult();
+  //         });
+  //       })
+  //       .catch(err => console.log(err));
+  //   });
+  // }
   refreshPage(close) {
     if (close)
       // this.setState({open:!this.state.open},()=>{console.log("open: ",this.state.open)})
@@ -65,7 +72,7 @@ class netNodes extends Component {
     this.setState({ viewComponent: <ViewNetNode netNode={n} open="true" /> });
   }
   searchResult(tblData) {
-    this.setState({ response: tblData.response.netNodes }, () => { });
+    this.setState({ response: tblData.response.netNodes ,search:true}, () => { });
   }
   delete(arrayOfIds) {
     this.callApi("delete", { arrayOfIds })
@@ -74,6 +81,7 @@ class netNodes extends Component {
     this.callApi("disconnect", n)
   }
   render() {
+    console.log("this.state.search: ",this.state.search)
       return (
         <div>
           <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
@@ -92,7 +100,7 @@ class netNodes extends Component {
                   disconnect={this.disconnect.bind(this)}
                   delete={this.delete.bind(this)}
                   nextPage={this.nextPage.bind(this)}
-                  // search={this.state.search}
+                  clear={this.state.search}
                 />
               }
             />
