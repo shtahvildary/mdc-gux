@@ -42,18 +42,23 @@ class showData extends React.Component {
 
     componentWillReceiveProps(newProps) {
         if (newProps.data === this.state.data) return;
+      
         var limit = this.state.size;
         var page = this.state.page++
         var skip = this.state.size * page
         var limits = { limit, skip }
+        // if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
+        //     limits.isTable = true
+        // })
+        // else this.setState({ isTable: false }, () => {
+        //     limits.isTable = false
+        // })
         limits.isTable = this.state.isTable
 
         var { addNew, columns, showView, showEdit, disconnect, page, finished } = newProps
         this.setState({ addNew, columns, showView, showEdit, disconnect, finished }, () => {
-            console.log("newProps.clear", newProps.clear)
             if (newProps.clear) var data = []
             else var data = this.state.data
-            console.log("data: ", data)
             if (!newProps.data) return
         
             newProps.data.map((d, i) => {
@@ -87,7 +92,6 @@ class showData extends React.Component {
                 nextPage(limits)
         })
     }
-    nextPage(page) { console.log("page: ", page) }
 
     render() {
         return (

@@ -11,10 +11,24 @@ class Search extends Component {
       super(props);
       this.state = {
         response: [],
+        isTable: true,
+            page: 0,
+            size: 10,
+            skip: 0,
       };
     }
     componentWillReceiveProps(){
-    this.setState({model:this.props.model})
+      var limit = this.state.size;
+        // var page=this.state.page++
+        var skip = this.state.skip
+        var limits = { limit, skip }
+      if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
+        limits.isTable = true
+    })
+    else this.setState({ isTable: false }, () => {
+        limits.isTable = false
+    })
+    this.setState({model:this.props.model,limits:limits})
     }
     callApi = async (model,payload) => {
         const response = await axios({
@@ -28,6 +42,7 @@ class Search extends Component {
       };
     tbxReadValue(input) {
         this.setState(input,()=>{
+          input.isTable=this.state.isTable
           this.callApi(this.state.model,input)
           .then(res => {
             console.log(res)

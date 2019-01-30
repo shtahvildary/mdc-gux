@@ -35,7 +35,6 @@ class netNodes extends Component {
       .then(res => {
         // this.setState(({ response: res.data.netNodes }), () => {
           this.setState(({ response: res.data.netNodes ,search:false,payload}), () => {
-            console.log(this.state)
         });
       })
       .catch(err => console.log(err));
@@ -81,10 +80,9 @@ class netNodes extends Component {
     this.callApi("disconnect", n)
   }
   render() {
-    console.log("this.state.search: ",this.state.search)
       return (
         <div>
-          <Search model="netnodes" searchResult={this.searchResult.bind(this)} />
+          <Search model="netnodes"  searchResult={this.searchResult.bind(this)} />
           {this.state.editComponent}
           {this.state.viewComponent}
             <Card
