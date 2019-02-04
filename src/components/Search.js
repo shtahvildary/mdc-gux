@@ -21,14 +21,14 @@ class Search extends Component {
       var limit = this.state.size;
         // var page=this.state.page++
         var skip = this.state.skip
-        var limits = { limit, skip }
+        // var limits = { limit, skip }
       if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
-        limits.isTable = true
+        // limits.isTable = true
     })
     else this.setState({ isTable: false }, () => {
-        limits.isTable = false
+        // limits.isTable = false
     })
-    this.setState({model:this.props.model,limits:limits})
+    this.setState({model:this.props.model,limit,skip})
     }
     callApi = async (model,payload) => {
         const response = await axios({
@@ -40,15 +40,39 @@ class Search extends Component {
         if (response.status !== 200) throw Error(response.message);
         return response;
       };
-    tbxReadValue(input) {
-        this.setState(input,()=>{
+    fillData(input){
+      var page = this.state.page++
+
+      var skip = this.state.size * page
+
+      input.limit=this.state.limit
+          input.skip=skip
           input.isTable=this.state.isTable
           this.callApi(this.state.model,input)
           .then(res => {
             console.log(res)
-            this.props.searchResult({ response: res.data })
+            this.props.searchResult({ response: res.data,skip,page },()=>{
+          if (!this.state.response.finished)
+          this.fillData(input)
+
+            })
           })
           .catch(err => console.log(err));
+
+    }
+    tbxReadValue(input) {
+        this.setState(input,()=>{
+          this.fillData(input)
+          
+          // input.limit=this.state.limit
+          // input.skip=this.state.skip
+          // input.isTable=this.state.isTable
+          // this.callApi(this.state.model,input)
+          // .then(res => {
+          //   console.log(res)
+          //   this.props.searchResult({ response: res.data })
+          // })
+          // .catch(err => console.log(err));
         });
       }
       render() {
