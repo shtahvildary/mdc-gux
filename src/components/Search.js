@@ -12,15 +12,15 @@ class Search extends Component {
       this.state = {
         response: [],
         isTable: true,
-            page: 0,
+            page: 1,
             size: 10,
             skip: 0,
       };
     }
     componentWillReceiveProps(){
-      var limit = this.state.size;
+      var size = this.state.size;
         // var page=this.state.page++
-        var skip = this.state.skip
+        var page = this.state.page
         // var limits = { limit, skip }
       if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
         // limits.isTable = true
@@ -28,7 +28,7 @@ class Search extends Component {
     else this.setState({ isTable: false }, () => {
         // limits.isTable = false
     })
-    this.setState({model:this.props.model,limit,skip})
+    this.setState({model:this.props.model,size,page})
     }
     callApi = async (model,payload) => {
         const response = await axios({
@@ -40,18 +40,19 @@ class Search extends Component {
         if (response.status !== 200) throw Error(response.message);
         return response;
       };
-    fillData(input){
+    fillData(input,page,size){
       var page = this.state.page++
 
-      var skip = this.state.size * page
+      var size = this.state.size 
+      // var skip = this.state.size * page
 
       input.limit=this.state.limit
-          input.skip=skip
+          input.size=size
           input.isTable=this.state.isTable
           this.callApi(this.state.model,input)
           .then(res => {
             console.log(res)
-            this.props.searchResult({ response: res.data,skip,page },()=>{
+            this.props.searchResult({ response: res.data,size,page },()=>{
           if (!this.state.response.finished)
           this.fillData(input)
 
@@ -62,7 +63,7 @@ class Search extends Component {
     }
     tbxReadValue(input) {
         this.setState(input,()=>{
-          this.fillData(input)
+          this.fillData(input,0,10)
           
           // input.limit=this.state.limit
           // input.skip=this.state.skip

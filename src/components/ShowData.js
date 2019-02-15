@@ -10,7 +10,7 @@ class showData extends React.Component {
         super(props);
         this.state = {
             isTable: true,
-            page: 0,
+            page: 1,
             size: 10,
             skip: 0,
             data: [],
@@ -19,10 +19,9 @@ class showData extends React.Component {
     }
     componentWillMount() {
 
-        var limit = this.state.size;
-        // var page=this.state.page++
-        var skip = this.state.skip
-        var limits = { limit, skip }
+        var size = this.state.size;
+        var page=this.state.page++
+        var limits = { size, page }
         var del;
         if (global.userType < 2) del = this.props.delete
         if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
@@ -43,10 +42,10 @@ class showData extends React.Component {
     componentWillReceiveProps(newProps) {
         if (newProps.data === this.state.data) return;
       
-        var limit = this.state.size;
+        var size = this.state.size;
         var page = this.state.page++
-        var skip = this.state.size * page
-        var limits = { limit, skip }
+        var limits = { size, page }
+        // var limits = { limit, skip }
         // if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
         //     limits.isTable = true
         // })
