@@ -19,9 +19,7 @@ class Search extends Component {
     }
     componentWillReceiveProps(){
       var size = this.state.size;
-        // var page=this.state.page++
         var page = this.state.page
-        // var limits = { limit, skip }
       if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
         // limits.isTable = true
     })
@@ -41,20 +39,26 @@ class Search extends Component {
         return response;
       };
     fillData(input,page,size){
+      console.log("input: ",input)
       var page = this.state.page++
 
       var size = this.state.size 
       // var skip = this.state.size * page
 
-      input.limit=this.state.limit
+      input.page=this.state.page
           input.size=size
           input.isTable=this.state.isTable
           this.callApi(this.state.model,input)
           .then(res => {
             console.log(res)
             this.props.searchResult({ response: res.data,size,page },()=>{
-          if (!this.state.response.finished)
-          this.fillData(input)
+              console.log("this.state.response: ",this.state.response)
+          
+              if (!this.state.response.finished)
+          {
+            console.log("hiiiii")
+            this.fillData(input)
+          }
 
             })
           })
@@ -63,7 +67,7 @@ class Search extends Component {
     }
     tbxReadValue(input) {
         this.setState(input,()=>{
-          this.fillData(input,0,10)
+          this.fillData(input,this.state.page,10)
           
           // input.limit=this.state.limit
           // input.skip=this.state.skip
