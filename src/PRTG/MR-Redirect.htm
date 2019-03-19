@@ -104,7 +104,8 @@
 
 			// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
 			
-			axios({url: 'http://172.16.17.191:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }})
+			axios({url: 'http://172.16.16.163:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }})
+			// axios({url: 'http://172.16.17.191:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }})
 			.then(	result=>{
 									console.log(result.data)
 									var content="شماره نود: "+result.data.patchPanelPort+"</br>"
@@ -185,7 +186,8 @@
 
 			// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
 			
-			axios({url: 'http://172.16.17.191:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }})
+			axios({url: 'http://172.16.16.163:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }})
+			// axios({url: 'http://172.16.17.191:5000/api/netNodes/prtg', method: 'post', data:{ switchName, switchPort }})
 			.then(	result=>{
 			var node = document.createElement("myModal");
 									console.log(result.data)
