@@ -41,11 +41,15 @@ class Search extends Component {
     fillData(input,page,size){
       console.log("input: ",input)
       var page = this.state.page++
+      console.log("page: ",page)
 
       var size = this.state.size 
       // var skip = this.state.size * page
+      console.log("size: ",size)
 
-      input.page=this.state.page
+
+      input.page=page
+      // input.page=this.state.page
           input.size=size
           input.isTable=this.state.isTable
           this.callApi(this.state.model,input)
@@ -67,7 +71,10 @@ class Search extends Component {
     }
     tbxReadValue(input) {
         this.setState(input,()=>{
-          this.fillData(input,this.state.page,10)
+          this.setState({page:1},()=>{
+
+            this.fillData(input,this.state.page,10)
+          })
           
           // input.limit=this.state.limit
           // input.skip=this.state.skip

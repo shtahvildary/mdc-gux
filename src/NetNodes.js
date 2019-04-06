@@ -80,6 +80,7 @@ class netNodes extends Component {
     this.callApi("disconnect", n)
   }
   render() {
+    console.log("this.state.response.finished: ",this.state.response.finished)
       return (
         <div>
           <Search model="netnodes"  searchResult={this.searchResult.bind(this)} />
