@@ -39,52 +39,32 @@ class Search extends Component {
         return response;
       };
     fillData(input,page,size){
-      console.log("input: ",input)
       var page = this.state.page++
-      console.log("page: ",page)
 
       var size = this.state.size 
       // var skip = this.state.size * page
-      console.log("size: ",size)
-
 
       input.page=page
-      // input.page=this.state.page
           input.size=size
           input.isTable=this.state.isTable
           this.callApi(this.state.model,input)
           .then(res => {
-            console.log(res)
-            this.props.searchResult({ response: res.data,size,page },()=>{
-              console.log("this.state.response: ",this.state.response)
-          
-              if (!this.state.response.finished)
-          {
-            console.log("hiiiii")
-            this.fillData(input)
-          }
-
+            console.log(res.data)
+              this.props.searchResult({ response: res.data,size,page },()=>{ 
+              
             })
+            if (!res.data.finished)
+        {
+          this.fillData(input)
+        }
           })
           .catch(err => console.log(err));
-
     }
     tbxReadValue(input) {
         this.setState(input,()=>{
           this.setState({page:1},()=>{
-
             this.fillData(input,this.state.page,10)
           })
-          
-          // input.limit=this.state.limit
-          // input.skip=this.state.skip
-          // input.isTable=this.state.isTable
-          // this.callApi(this.state.model,input)
-          // .then(res => {
-          //   console.log(res)
-          //   this.props.searchResult({ response: res.data })
-          // })
-          // .catch(err => console.log(err));
         });
       }
       render() {
