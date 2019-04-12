@@ -38,7 +38,7 @@ import DashboardPage from '../Dashboard';
 import Dashboard from '@material-ui/icons/Dashboard';
 import Computer from '@material-ui/icons/Computer'
 import NetworkWifi from '@material-ui/icons/NetworkWifi'
-import switch-26.png from '@material-ui/icons'
+// import switch-26.png from '@material-ui/icons'
 import DevicesIcon from '@material-ui/icons/Devices'
 
 import List from '@material-ui/core/List';

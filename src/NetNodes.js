@@ -33,8 +33,10 @@ class netNodes extends Component {
   nextPage(payload) {
     this.callApi("all", payload)
       .then(res => {
+        if (res.data.netNode.dataLength) this.setState({dataLength:res.data.netNode.dataLength},()=>{})
           this.setState(({ response: res.data.netNodes ,search:false,payload}), () => {
-        });
+        // console.log("dataLength: ",this.state.response.dataLength)
+          });
       })
       .catch(err => console.log(err));
   }
@@ -77,6 +79,7 @@ class netNodes extends Component {
                   addNew={{ path: "/نود جدید", link: "/نود جدید", component: NewNetNode }}
                   columns={this.state.response.columns}
                   data={this.state.response.netNodesData}
+                  dataLength={this.state.response.dataLength}
                   finished={this.state.response.finished}
                   showView={this.showView.bind(this)}
                   showEdit={this.showEdit.bind(this)}
