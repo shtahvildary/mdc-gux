@@ -33,7 +33,10 @@ class netNodes extends Component {
   nextPage(payload) {
     this.callApi("all", payload)
       .then(res => {
-        if (res.data.netNode.dataLength) this.setState({dataLength:res.data.netNode.dataLength},()=>{})
+        if (res.data.netNodes.dataLength){
+           this.setState({dataLength:res.data.netNodes.dataLength},()=>{
+           })
+        }
           this.setState(({ response: res.data.netNodes ,search:false,payload}), () => {
         // console.log("dataLength: ",this.state.response.dataLength)
           });
@@ -54,6 +57,10 @@ class netNodes extends Component {
     this.setState({ viewComponent: <ViewNetNode netNode={n} open="true" /> });
   }
   searchResult(tblData) {
+    if (tblData.response.netNodes.dataLength){
+      this.setState({dataLength:tblData.response.netNodes.dataLength},()=>{
+      })
+   }
     this.setState({ response: tblData.response.netNodes,page:tblData.page ,search:true}, () => {
 
      });
@@ -79,7 +86,7 @@ class netNodes extends Component {
                   addNew={{ path: "/نود جدید", link: "/نود جدید", component: NewNetNode }}
                   columns={this.state.response.columns}
                   data={this.state.response.netNodesData}
-                  dataLength={this.state.response.dataLength}
+                  dataLength={this.state.dataLength}
                   finished={this.state.response.finished}
                   showView={this.showView.bind(this)}
                   showEdit={this.showEdit.bind(this)}

@@ -31,8 +31,8 @@ class showData extends React.Component {
             limits.isTable = false
         })
 
-        var { addNew, columns, showView, showEdit, disconnect, finished } = this.props
-        this.setState({ addNew, columns, showView, showEdit, disconnect, del, finished }, () => {
+        var { addNew, columns, showView, showEdit, disconnect, finished,dataLength } = this.props
+        this.setState({ addNew, columns, showView, showEdit, disconnect, del, finished,dataLength }, () => {
             this.fillComponent(limits, this.props.nextPage)
             // this.props.nextPage(limits)
 
@@ -54,8 +54,8 @@ class showData extends React.Component {
         // })
         limits.isTable = this.state.isTable
 
-        var { addNew, columns, showView, showEdit, disconnect, page, finished } = newProps
-        this.setState({ addNew, columns, showView, showEdit, disconnect, finished }, () => {
+        var { addNew, columns, showView, showEdit, disconnect, page, finished,dataLength } = newProps
+        this.setState({ addNew, columns, showView, showEdit, disconnect, finished ,dataLength}, () => {
             if (newProps.clear) var data = []
             else var data = this.state.data
             if (!newProps.data) return
@@ -79,13 +79,14 @@ class showData extends React.Component {
                     addNew={this.state.addNew}
                     columns={this.state.columns}
                     data={this.state.data}
+                    dataLength={this.state.dataLength}
                     showView={this.state.showView}
                     showEdit={this.state.showEdit}
                     disconnect={this.state.disconnect}
                     delete={this.state.del}
                 />
         else
-            component = <ExpantionPanel items={this.state.data} />
+            component = <ExpantionPanel items={this.state.data} dataLength={this.state.dataLength} />
         this.setState({ component }, () => {
             if (!this.state.finished)
                 nextPage(limits)

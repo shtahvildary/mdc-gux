@@ -68,7 +68,7 @@ class SimpleExpansionPanel extends React.Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>)
     })
-    this.setState({ items }, () => { console.log(items) })
+    this.setState({ items,dataLength:newProps.dataLength }, () => { console.log(items) })
   }
   render() {
     const { classes } = this.props;
@@ -77,6 +77,7 @@ class SimpleExpansionPanel extends React.Component {
     return (
 
       <div className="container">
+      تعداد کل: {this.state.dataLength}
        {this.state.items}
       </div>
     );

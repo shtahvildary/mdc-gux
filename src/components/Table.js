@@ -176,6 +176,7 @@ class EnhancedTable extends React.Component {
       data: [
       ],
       columnData: [],
+      dataLength:0,
 
     };
   }
@@ -193,7 +194,7 @@ class EnhancedTable extends React.Component {
     var addNew = newProps.addNew
     var { orderBy } = this.state;
     if (!orderBy && columns[0]) orderBy = columns[0].id
-    this.setState({ columnData: columns, data, orderBy, addNew })
+    this.setState({ columnData: columns, data, orderBy, addNew,dataLength:newProps.dataLength })
   }
 
   handleRequestSort = (event, property) => {
@@ -265,7 +266,8 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={this.props.classes.root}>
-        <EnhancedTableToolbar addNew={this.state.addNew} dataLength={this.state.data.length} />
+        <EnhancedTableToolbar addNew={this.state.addNew} dataLength={this.state.dataLength} />
+        {/* <EnhancedTableToolbar addNew={this.state.addNew} dataLength={this.state.data.length} /> */}
         <div className={this.props.classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
