@@ -9,6 +9,7 @@ import Locations from "./Locations";
 import Vlans from "./Vlans";
 import "./App.css";
 import Streams from "./Streams";
+import Summary from "./components/Summary";
 
 function Dashboard() {
   var localComponents = [];
@@ -21,7 +22,8 @@ function Dashboard() {
               pageName="نودها"
               content={
                 <div>
-                  <p>نمایش لیست نودها</p>
+                  {/* <p>نمایش لیست نودها</p> */}
+                  <Summary model="netNodes"/>
                   <Link to="/نودها">بیشتر...</Link>
                 </div>
               }

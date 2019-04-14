@@ -9,7 +9,7 @@ class showData extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isTable: true,
+            // isTable: true,
             page: 1,
             size: 10,
             skip: 0,
@@ -24,7 +24,7 @@ class showData extends React.Component {
         var limits = { size, page }
         var del;
         if (global.userType < 2) del = this.props.delete
-        if (window.innerWidth > 768) this.setState({ isTable: true }, () => {
+        if (window.innerWidth > 768 && !this.props.ExpantionPanel) this.setState({ isTable: true }, () => {
             limits.isTable = true
         })
         else this.setState({ isTable: false }, () => {
@@ -72,8 +72,10 @@ class showData extends React.Component {
         })
     }
     fillComponent(limits, nextPage) {
+        // console.log("data: ",this.state.data)
+
         var component;
-        if (this.state.isTable)
+        if (this.state.isTable&&!this.props.ExpantionPanel)
             component =
                 <SimpleTable
                     addNew={this.state.addNew}
