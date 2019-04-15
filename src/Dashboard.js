@@ -34,7 +34,7 @@ function Dashboard() {
               pageName="سوییچها"
               content={
                 <div>
-                  <p>"نمایش لیست سوییچها"</p>
+                  <Summary model="switches"/>
                   <Link to="/سوییچها">بیشتر...</Link>
                 </div>
               }
@@ -49,7 +49,9 @@ function Dashboard() {
               pageName="مکانها"
               content={
                 <div>
-                  <p>نمایش لیست مکانها</p>
+                  {/* <p>نمایش لیست مکانها</p> */}
+                  <Summary model="locations"/>
+
                   <Link to="/مکانها">بیشتر...</Link>
                 </div>
               }
@@ -60,7 +62,9 @@ function Dashboard() {
               pageName="VLANها"
               content={
                 <div>
-                  <p>نمایش لیست VLANها</p>
+                  {/* <p>نمایش لیست VLANها</p> */}
+                  <Summary model="vlans"/>
+
                   <Link to="/VLANها">بیشتر...</Link>
                 </div>
               }
@@ -74,7 +78,7 @@ function Dashboard() {
               pageName="استریم ها"
               content={
                 <div>
-                  <p>نمایش لیست استریم ها</p>
+                  <Summary model="streams"/>
                   <Link to="/استریم ها">بیشتر...</Link>
                 </div>
               }

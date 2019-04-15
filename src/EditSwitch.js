@@ -158,7 +158,8 @@ class EditSwitch extends Component {
                 <p>
                   {" "}
                   {this.state.locationInfo.name} واقع در ساختمان{" "}
-                  {this.state.locationInfo.building}، اتاق{" "}
+                  {this.state.locationInfo.building}، طبقه{" "}
+                  {this.state.locationInfo.level}، اتاق{" "}
                   {this.state.locationInfo.room}
                 </p>
               ) : (

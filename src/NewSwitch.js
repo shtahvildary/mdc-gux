@@ -26,7 +26,7 @@ class NewSwitch extends Component {
   }
   
   fillComponent(){
-
+console.log("this.state.locationInfo: ",this.state.locationInfo)
     var localComponent = [];
     localComponent.push(
       <MuiThemeProvider>
@@ -73,7 +73,7 @@ class NewSwitch extends Component {
                     <ReactSelect id="location" name="مکان" items={this.state.locations} selectedId={this.setId.bind(this,"locations")} isMulti={false} isClearable={true}/>
           
           {this.state.locationInfo?(
-                 <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}، اتاق {this.state.locationInfo.room}</p>
+                 <p> {this.state.locationInfo.name} واقع در ساختمان {this.state.locationInfo.building}،طبقه {this.state.locationInfo.level}، اتاق {this.state.locationInfo.room}</p>
                 ):("")}
           {/* <TextField id="location" label="مکان" change={this.tbxReadValue.bind(this)}/> */}
           <br />

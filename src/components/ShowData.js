@@ -59,8 +59,8 @@ class showData extends React.Component {
             if (newProps.clear) var data = []
             else var data = this.state.data
             if (!newProps.data) return
-        
-            newProps.data.map((d, i) => {
+            
+            newProps.data.map((d,i )=> {
                 if (this.state.isTable) var ind = data.findIndex(i => i._id === d._id)
                 else var ind = data.findIndex(i => i.details._id === d._id)
                 if (ind === -1) data.push(d)
@@ -72,8 +72,6 @@ class showData extends React.Component {
         })
     }
     fillComponent(limits, nextPage) {
-        // console.log("data: ",this.state.data)
-
         var component;
         if (this.state.isTable&&!this.props.ExpantionPanel)
             component =

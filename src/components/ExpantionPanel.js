@@ -25,38 +25,14 @@ class SimpleExpansionPanel extends React.Component {
       items: [],
     }
   }
-  componentWillMount(){
-    const { classes } = this.props;
-    console.log(this.props)
-    if (!this.props.items) return;
-    // var items = this.state.items
-    var items =[];
-    this.props.items.map(i => {
-      console.log(i.details)
-      items.push(
-        <ExpansionPanel key={i.summary}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>{i.summary}</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Typography>
-              {JSON.stringify(i.details)}
-            </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>)
-    })
-    this.setState({ items }, () => { console.log(items) })
-  }
-
+ 
   componentWillReceiveProps(newProps) {
     const { classes } = newProps;
-    // console.log(newProps)
     if (newProps.items===this.state.items) return;
     // var items = this.state.items
     var items = []
     var keys,details
     newProps.items.map(i => {
-      // console.log(i.details)
       
        keys=Object.keys(i.details)
        details=""
@@ -74,18 +50,16 @@ class SimpleExpansionPanel extends React.Component {
           <ExpansionPanelDetails>
             <Typography>
               {details}
+    
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>)
     })
     this.setState({ items,dataLength:newProps.dataLength }, () => { 
-      // console.log(items) 
     })
   }
   render() {
     const { classes } = this.props;
-    // console.log("props: ", this.state.items)
-
     return (
 
       <div className="container">
