@@ -6,6 +6,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import validator from "validator"
 
 
 const styles = theme => ({
@@ -37,8 +38,11 @@ class SimpleExpansionPanel extends React.Component {
        keys=Object.keys(i.details)
        details=""
        keys.map(k=>{
-         if(k!="_id")         
-        details+=k+": "+i.details[k]+"\r\n"
+         if(k!="_id"){
+         if (typeof i.details[k] === 'string' && validator.isURL(i.details[k]) && !validator.isIP(i.details[k])) details+=k+": "+ "مشاهده";
+        //  if (typeof i.details[k] === 'string' && validator.isURL(i.details[k]) && !validator.isIP(i.details[k])) details+= "<a href={normUrl(i.details[k] )}>مشاهده</a>";
+else
+        details+=k+": "+i.details[k]+"\r\n"}
         // details+="\r\n"+k+": "+i.details[k]+"\r\n"
         // details+=k+": "+i.details[k]
       })
