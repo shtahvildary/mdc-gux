@@ -32,7 +32,12 @@ class Login extends Component {
         <form className={classes.container} noValidate autoComplete="off">
         <MyTextField id="username" label="نام کاربری" change={this.tbxReadValue.bind(this)}/>  
          <br/>
-         <MyTextField id="password" label="کلمه عبور" type="password" autoComplete="current-password" change = {this.tbxReadValue.bind(this)}/>
+         <MyTextField id="password" label="کلمه عبور" type="password" autoComplete="current-password" change = {this.tbxReadValue.bind(this)} onKeyPress={(ev) => {
+        if ( ev.key === 'Enter') {
+          console.log("hiiiii")
+            this.enter() // here was the mistake
+        }
+      }}/>
            <br/> 
            <MyButton label="وارد شوید" click={this.enter.bind(this)}/>
        </form>
@@ -40,6 +45,9 @@ class Login extends Component {
        </MuiThemeProvider>
     )
     this.setState({loginComponent})
+  }
+  keyPress(e){
+    if(e.keyCode==13) this.enter()
   }
   enter(event){
     // handleClick(event){
