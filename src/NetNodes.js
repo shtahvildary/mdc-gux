@@ -6,6 +6,8 @@ import ViewNetNode from "./ViewNetNode";
 import Search from "./components/Search";
 import NewNetNode from "./NewNetNode";
 import ShowData from "./components/ShowData"
+import "./App.css";
+
 
 class netNodes extends Component {
   constructor(props) {

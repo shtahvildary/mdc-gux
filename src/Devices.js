@@ -6,6 +6,8 @@ import EditDevice from "./EditDevice";
 import ViewDevice from "./ViewDevice";
 import Search from "./components/Search";
 import NewDevice from "./NewDevice";
+import "./App.css";
+
 
 
 class Devices extends Component {

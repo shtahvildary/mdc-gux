@@ -8,6 +8,8 @@ import Modal from './components/Modal'
 import Paper from '@material-ui/core/Paper'
 // import Radiogroup from "./components/Radiogroup";
 import Menu from "./components/Menu";
+import "./App.css";
+
 
 
 

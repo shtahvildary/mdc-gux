@@ -7,6 +7,8 @@ import "./index.css";
 import Modal from "./components/Modal";
 import Paper from "@material-ui/core/Paper";
 import Menu from "./components/Menu";
+import "./App.css";
+
 
 class EditDevice extends Component {
   constructor(props) {

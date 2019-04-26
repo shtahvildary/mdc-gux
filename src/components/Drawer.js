@@ -48,6 +48,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import NewDepartment from '../NewDepartment';
 import NewUser from '../NewUser';
 import NewStream from '../NewStream';
+import "../App.css";
+
 // import Register from '../Register';
 // import computerIcon from '../Icons/twotone-computer-24px'
 

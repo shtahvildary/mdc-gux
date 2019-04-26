@@ -165,7 +165,8 @@ class Streams extends Component {
     return (
       <div>
         <Search model="streams" searchResult={this.searchResult.bind(this)} />
-
+        {/* <div><a href="http://localhost:4000">مشاهده استریم ها</a></div> */}
+        <div><a href="http://172.16.16.163:4000">مشاهده استریم ها</a></div>
         {this.state.editComponent}
         {this.state.viewComponent}
         <Card

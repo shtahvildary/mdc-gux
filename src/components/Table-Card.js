@@ -24,6 +24,8 @@ import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
 import LazyLoad from 'react-lazyload';
+import "../App.css";
+
 
 
 import { Link } from 'react-router-dom';
