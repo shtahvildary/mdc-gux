@@ -49,8 +49,13 @@ class Streams extends Component {
   };
 
   componentWillMount() {
-    var socket = io("http://172.16.16.164:3000")
-    // var socket = io("http://localhost:3000")
+    // var socket = io("http://172.16.16.164:3000")
+    this.callApi("all", "")
+    .then(res => {
+      this.changeStateBtns(res.data.streams)
+    
+
+    var socket = io("http://localhost:3000")
     socket.on("connection", () => {
       console.log("connected succ")
     })
@@ -76,11 +81,8 @@ class Streams extends Component {
       response.streamsData = streamsData
       this.setState({ response }, () => { })
     })
-    this.callApi("all", "")
-      .then(res => {
-        this.changeStateBtns(res.data.streams)
-      })
-      .catch(err => console.log(err));
+  })
+  .catch(err => console.log(err));
   }
   changeStateBtns(response) {
     // var response = res.data.streams
@@ -116,10 +118,10 @@ class Streams extends Component {
       var mosaicInputs = [];
       str.mosaicInputs.map(i => {
         console.log("iiiii", i)
-        mosaicInputs.push({ "name": i.name.en, "address": i.address })
+        mosaicInputs.push({ "name": i.name.en, "address": i.address,"streamServer":str.streamServer})
       })
       console.log("mosaicInputs", mosaicInputs)
-      this.callStreamApi("mosaic/start", str.streamServer, { name: str.nameEn,  mosaicInputs, id: str._id, dshow: 0 })
+      this.callStreamApi("mosaic/start", str.streamServer, { name: str.nameEn,  mosaicInputs, id: str._id,dshow: 0 })
     }
 
   }
@@ -165,8 +167,8 @@ class Streams extends Component {
     return (
       <div>
         <Search model="streams" searchResult={this.searchResult.bind(this)} />
-        {/* <div><a href="http://localhost:4000">مشاهده استریم ها</a></div> */}
-        <div><a href="http://172.16.16.163:4000">مشاهده استریم ها</a></div>
+        <div><a href="http://localhost:4000">مشاهده استریم ها</a></div>
+        {/* <div><a href="http://172.16.16.163:4000">مشاهده استریم ها</a></div> */}
         {this.state.editComponent}
         {this.state.viewComponent}
         <Card
