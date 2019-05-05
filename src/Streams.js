@@ -27,12 +27,15 @@ class Streams extends Component {
     };
   }
   callApi = async (path, payload) => {
+    console.log("request time",Date.now())
+
     const response = await axios({
       method: "post",
       url: global.serverAddress + "/streams/" + path,
       headers: { "x-access-token": localStorage.getItem("token") },
       data: payload
     });
+    console.log("response time",Date.now())
     // const body = await response;
     if (response.status !== 200) throw Error(response.message);
     return response;
@@ -50,14 +53,21 @@ class Streams extends Component {
 
   componentWillMount() {
     // var socket = io("http://172.16.16.164:3000")
+    var start=Date.now()
+    console.log("start component",start)
     this.callApi("all", "")
     .then(res => {
+      
+      var apiTime=Date.now()
+      console.log("call api ",apiTime,apiTime-start)
       this.changeStateBtns(res.data.streams)
     
 
+    // var socket = io("localhost:3000")
     var socket = io("http://localhost:3000")
     socket.on("connection", () => {
-      console.log("connected succ")
+      var socketTime=Date.now()
+      console.log("connected succ",socketTime,socketTime-apiTime)
     })
     socket.on("changes", (data) => {
       var ind = this.state.response.streamsData.findIndex(i => String(i._id) === String(data.id));
