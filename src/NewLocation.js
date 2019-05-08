@@ -6,7 +6,7 @@ import axios from "axios";
 import TextField from "./components/TextField";
 import "./index.css";
 import Card from "./components/Card"
-import Radiogroup from "./components/Radiogroup";
+// import Radiogroup from "./components/Radiogroup";
 import Menu from "./components/Menu";
 
 class NewLocation extends Component {

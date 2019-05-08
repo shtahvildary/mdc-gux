@@ -52,7 +52,7 @@ class Streams extends Component {
   };
 
   componentWillMount() {
-    // var socket = io("http://172.16.16.164:3000")
+    
     var start=Date.now()
     console.log("start component",start)
     this.callApi("all", "")
@@ -63,7 +63,8 @@ class Streams extends Component {
       this.changeStateBtns(res.data.streams)
     
 
-    // var socket = io("localhost:3000")
+   
+    // var socket = io("http://172.16.16.164:3000")
     var socket = io("http://localhost:3000")
     socket.on("connection", () => {
       var socketTime=Date.now()
@@ -72,18 +73,19 @@ class Streams extends Component {
     socket.on("changes", (data) => {
       var ind = this.state.response.streamsData.findIndex(i => String(i._id) === String(data.id));
       var { streamsData } = this.state.response;
+      var changePlayState,playState;
       if (data.playState === 0) {
-        var changePlayState = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(this.state.response.streamsData[ind])} >
+         changePlayState = <IconButton aria-label="play{nameEn}" onClick={event => this.playStream(this.state.response.streamsData[ind])} >
           <PlayIcon />
         </IconButton>
-        var playState = "متوقف شده"
+        playState = "متوقف شده"
 
       }
       else {
-        var changePlayState = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(this.state.response.streamsData[ind])} >
+         changePlayState = <IconButton aria-label="pause{nameEn}" onClick={event => this.pauseStream(this.state.response.streamsData[ind])} >
           <PauseIcon />
         </IconButton>
-        var playState = "در حال پخش"
+         playState = "در حال پخش"
       }
       streamsData[ind].changePlayState = changePlayState;
       streamsData[ind].playStateText = playState;
@@ -128,7 +130,7 @@ class Streams extends Component {
       var mosaicInputs = [];
       str.mosaicInputs.map(i => {
         console.log("iiiii", i)
-        mosaicInputs.push({ "name": i.name.en, "address": i.address,"streamServer":str.streamServer})
+        mosaicInputs.push({ "name": i.name.en, "address": i.address,"streamServer":str.streamServer,"xMosaic":str.mosaicDimensions.x,"yMosaic":str.mosaicDimensions.y})
       })
       console.log("mosaicInputs", mosaicInputs)
       this.callStreamApi("mosaic/start", str.streamServer, { name: str.nameEn,  mosaicInputs, id: str._id,dshow: 0 })

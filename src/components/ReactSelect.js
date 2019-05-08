@@ -249,6 +249,7 @@ class IntegrationReactSelect extends React.Component {
                                 shrink: true,
                             },
                         }}
+                        defaultValues={this.props.defaultValues}
                         onChange={this.handleChange(type)}
                         placeholder="انتخاب کنید ..."
                         isClearable={this.props.isClearable}

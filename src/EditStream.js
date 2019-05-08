@@ -6,6 +6,7 @@ import TextField from "./components/TextField";
 import "./index.css";
 import Modal from "./components/Modal";
 import Paper from "@material-ui/core/Paper";
+import ReactSelect from "./components/ReactSelect"
 
 class EditStream extends Component {
   constructor(props) {
@@ -82,15 +83,13 @@ class EditStream extends Component {
       { _id, nameEn, nameFa, address, streamServer },
       () => {
         var localComponent = [];
-        if (input.stream.isMosaic === 1) {
-          var mosaicInputs = [];
-          input.stream.mosaicInputs.map((i, index) => {
-            mosaicInputs.push(
-              <TextField id="mosaicInputs" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer} />
-
-            )
+        if(input.stream.isMosaic===1){
+          var mosaicInputs=[];
+          input.stream.mosaicInputs.map(i=>{
+          mosaicInputs.push(i.name.fa)
           })
         }
+        console.log("mosaicInputs: ",mosaicInputs)
         localComponent.push(
           <MuiThemeProvider>
             <div>
@@ -98,8 +97,12 @@ class EditStream extends Component {
               <br />
               <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameEn} />
               <br />
-              <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} defaultValue={this.state.address} />
               <br />
+              {input.stream.isMosaic ? (
+                <ReactSelect id="mosaicInputs" name="ورودی های موزاییک" items={this.state.streamsList} selectedId={this.setMosaicInputs.bind(this)} defaultValues={mosaicInputs} isMulti={true} isClearable={true} />
+              ) : (
+              <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} defaultValue={this.state.address} />
+              )}
               <TextField id="streamServer" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer} />
               <br />
               <MyButton label="ذخیره" click={this.saveBtnClick.bind(this)} />
@@ -116,15 +119,29 @@ class EditStream extends Component {
 
     var open = this.props.open;
     var input = this.props;
-    this.setState(
-      {
-        open,
-        input
-      },
-      () => {
-        console.log(this.props);
-        this.setLocalComponent(this.props);
+    var streamsList;
+    this.callApiMenu('streams')
+      .then(res => {
+        streamsList = res.data.streams
+        this.setState(
+          {
+            open,
+            input, streamsList
+          },
+          () => {
+            console.log(this.props);
+            this.setLocalComponent(this.props);
+          })
       })
+
+  }
+  callApiMenu = async (model) => {
+    var response = await axios({ method: 'post', url: global.serverAddress + '/' + model + '/all/names', headers: { "x-access-token": localStorage.getItem('token') } });
+    if (response.status !== 200) throw Error(response.message);
+    return response;
+  };
+  setMosaicInputs(selectedId) {
+    this.setState(selectedId, () => { })
   }
   componentWillReceiveProps(newProps) {
     this.setLocalComponent(newProps);

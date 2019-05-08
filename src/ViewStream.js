@@ -41,7 +41,7 @@ class ViewStream extends Component {
           <p>آی پی سرور استریم: {input.stream.streamServer}</p>
           <p>وضعیت: {input.stream.playStateText}</p>
           <p>زمان تغییر وضعیت: {moment(input.stream.changeStateTime).format('jYY/jMM/jD,h:mm:ss,a')}</p>
-          {input.stream.isMosaic? (<p>لیست شبکه ها: {mosaicInputs.toString()}</p>):(<p>آدرس: {input.stream.address}</p>)}
+          {input.stream.isMosaic? (<p>لیست شبکه ها: {mosaicInputs.toString()} <br/>ابعاد موزاییک: {input.stream.mosaicDimensions.x}*{input.stream.mosaicDimensions.y}</p>):(<p>آدرس: {input.stream.address}</p>)}
           
         </div>
       </MuiThemeProvider>
