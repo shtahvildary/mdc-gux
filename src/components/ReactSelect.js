@@ -184,14 +184,22 @@ class IntegrationReactSelect extends React.Component {
         suggestions: []
     };
     componentWillMount() {
+
         if (!this.props.items) return;
         var suggestions = [];
+        var  defaultValues= [];
+        var defaultLabels=""
         var label = this.props.name
         this.props.items.map((item) => {
             suggestions.push({ label: item.name, value: item._id })
         })
+        if(this.props.defaultValues)
+        this.props.defaultValues.map((item) => {
+            defaultValues.push({ label: item.name, value: item._id })
+            defaultLabels+=item.name+" "
 
-        this.setState({ suggestions, label }, () => { })
+        })
+        this.setState({ suggestions, label,defaultValues,defaultLabels }, () => {})
     }
 
     handleChange = name => value => {
@@ -213,10 +221,11 @@ class IntegrationReactSelect extends React.Component {
         var json = {}
         json[this.props.id] = selectedId
         this.props.selectedId(json)
-        console.log("selectedId: ",selectedId)
+       
     };
 
     render() {
+
         const { classes, theme } = this.props;
 
         const selectStyles = {
@@ -234,6 +243,7 @@ class IntegrationReactSelect extends React.Component {
             type = 'multi'
             value = this.state.multi
         }
+
         return (
             <Grid container justify='center'>
                 <NoSsr>
@@ -249,7 +259,9 @@ class IntegrationReactSelect extends React.Component {
                                 shrink: true,
                             },
                         }}
-                        defaultValues={this.props.defaultValues}
+                      
+                        // defaultInputValue ={this.state.defaultValues[0].label}
+                        defaultInputValue ={this.state.defaultLabels}
                         onChange={this.handleChange(type)}
                         placeholder="انتخاب کنید ..."
                         isClearable={this.props.isClearable}

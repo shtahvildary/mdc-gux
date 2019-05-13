@@ -62,6 +62,7 @@ class EditNetNode extends Component {
           alert("ذخیره سازی با موفقیت انجام شد.");
           }
           else {
+          alert("خطایی رخ داده، لطفا دوباره امتحان کنید!");
             console.log("some error ocurred", response.status);
           }
         })

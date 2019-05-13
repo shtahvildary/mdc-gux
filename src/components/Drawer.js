@@ -35,11 +35,21 @@ import NewDeviceType from '../NewDeviceType';
 import DashboardPage from '../Dashboard';
 // import Index from '../Index'
 
-import Dashboard from '@material-ui/icons/Dashboard';
-import Computer from '@material-ui/icons/Computer'
-import NetworkWifi from '@material-ui/icons/NetworkWifi'
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import NodesIcon from '@material-ui/icons/Computer'
+import SwitchesIcon from '@material-ui/icons/Router'
+// import SwitchesIcon from '@material-ui/icons/DeviceHub'
 // import switch-26.png from '@material-ui/icons'
 import DevicesIcon from '@material-ui/icons/Devices'
+import StreamsIcon from '@material-ui/icons/Tv'
+import LocationsIcon from '@material-ui/icons/Room'
+import NewLocationIcon from '@material-ui/icons/AddLocation'
+import UsersIcon from '@material-ui/icons/People'
+import NewUserIcon from '@material-ui/icons/PersonAdd'
+import ManagementIcon from '@material-ui/icons/Settings'
+import NewDepartmentIcon from '@material-ui/icons/LocationCity'
+import NewTypeIcon from '@material-ui/icons/DevicesOther'
+import VlanIcon from '@material-ui/icons/Cast'
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -200,7 +210,7 @@ class MiniDrawer extends React.Component {
             <Link to="/">
               <ListItem>
                 <ListItemIcon>
-                  <Dashboard />
+                  <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText>داشبورد</ListItemText>
               </ListItem>
@@ -210,7 +220,7 @@ class MiniDrawer extends React.Component {
             <Link to="/نودها">
               <ListItem>
                 <ListItemIcon>
-                  <Computer />
+                  <NodesIcon />
                 </ListItemIcon>
                 <ListItemText>نود ها  </ListItemText>
               </ListItem>
@@ -218,41 +228,41 @@ class MiniDrawer extends React.Component {
 
             <Link to="/سوییچها">
               <ListItem>
-                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemIcon><SwitchesIcon /></ListItemIcon>
                 <ListItemText>سوییچها</ListItemText>
               </ListItem>
             </Link>
 
             <Link to="/مکانها">
               <ListItem>
-                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemIcon><LocationsIcon /></ListItemIcon>
                 <ListItemText>مکانها</ListItemText>
               </ListItem>
             </Link>
 
             <Link to="/VLAN">
               <ListItem>
-                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemIcon><VlanIcon /></ListItemIcon>
                 <ListItemText>VLAN</ListItemText>
               </ListItem>
             </Link>
 
             <Link to="/سخت افزارها">
               <ListItem>
-                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemIcon><DevicesIcon /></ListItemIcon>
                 <ListItemText>سخت افزارها</ListItemText>
               </ListItem>
             </Link>
             <Link to="/استریم ها">
               <ListItem>
-                <ListItemIcon><Dashboard /></ListItemIcon>
+                <ListItemIcon><StreamsIcon /></ListItemIcon>
                 <ListItemText>استریم ها</ListItemText>
               </ListItem>
             </Link>
             {global.userType < 2 ? (
               <Link to="/کاربران">
                 <ListItem>
-                  <ListItemIcon><Dashboard /></ListItemIcon>
+                  <ListItemIcon><UsersIcon /></ListItemIcon>
                   <ListItemText>کاربران</ListItemText>
                 </ListItem>
               </Link>
@@ -270,7 +280,7 @@ class MiniDrawer extends React.Component {
 
                   <ListItem button onClick={this.handleClickManagement}>
                     <ListItemIcon>
-                      <Dashboard />
+                      <ManagementIcon />
                     </ListItemIcon>
                     <ListItemText inset primary="ابزارهای مدیریتی" />
                     {this.state.managementOpen ? <ExpandLess /> : <ExpandMore />}
@@ -280,14 +290,14 @@ class MiniDrawer extends React.Component {
 
                       <Link to="/نود جدید">
                         <ListItem button className={classes.nested}>
-                          <ListItemIcon><Dashboard /></ListItemIcon>
+                          <ListItemIcon><NodesIcon /></ListItemIcon>
                           <ListItemText inset primary="افزودن نود جدید" />
                         </ListItem>
                       </Link>
 
                       <Link to="/سوییچ جدید">
                         <ListItem button className={classes.nested}>
-                          <ListItemIcon><Dashboard /></ListItemIcon>
+                          <ListItemIcon><SwitchesIcon /></ListItemIcon>
                           <ListItemText inset primary="افزودن سوییچ جدید" />
                         </ListItem>
                       </Link>
@@ -295,7 +305,7 @@ class MiniDrawer extends React.Component {
                       <Link to="/مکان جدید">
                         <ListItem button className={classes.nested}>
                           <ListItemIcon>
-                            <Dashboard />
+                            <NewLocationIcon />
                           </ListItemIcon>
                           <ListItemText>افزودن مکان جدید</ListItemText>
                         </ListItem>
@@ -303,7 +313,7 @@ class MiniDrawer extends React.Component {
                       <Link to="/VLAN جدید">
                         <ListItem button className={classes.nested}>
                           <ListItemIcon>
-                            <Dashboard />
+                            <VlanIcon />
                           </ListItemIcon>
                           <ListItemText inset primary="افزودن VLAN جدید" />
                         </ListItem>
@@ -321,7 +331,7 @@ class MiniDrawer extends React.Component {
                       <Link to="/نوع جدید" >
                         <ListItem button className={classes.nested}>
                           <ListItemIcon>
-                            <Dashboard />
+                            <NewTypeIcon />
                           </ListItemIcon>
                           <ListItemText inset primary="افزودن نوع جدید" />
                         </ListItem>
@@ -330,7 +340,7 @@ class MiniDrawer extends React.Component {
                       <Link to="/واحد جدید" >
                         <ListItem button className={classes.nested}>
                           <ListItemIcon>
-                            <Dashboard />
+                            <NewDepartmentIcon />
                           </ListItemIcon>
                           <ListItemText inset primary="افزودن واحد جدید" />
                         </ListItem>
@@ -339,7 +349,7 @@ class MiniDrawer extends React.Component {
                       <Link to="/استریم جدید" >
                         <ListItem button className={classes.nested}>
                           <ListItemIcon>
-                            <Dashboard />
+                            <StreamsIcon />
                           </ListItemIcon>
                           <ListItemText inset primary="افزودن استریم جدید" />
                         </ListItem>
@@ -348,7 +358,7 @@ class MiniDrawer extends React.Component {
                         <Link to="/کاربر جدید" >
                           <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                              <Dashboard />
+                              <NewUserIcon />
                             </ListItemIcon>
                             <ListItemText inset primary="افزودن کاربر جدید" />
                           </ListItem>

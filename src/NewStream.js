@@ -42,24 +42,28 @@ class NewStream extends Component {
       name.fa = this.state.nameFa;
       var payload = {
         "name": name,
-        "streamServer": this.state.streamServer
+        "streamServer": this.state.streamServer,
+        "isMosaic" :isMosaic,
       }
+      var completed=0; //to show payload data is completed or not 
       if (isMosaic) {
         if (this.state.mosaicInputs.length != this.state.xMosaic * this.state.yMosaic) {
           alert("تعداد استریم های انتخاب شده برابر با ابعاد موزاییک نیست");
         }
 
         else {
-          payload.isMosaic = 1;
           payload.mosaicInputs = this.state.mosaicInputs
           payload.mosaicDimensions={"x":this.state.xMosaic,"y":this.state.yMosaic}
+          completed=1
         }
       }
       else //=> it's not mosaic
        { 
-        payload.isMosaic = 0;
          payload.address = this.state.address
+         completed=1
+
        }
+       if (completed)
       this.callApi(payload)
         .then(function (response) {
           if (response.status === 200) {

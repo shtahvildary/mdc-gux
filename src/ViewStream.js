@@ -25,6 +25,7 @@ class ViewStream extends Component {
     );
   }
   fillComponent(input) {
+    console.log("input.stream.changeStateTime: ",input.stream.changeStateTime)
     var localComponent = [];
     this.setState({ open: input.open })
     if(input.stream.isMosaic===1){
@@ -40,8 +41,8 @@ class ViewStream extends Component {
           <p>نام انگلیسی: {input.stream.nameEn} </p>
           <p>آی پی سرور استریم: {input.stream.streamServer}</p>
           <p>وضعیت: {input.stream.playStateText}</p>
-          <p>زمان تغییر وضعیت: {moment(input.stream.changeStateTime).format('jYY/jMM/jD,h:mm:ss,a')}</p>
-          {input.stream.isMosaic? (<p>لیست شبکه ها: {mosaicInputs.toString()} <br/>ابعاد موزاییک: {input.stream.mosaicDimensions.x}*{input.stream.mosaicDimensions.y}</p>):(<p>آدرس: {input.stream.address}</p>)}
+          <p>زمان تغییر وضعیت: {input.stream.changeStateTime?(moment(input.stream.changeStateTime).format('jYY/jMM/jD,h:mm:ss,a')):("-")}</p>
+          {input.stream.isMosaic? (<p>لیست شبکه ها: {mosaicInputs.toString()} <br/>ابعاد موزاییک: {input.stream.mosaicDimensions.x}×{input.stream.mosaicDimensions.y}</p>):(<p>آدرس: {input.stream.address}</p>)}
           
         </div>
       </MuiThemeProvider>

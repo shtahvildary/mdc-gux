@@ -17,31 +17,79 @@ class EditStream extends Component {
       nameFa: "",
       address: "",
       streamServer: "",
+      mosaicInputs: [],
+
+      
       open: true
     };
   }
-  // tbxReadValue(input) {
-  //   this.setState(input);
-  // }
+ 
+  componentWillMount() {
 
+    var open = this.props.open;
+    var xMosaic=this.props.stream.mosaicDimensions.x;
+    var yMosaic=this.props.stream.mosaicDimensions.y;
+    var streamsList;
+    this.callApiMenu('streams')
+      .then(res => {
+        streamsList = res.data.streams
+        if (this.props.stream.isMosaic === 1) {
+          var mosaicInputs = [];
+          this.props.stream.mosaicInputs.map(i => {
+            var index = streamsList.findIndex(svi => svi.name === i.name.fa)
+            if (i != -1) mosaicInputs.push(streamsList[index])
+          })
+        }
 
+        this.setState(
+          {
+            open,
+             streamsList, mosaicInputs,xMosaic,yMosaic
+          },
+          () => {
+            this.setLocalComponent(this.props)
+          })
+      })
+
+  }
   saveBtnClick(event) {
-    if (this.state.nameEn.length && this.state.address.length && this.state.streamServer.length > 0) {
+    var isMosaic=this.state.isMosaic
+    
+    if (this.state.nameEn.length && this.state.streamServer.length && (this.state.address.length > 0 || isMosaic)) {
+      
       var name = {}
       name.en = this.state.nameEn;
       name.fa = this.state.nameFa;
       var payload = {
         "_id": this.state._id,
         "name": name,
-        "address": this.state.address,
         "streamServer": this.state.streamServer,
+        "isMosaic" :isMosaic,
       }
+      var completed=0; //to show payload data is completed or not 
+      if (isMosaic) {
+        if (this.state.mosaicInputs.length != this.state.xMosaic * this.state.yMosaic) {
+          alert("تعداد استریم های انتخاب شده برابر با ابعاد موزاییک نیست: ");
+        }
+        else {
+          payload.mosaicInputs = this.state.mosaicInputs
+          payload.mosaicDimensions={"x":this.state.xMosaic,"y":this.state.yMosaic}
+          completed=1
+        }
+      }
+      else //=> it's not mosaic
+       { 
+         payload.address = this.state.address
+         completed=1
+       }
+       if (completed)
       this.callApi(payload)
         .then(function (response) {
           if (response.status === 200) {
             console.log("update stream is OK :D");
             alert("ذخیره سازی با موفقیت انجام شد.");
           } else {
+          alert("خطایی رخ داده، لطفا دوباره امتحان کنید!");
             console.log("some error ocurred", response.status);
           }
         }).then(this.closeModal())
@@ -53,10 +101,9 @@ class EditStream extends Component {
     }
     else {
       alert("تمامی فیلدهای ستاره دار را پر کنید.");
-
-      // alert("Input field value is missing");
     }
   }
+  
   closeModal() { this.props.close(true) }
 
   callApi = async payload => {
@@ -73,23 +120,36 @@ class EditStream extends Component {
 
 
   setLocalComponent(input) {
-    console.log(input);
     this.setState({ open: input.open });
 
-    var { _id, nameEn, nameFa, address, streamServer } = input.stream;
-    console.log("_id: ", _id);
+    var { _id, nameEn, nameFa, address, streamServer ,isMosaic} = input.stream;
+    if(!address) address=""
 
     this.setState(
-      { _id, nameEn, nameFa, address, streamServer },
+      { _id, nameEn, nameFa, address, streamServer,isMosaic },
       () => {
         var localComponent = [];
-        if(input.stream.isMosaic===1){
-          var mosaicInputs=[];
-          input.stream.mosaicInputs.map(i=>{
-          mosaicInputs.push(i.name.fa)
-          })
+        var addedComponents = []
+        if (input.stream.isMosaic == 1) {
+          addedComponents.push(
+            <MuiThemeProvider>
+              ابعاد موزاییک:
+          <br />
+              <TextField id="xMosaic" label="افقی" change={this.tbxReadValue.bind(this)} defaultValue={input.stream.mosaicDimensions.x} />
+              <TextField id="yMosaic" label="عمودی" change={this.tbxReadValue.bind(this)} defaultValue={input.stream.mosaicDimensions.y} />
+              <ReactSelect id="mosaicInputs" name="ورودی های موزاییک" items={this.state.streamsList} selectedId={this.setMosaicInputs.bind(this)} defaultValues={this.state.mosaicInputs} isMulti={true} isClearable={true} />
+
+            </MuiThemeProvider>
+          )
         }
-        console.log("mosaicInputs: ",mosaicInputs)
+        else addedComponents.push(
+          <MuiThemeProvider>
+            * <TextField id="address" label="آدرس استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.address} />
+            <br />
+          </MuiThemeProvider>
+        )
+
+
         localComponent.push(
           <MuiThemeProvider>
             <div>
@@ -98,11 +158,7 @@ class EditStream extends Component {
               <TextField id="nameEn" label="نام انگلیسی" change={this.tbxReadValue.bind(this)} defaultValue={this.state.nameEn} />
               <br />
               <br />
-              {input.stream.isMosaic ? (
-                <ReactSelect id="mosaicInputs" name="ورودی های موزاییک" items={this.state.streamsList} selectedId={this.setMosaicInputs.bind(this)} defaultValues={mosaicInputs} isMulti={true} isClearable={true} />
-              ) : (
-              <TextField id="address" label="آدرس" change={this.tbxReadValue.bind(this)} defaultValue={this.state.address} />
-              )}
+              {addedComponents}
               <TextField id="streamServer" label="IP سرور استریم" change={this.tbxReadValue.bind(this)} defaultValue={this.state.streamServer} />
               <br />
               <MyButton label="ذخیره" click={this.saveBtnClick.bind(this)} />
@@ -113,28 +169,8 @@ class EditStream extends Component {
       }
     );
   }
+  
 
-  componentWillMount() {
-    console.log("hiiii")
-
-    var open = this.props.open;
-    var input = this.props;
-    var streamsList;
-    this.callApiMenu('streams')
-      .then(res => {
-        streamsList = res.data.streams
-        this.setState(
-          {
-            open,
-            input, streamsList
-          },
-          () => {
-            console.log(this.props);
-            this.setLocalComponent(this.props);
-          })
-      })
-
-  }
   callApiMenu = async (model) => {
     var response = await axios({ method: 'post', url: global.serverAddress + '/' + model + '/all/names', headers: { "x-access-token": localStorage.getItem('token') } });
     if (response.status !== 200) throw Error(response.message);

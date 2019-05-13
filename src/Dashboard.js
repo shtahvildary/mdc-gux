@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import { Link, Route, Switch } from "react-router-dom";
 import Switches from "./Switches";
 import NetNodes from "./NetNodes";
-import Locations from "./Locations";
 import Vlans from "./Vlans";
 import "./App.css";
 import Streams from "./Streams";
@@ -44,19 +43,7 @@ function Dashboard() {
 
           <Grid container spacing={24}>
 
-           <Grid item xs>
-            <Card
-              pageName="مکانها"
-              content={
-                <div>
-                  {/* <p>نمایش لیست مکانها</p> */}
-                  <Summary model="locations"/>
-
-                  <Link to="/مکانها">بیشتر...</Link>
-                </div>
-              }
-            />
-          </Grid>
+         
           <Grid item xs>
             <Card
               pageName="VLANها"
@@ -70,9 +57,6 @@ function Dashboard() {
               }
             />
           </Grid>
-          </Grid>
-          <Grid container spacing={24}>
-
           <Grid item xs>
             <Card
               pageName="استریم ها"
@@ -84,7 +68,8 @@ function Dashboard() {
               }
             />
           </Grid>
-        </Grid>
+          </Grid>
+         
       </div>
     </Paper>
   );
@@ -93,7 +78,6 @@ function Dashboard() {
     <Switch>
       <Route path="/سوییچها" component={Switches} />
       <Route path="/نودها" component={NetNodes} />
-      <Route path="/مکانها" component={Locations} />
       <Route path="/VLANها" component={Vlans} />
       <Route path="/استریم ها" component={Streams} />
 
