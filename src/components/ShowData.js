@@ -58,6 +58,7 @@ class showData extends React.Component {
         this.setState({ addNew, columns, showView, showEdit, disconnect, finished ,dataLength}, () => {
             if (newProps.clear) var data = []
             else var data = this.state.data
+            console.log("newProps.data: ",newProps.data)
             if (!newProps.data) return
             
             newProps.data.map((d,i )=> {

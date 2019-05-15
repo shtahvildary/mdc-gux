@@ -115,7 +115,8 @@
 .drawer-appBarShift {
   
   margin-Left: var(--drawerWidth);
-  width: calc(100% - var(--drawerWidth)px);
+  width: calc(100% - var(--drawerWidth));
+  /* width: calc(100% - var(--drawerWidth)px); */
   /* transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,

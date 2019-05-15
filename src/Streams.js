@@ -64,8 +64,8 @@ class Streams extends Component {
     
 
    
-    var socket = io("http://172.16.16.164:3000")
-    // var socket = io("http://localhost:3000")
+    // var socket = io("http://172.16.16.164:3000")
+    var socket = io("http://localhost:3000")
     socket.on("connection", () => {
       var socketTime=Date.now()
       console.log("connected succ",socketTime,socketTime-apiTime)
@@ -179,8 +179,8 @@ class Streams extends Component {
     return (
       <div>
         <Search model="streams" searchResult={this.searchResult.bind(this)} />
-        {/* <div><a href="http://localhost:4000">مشاهده استریم ها</a></div> */}
-        <div><a href="http://172.16.16.163:4000">مشاهده استریم ها</a></div>
+        <div><a href="http://localhost:4000">مشاهده استریم ها</a></div>
+        {/* <div><a href="http://172.16.16.163:4000">مشاهده استریم ها</a></div> */}
         {this.state.editComponent}
         {this.state.viewComponent}
         <Card

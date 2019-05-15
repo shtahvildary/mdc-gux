@@ -19,16 +19,18 @@ class EditStream extends Component {
       streamServer: "",
       mosaicInputs: [],
 
-      
+
       open: true
     };
   }
- 
+
   componentWillMount() {
 
     var open = this.props.open;
-    var xMosaic=this.props.stream.mosaicDimensions.x;
-    var yMosaic=this.props.stream.mosaicDimensions.y;
+    if (this.props.mosaicDimensions) {
+      var xMosaic = this.props.stream.mosaicDimensions.x;
+      var yMosaic = this.props.stream.mosaicDimensions.y;
+    }
     var streamsList;
     this.callApiMenu('streams')
       .then(res => {
@@ -44,7 +46,7 @@ class EditStream extends Component {
         this.setState(
           {
             open,
-             streamsList, mosaicInputs,xMosaic,yMosaic
+            streamsList, mosaicInputs, xMosaic, yMosaic
           },
           () => {
             this.setLocalComponent(this.props)
@@ -53,10 +55,10 @@ class EditStream extends Component {
 
   }
   saveBtnClick(event) {
-    var isMosaic=this.state.isMosaic
-    
+    var isMosaic = this.state.isMosaic
+
     if (this.state.nameEn.length && this.state.streamServer.length && (this.state.address.length > 0 || isMosaic)) {
-      
+
       var name = {}
       name.en = this.state.nameEn;
       name.fa = this.state.nameFa;
@@ -64,46 +66,46 @@ class EditStream extends Component {
         "_id": this.state._id,
         "name": name,
         "streamServer": this.state.streamServer,
-        "isMosaic" :isMosaic,
+        "isMosaic": isMosaic,
       }
-      var completed=0; //to show payload data is completed or not 
+      var completed = 0; //to show payload data is completed or not 
       if (isMosaic) {
         if (this.state.mosaicInputs.length != this.state.xMosaic * this.state.yMosaic) {
           alert("تعداد استریم های انتخاب شده برابر با ابعاد موزاییک نیست: ");
         }
         else {
           payload.mosaicInputs = this.state.mosaicInputs
-          payload.mosaicDimensions={"x":this.state.xMosaic,"y":this.state.yMosaic}
-          completed=1
+          payload.mosaicDimensions = { "x": this.state.xMosaic, "y": this.state.yMosaic }
+          completed = 1
         }
       }
       else //=> it's not mosaic
-       { 
-         payload.address = this.state.address
-         completed=1
-       }
-       if (completed)
-      this.callApi(payload)
-        .then(function (response) {
-          if (response.status === 200) {
-            console.log("update stream is OK :D");
-            alert("ذخیره سازی با موفقیت انجام شد.");
-          } else {
-          alert("خطایی رخ داده، لطفا دوباره امتحان کنید!");
-            console.log("some error ocurred", response.status);
-          }
-        }).then(this.closeModal())
+      {
+        payload.address = this.state.address
+        completed = 1
+      }
+      if (completed)
+        this.callApi(payload)
+          .then(function (response) {
+            if (response.status === 200) {
+              console.log("update stream is OK :D");
+              alert("ذخیره سازی با موفقیت انجام شد.");
+            } else {
+              alert("خطایی رخ داده، لطفا دوباره امتحان کنید!");
+              console.log("some error ocurred", response.status);
+            }
+          }).then(this.closeModal())
 
-        .catch(function (error) {
-          console.log(error);
-        });
+          .catch(function (error) {
+            console.log(error);
+          });
 
     }
     else {
       alert("تمامی فیلدهای ستاره دار را پر کنید.");
     }
   }
-  
+
   closeModal() { this.props.close(true) }
 
   callApi = async payload => {
@@ -122,11 +124,11 @@ class EditStream extends Component {
   setLocalComponent(input) {
     this.setState({ open: input.open });
 
-    var { _id, nameEn, nameFa, address, streamServer ,isMosaic} = input.stream;
-    if(!address) address=""
+    var { _id, nameEn, nameFa, address, streamServer, isMosaic } = input.stream;
+    if (!address) address = ""
 
     this.setState(
-      { _id, nameEn, nameFa, address, streamServer,isMosaic },
+      { _id, nameEn, nameFa, address, streamServer, isMosaic },
       () => {
         var localComponent = [];
         var addedComponents = []
@@ -169,7 +171,7 @@ class EditStream extends Component {
       }
     );
   }
-  
+
 
   callApiMenu = async (model) => {
     var response = await axios({ method: 'post', url: global.serverAddress + '/' + model + '/all/names', headers: { "x-access-token": localStorage.getItem('token') } });
