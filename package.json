@@ -29,8 +29,14 @@
     "webpack-dev-middleware": "^3.1.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "home": "REACT_APP_PROJECT_MODE=Home react-scripts start",
+    "office": "set \"REACT_APP_PROJECT_MODE=Office\" && react-scripts start",
+    "server": "REACT_APP_PROJECT_MODE=Server react-scripts start",
+    "start": "REACT_APP_PROJECT_MODE=Server react-scripts start",
+    "build": "REACT_APP_PROJECT_MODE=Server react-scripts build",
+    "build-home": "REACT_APP_PROJECT_MODE=Server react-scripts build",
+    "build-office": "set \"REACT_APP_PROJECT_MODE=Server\" && react-scripts build",
+    "build-server": "REACT_APP_PROJECT_MODE=Server react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
