@@ -233,12 +233,7 @@ class MiniDrawer extends React.Component {
               </ListItem>
             </Link>
 
-            <Link to="/مکانها">
-              <ListItem>
-                <ListItemIcon><LocationsIcon /></ListItemIcon>
-                <ListItemText>مکانها</ListItemText>
-              </ListItem>
-            </Link>
+
 
             <Link to="/VLAN">
               <ListItem>
@@ -288,6 +283,13 @@ class MiniDrawer extends React.Component {
                   <Collapse in={this.state.managementOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
 
+                      <Link to="/مکانها">
+                        <ListItem>
+                          <ListItemIcon><LocationsIcon /></ListItemIcon>
+                          <ListItemText>مکانها</ListItemText>
+                        </ListItem>
+                      </Link>
+                      
                       <Link to="/نود جدید">
                         <ListItem button className={classes.nested}>
                           <ListItemIcon><NodesIcon /></ListItemIcon>
