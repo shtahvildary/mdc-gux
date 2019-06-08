@@ -15,6 +15,7 @@ class Search extends Component {
       page: 1,
       size: 10,
       skip: 0,
+      filledAt:0,
     };
   }
   componentWillReceiveProps() {
@@ -51,20 +52,24 @@ class Search extends Component {
     input.page = page
     input.size = size
     input.isTable = this.state.isTable
-    this.callApi(this.state.model, input)
-      .then(res => {
-        console.log(res.data)
-        this.props.searchResult({ response: res.data, size, page }, () => {
-
+    let timestamp=Date.now()
+    this.setState({filledAt:timestamp},()=>{
+      this.callApi(this.state.model, input)
+        .then(res => {
+          console.log(res.data)
+          if(timestamp!=this.state.timestamp)return;
+          this.props.searchResult({ response: res.data, size, page }, () => {
+  
+          })
+          if (!res.data.finished ) {
+            // if (!res.data.finished || !newSearch) {
+            
+            // this.fillData(input)
+            // this.fillData(input, newSearch)
+          }
         })
-        if (!res.data.finished ) {
-          // if (!res.data.finished || !newSearch) {
-          
-          this.fillData(input)
-          // this.fillData(input, newSearch)
-        }
-      })
-      .catch(err => console.log(err));
+        .catch(err => console.log(err));
+    })
   }
   tbxReadValue(input) {
     this.setState(input, () => {

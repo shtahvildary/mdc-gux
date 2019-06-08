@@ -3,6 +3,8 @@ import ExpantionPanel from "./ExpantionPanel";
 import SimpleTable from "./Table";
 import Grid from '@material-ui/core/Grid';
 import _ from "lodash";
+import InfiniteScroll from "react-infinite-scroller"
+
 
 
 class showData extends React.Component {
@@ -11,9 +13,11 @@ class showData extends React.Component {
         this.state = {
             // isTable: true,
             page: 1,
-            size: 10,
+            size: 100,
             skip: 0,
             data: [],
+            hasMore:true,
+            // totalPage:0
 
         }
     }
@@ -67,12 +71,14 @@ class showData extends React.Component {
                 if (ind === -1) data.push(d)
                 
             })
-            this.setState({ data }, () => {
+            this.setState({ data,limits }, () => {
                 this.fillComponent(limits, newProps.nextPage)
+                // this.fillComponent()
             })
         })
     }
-    fillComponent(limits, nextPage) {
+    // fillComponent(limits) {
+        fillComponent(limits, nextPage) {
         var component;
         if (this.state.isTable&&!this.props.ExpantionPanel)
             component =
@@ -89,15 +95,36 @@ class showData extends React.Component {
         else
             component = <ExpantionPanel items={this.state.data} dataLength={this.state.dataLength} />
         this.setState({ component }, () => {
+
             if (!this.state.finished)
-                nextPage(limits)
+                this.requestNextPage(limits,nextPage)
         })
     }
+    requestNextPage(page,limits,nextPage){
+        console.log("page: ",page)
+        console.log("finished: ",this.state.finished)
+
+        // if(!this.props.nextPage){
+            // if (page==this.state.totalPage){
+            if (!this.state.finished)
+{
+    this.props.nextPage(this.state.limits)
+          return this.setState({hasMore:false})
+        }
+      }
 
     render() {
         return (
             <Grid >
+                  <InfiniteScroll
+                pageStart={-1}
+                loadMore={(page)=>this.requestNextPage(page)}
+                hasMore={this.state.hasMore}
+                loader={<div className="loader" key={0}>Loading ...</div>}
+              >
+
                 {this.state.component}
+              </InfiniteScroll>
             </Grid>
         )
     }

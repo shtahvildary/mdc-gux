@@ -23,7 +23,7 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
-import LazyLoad from 'react-lazyload';
+import InfiniteScroll from "react-infinite-scroller"
 import "../App.css";
 
 
@@ -152,7 +152,7 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
     // overflowY: 'auto',
-    
+
   },
   table: {
     minWidth: 'auto',
@@ -173,12 +173,13 @@ class EnhancedTable extends React.Component {
       orderBy: null,
       selected: [],
       selectedIds: [],
-      
+
 
       data: [
       ],
       columnData: [],
-      dataLength:0,
+      dataLength: 0,
+      hasMore:true,
 
     };
   }
@@ -196,7 +197,7 @@ class EnhancedTable extends React.Component {
     var addNew = newProps.addNew
     var { orderBy } = this.state;
     if (!orderBy && columns[0]) orderBy = columns[0].id
-    this.setState({ columnData: columns, data, orderBy, addNew,dataLength:newProps.dataLength })
+    this.setState({ columnData: columns, data, orderBy, addNew, dataLength: newProps.dataLength })
   }
 
   handleRequestSort = (event, property) => {
@@ -219,22 +220,22 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: [] });
   };
 
-  
+
   fill(data, order, orderBy, columnData) {
-    return data
-      .sort(getSorting(order, orderBy))
-      .map(n => {
-        return (
-          
-          <LazyLoad height={window.innerHeight} key={n.id} once={true}>
-            <TableRow>
+    return (
+
+      data.sort(getSorting(order, orderBy))
+        .map(n => {
+          return (
+
+            <TableRow key={n.id}>
               {columnData.map(c => {
                 let txt = n[c.id];
                 if (!txt) txt = "-";
                 if (typeof txt === 'string' && validator.isURL(txt) && !validator.isIP(txt)) txt = <a href={normUrl(txt)}>مشاهده</a>;
                 return <TableCell display="flex" key={c.id}>{txt}</TableCell>
               })}
-              <TableCell  display="flex">
+              <TableCell display="flex">
                 <Tooltip title="جزئیات">
                   <IconButton aria-label="View" onClick={event => this.props.showView(n)} >
                     <ViewListIcon />
@@ -258,10 +259,21 @@ class EnhancedTable extends React.Component {
                 </Tooltip>
               </TableCell>
             </TableRow>
-            </LazyLoad>
-            
-        );
-      })
+
+          );
+        })
+    )
+  }
+  nextPage(page){
+    console.log("page: ",page)
+
+    // if(!this.props.nextPage){
+    //   console.log("next page: ",this.props)
+    //   return this.setState({hasMore:false})
+    // }
+    let result=this.props.nextPage(page)
+    console.log("result: ",result)
+    if(result.finished)return this.setState({hasMore:false})
   }
   render() {
     const { classes } = this.props;
@@ -281,7 +293,10 @@ class EnhancedTable extends React.Component {
             />
 
             <TableBody>
-              {this.fill(this.state.data, this.state.order, this.state.orderBy, this.state.columnData)}
+            
+             
+                {this.fill(this.state.data, this.state.order, this.state.orderBy, this.state.columnData)}
+              
             </TableBody>
 
           </Table>
