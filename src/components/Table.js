@@ -23,7 +23,6 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import _ from "lodash";
 import validator from "validator"
 import normUrl from "normalize-url"
-import InfiniteScroll from "react-infinite-scroller"
 import "../App.css";
 
 
@@ -264,17 +263,7 @@ class EnhancedTable extends React.Component {
         })
     )
   }
-  nextPage(page){
-    console.log("page: ",page)
 
-    // if(!this.props.nextPage){
-    //   console.log("next page: ",this.props)
-    //   return this.setState({hasMore:false})
-    // }
-    let result=this.props.nextPage(page)
-    console.log("result: ",result)
-    if(result.finished)return this.setState({hasMore:false})
-  }
   render() {
     const { classes } = this.props;
 
