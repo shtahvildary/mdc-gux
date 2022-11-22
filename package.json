@@ -24,7 +24,7 @@
     "react-scripts": "^3.0.1",
     "react-select": "^2.3.0",
     "react-tap-event-plugin": "^3.0.3",
-    "socket.io": "^2.1.1",
+    "socket.io": "^2.5.0",
     "validator": "^10.4.0",
     "webpack": "4.29.6",
     "webpack-dev-middleware": "^3.2.1"
